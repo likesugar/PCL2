@@ -1,6 +1,6 @@
 '仅保留下载（包括下载所需的版本/依赖元数据）与微软正版登录。
 Public Module RedPolicy
-    Public Const DefaultTheme As Integer = 15
+    Public Const DefaultTheme As Integer = 12
 
     Private ReadOnly MetadataHosts As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {
         "launchermeta.mojang.com", "piston-meta.mojang.com", "launcher.mojang.com",
