@@ -162,7 +162,7 @@ internal static class Program {
             }
 
             Set("SystemLastVersionReg", 413);
-            Set("UiLauncherTheme", 15);
+            Set("UiLauncherTheme", 12);
             var window = (Window)Activator.CreateInstance(T("FormMain"))!;
             app.MainWindow = window;
             window.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -172,7 +172,7 @@ internal static class Program {
             Pump(1000);
             Check(window.Title == "PCL Communist", "Main window uses the requested product name");
             Check(((Panel)Control(window, "PanMsg")).Children.Count == 0, "Startup reaches the main page without an agreement dialog");
-            Call("ModSecret", "ThemeRefresh", 15);
+            Call("ModSecret", "ThemeRefresh", 11);
             Check((int)Field("ModSecret", "ThemeNow")! == 12, "Default theme survives startup");
             Check(((FrameworkElement)Control(window, "CommunismBackdrop")).Visibility == Visibility.Visible, "Hammer-and-sickle background is visible");
             Check(((string)Call("ModMinecraft", "McSkinDownload", "https://textures.minecraft.net/texture/test")!).StartsWith("pack://"), "Online skins use bundled local fallback");
@@ -194,7 +194,7 @@ internal static class Program {
             Check(!(bool)Call("ModSecret", "ThemeCheckOne", -1)!, "Invalid theme IDs are rejected");
             Set("UiLauncherHue", 123); Set("UiLauncherSat", 45);
             Set("UiLauncherLight", 30); Set("UiLauncherDelta", 10);
-            Call("ModSecret", "ThemeRefresh", 14);
+            Call("ModSecret", "ThemeRefresh", 12);
             Call("ModSecret", "ThemeRefresh", -1);
             Check((int)Field("ModSecret", "ColorHue")! == 123 && (int)Field("ModSecret", "ColorSat")! == 45 && (int)Field("ModSecret", "ColorLightAdjust")! == 10, "Custom HSL sliders affect the rendered palette");
             Call("ModSecret", "ThemeRefresh", 12);
@@ -202,11 +202,11 @@ internal static class Program {
             Pump(100);
             Call("ModSecret", "ThemeRefresh", -1);
             Check((int)Field("ModSecret", "ColorHue")! != hue, "Rainbow theme changes over time");
-            Call("ModSecret", "ThemeRefresh", 15);
+            Call("ModSecret", "ThemeRefresh", 11);
             Call("ModSecret", "ThemeRefresh", 999);
             Check((int)Field("ModSecret", "ThemeNow")! == 12, "Invalid saved theme falls back to default theme");
 
-            Set("UiLauncherTheme", 15);
+            Set("UiLauncherTheme", 12);
             ((Border)Control(window, "PanMainRight")).Child = (UIElement)page;
             Pump(500);
             Capture(window, Path.Combine(output, "All-themes-unlocked.png"));
