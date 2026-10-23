@@ -1338,11 +1338,10 @@ Public Module ModDownload
                     If WaitCycle < SubLoader.Value * 100 Then WaitCycle = SubLoader.Value * 100
                 End If
             Next
-            '第一轮时：既然不直接使用已经加载好的结果，那就启动第一个加载器
+            '第一轮时：并发启动全部下载源竞速（移植自 oaoi 多源下载），最快成功者胜出
             If WaitCycle = 0 Then
-                LoaderList.First.Key.Start(MainLoader.Input, IsForceRestart)
-                For Each Loader In LoaderList.Skip(1)
-                    Loader.Key.State = LoadState.Waiting '将其他源标记为未启动，以确保可以切换下载源（#184）
+                For Each Loader In LoaderList
+                    Loader.Key.Start(MainLoader.Input, IsForceRestart)
                 Next
             End If
             '检查加载器失败或超时
