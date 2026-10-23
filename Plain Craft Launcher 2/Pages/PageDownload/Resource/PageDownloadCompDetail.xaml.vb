@@ -505,6 +505,50 @@ GroupDone:
                     End Select
                 End If
                 If File.ResourceType = ResourceTypes.Mod Then FileName = FileName.Replace("~", "-") '~ 会导致 Mixin 加载失败
+                '自动补齐前置（移植自 OpenLauncher）：后台递归解析必需依赖，与主文件一起下载
+                Dim DepFilesList As New List(Of NetFile)
+                Dim DepCount As Integer = 0, DepSkipped As Integer = 0, DepMissing As Integer = 0
+                If File.ResourceType = ResourceTypes.Mod AndAlso File.Dependencies.Any AndAlso Not RestrictMcDownload Then
+                    Try
+                        Dim DepDir As String = DefaultFolder & If(SubFolder = "", "\", SubFolder)
+                        If Not Directory.Exists(DepDir) Then Directory.CreateDirectory(DepDir)
+                        Dim Visited As New HashSet(Of String)
+                        Dim Queue As New Queue(Of String)(File.Dependencies)
+                        Dim Allowed As ModLoaders = If(File.ModLoaders <> ModLoaders.None, File.ModLoaders, Project.ModLoaders)
+                        Dim MainVersions = File.GameVersions
+                        While Queue.Any AndAlso DepCount < 50
+                            Dim DepId = Queue.Dequeue
+                            If Not Visited.Add(DepId) Then Continue While
+                            If Not ResourceProject.Cache.ContainsKey(DepId) Then
+                                DepMissing += 1
+                                Continue While
+                            End If
+                            Dim DepProj As ResourceProject = ResourceProject.Cache(DepId)
+                            Dim DepVer As ResourceVersion = Nothing
+                            For Each v In ResourceVersion.FromProjectId(DepProj.Id, DepProj.Platform)
+                                If Not v.DownloadAvailable Then Continue For
+                                If Not v.GameVersions.Any(Function(gv) MainVersions.Contains(gv)) Then Continue For
+                                If v.ModLoaders <> ModLoaders.None AndAlso Allowed <> ModLoaders.None AndAlso (v.ModLoaders And Allowed) = 0 Then Continue For
+                                Dim DepTargetPath = DepDir & v.FileName
+                                If FileUtils.Exists(DepTargetPath) Then
+                                    DepSkipped += 1
+                                    Continue While
+                                End If
+                                DepVer = v
+                                Exit For
+                            Next
+                            If DepVer Is Nothing Then Continue While
+                            DepFilesList.Add(DepVer.ToNetFile(DepDir & DepVer.FileName, ResourceVersion.DownloadReason.Dependency))
+                            DepCount += 1
+                            For Each SubDep In DepVer.Dependencies
+                                Queue.Enqueue(SubDep)
+                            Next
+                        End While
+                        Logger.Info($"前置解析完成：新增 {DepCount}，已存在 {DepSkipped}，缺失 {DepMissing}")
+                    Catch ex As Exception
+                        Logger.Error(ex, "解析前置 Mod 失败，仅下载主文件")
+                    End Try
+                End If
                 RunInUi(
                 Sub()
                     '弹窗要求选择保存位置
@@ -517,10 +561,14 @@ GroupDone:
                     '构造步骤加载器
                     Dim LoaderName As String = Desc & "下载：" & PathUtils.GetFileNameWithoutExtension(Target) & " "
                     If Not PathUtils.IsSame(PathUtils.RemoveLastPart(Target), DefaultFolder) Then CachedFolder(File.ResourceType) = PathUtils.RemoveLastPart(Target)
-                    Dim Loaders As New List(Of LoaderBase)
-                    Loaders.Add(New LoaderDownload("下载文件", {
+                    Dim MainFiles As New List(Of NetFile) From {
                         File.ToNetFile(Target, If(TargetResourceType = ResourceTypes.Any, ResourceVersion.DownloadReason.Dependency, ResourceVersion.DownloadReason.Standalone))
-                    }) With {.ProgressWeight = 6, .Block = True})
+                    }
+                    MainFiles.AddRange(DepFilesList)
+                    If DepCount > 0 Then LoaderName = Desc & "下载：" & PathUtils.GetFileNameWithoutExtension(Target) & " 及 " & DepCount & " 个前置 "
+                    Dim Loaders As New List(Of LoaderBase)
+                    Loaders.Add(New LoaderDownload("下载文件", MainFiles) With {.ProgressWeight = 6 + DepCount * 2, .Block = True})
+                    If DepCount > 0 Then Hint(Desc & $"开始下载（已自动补齐 {DepCount} 个前置 Mod" & If(DepSkipped > 0, $"，{DepSkipped} 个已存在跳过", "") & "）")
                     '启动
                     Dim Loader As New LoaderCombo(Of Integer)(LoaderName, Loaders) With {.OnStateChanged =
                     Sub(MyLoader)
