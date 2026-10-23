@@ -123,7 +123,7 @@ internal static class Program {
                 var source = setting.GetType().GetField("Source")!;
                 if (source.GetValue(setting)!.ToString() == "Registry") source.SetValue(setting, Enum.Parse(source.FieldType, "Normal"));
             }
-            Check((int)entries["UiLauncherTheme"]!.GetType().GetField("DefaultValue")!.GetValue(entries["UiLauncherTheme"])! == 15, "Soviet red is the fresh-install default");
+            Check((int)entries["UiLauncherTheme"]!.GetType().GetField("DefaultValue")!.GetValue(entries["UiLauncherTheme"])! == 12, "Funny colors is the fresh-install default");
             Check(!(bool)T("ModSecret").GetField("RestrictMcDownload", Static)!.GetRawConstantValue()!, "Minecraft downloads are unrestricted");
             Check(!string.IsNullOrWhiteSpace((string)Field("ModSecret", "OAuthClientId")!), "Microsoft public client ID is configured");
             Check((int)entries["ToolDownloadSource"]!.GetType().GetField("DefaultValue")!.GetValue(entries["ToolDownloadSource"])! == 0, "Mainland mirrors are preferred for files");
