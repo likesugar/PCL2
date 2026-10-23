@@ -174,6 +174,9 @@ internal static class Program {
             Check(((Panel)Control(window, "PanMsg")).Children.Count == 0, "Startup reaches the main page without an agreement dialog");
             Call("ModSecret", "ThemeRefresh", 12);
             Check((int)Field("ModSecret", "ThemeNow")! == 12, "Default theme survives startup");
+            Check(((FrameworkElement)Control(window, "CommunismBackdrop")).Visibility == Visibility.Collapsed, "Funny-colors default hides the sickle backdrop");
+            Call("ModSecret", "ThemeRefresh", 15);
+            Pump(300);
             Check(((FrameworkElement)Control(window, "CommunismBackdrop")).Visibility == Visibility.Visible, "Hammer-and-sickle background is visible");
             Check(((string)Call("ModMinecraft", "McSkinDownload", "https://textures.minecraft.net/texture/test")!).StartsWith("pack://"), "Online skins use bundled local fallback");
             Capture(window, Path.Combine(output, "Soviet-red-home.png"));

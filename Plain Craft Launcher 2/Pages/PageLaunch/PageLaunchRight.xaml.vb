@@ -5,7 +5,7 @@ Public Class PageLaunchRight
 
     Private Sub Init() Handles Me.Loaded
         PanBack.ScrollToHome()
-        CommunismWelcome.Visibility = If(ThemeNow = DefaultTheme, Visibility.Visible, Visibility.Collapsed)
+        CommunismWelcome.Visibility = If(ThemeNow = 15, Visibility.Visible, Visibility.Collapsed)
         PanLog.Visibility = ModeDebug.ToVisibility
         '快照版提示
         PanHint.Visibility =

@@ -180,7 +180,7 @@ Friend Module ModSecret
                 Brush.GradientStops.Add(New GradientStop(New MyColor().FromHSL2(ColorHue, ColorSat, 25), 0))
                 Brush.GradientStops.Add(New GradientStop(New MyColor().FromHSL2(ColorHue, ColorSat, 15), 0.5))
                 Brush.GradientStops.Add(New GradientStop(New MyColor().FromHSL2(ColorHue, ColorSat, 25), 1))
-            ElseIf ThemeNow = DefaultTheme Then
+            ElseIf ThemeNow = 15 Then
                 Brush.GradientStops.Clear()
                 Brush.GradientStops.Add(New GradientStop(Color.FromRgb(142, 12, 24), 0))
                 Brush.GradientStops.Add(New GradientStop(Color.FromRgb(198, 23, 38), 0.55))
@@ -188,9 +188,9 @@ Friend Module ModSecret
             End If
             FrmMain.PanTitle.Background = Brush
             FrmMain.PanTitle.Background.Freeze()
-            FrmMain.ImgTitle.Source = If(ThemeNow >= 5 AndAlso ThemeNow <> 14 AndAlso ThemeNow <> DefaultTheme, $"{PathImage}Themes/{ThemeNow}.png", Nothing)
+            FrmMain.ImgTitle.Source = If(ThemeNow >= 5 AndAlso ThemeNow <> 14 AndAlso ThemeNow <> 15, $"{PathImage}Themes/{ThemeNow}.png", Nothing)
             FrmMain.ImgTitle.Opacity = If(ThemeNow = 13, 0.25, 0.5)
-            FrmMain.CommunismEmblem.Visibility = If(ThemeNow = DefaultTheme, Visibility.Visible, Visibility.Collapsed)
+            FrmMain.CommunismEmblem.Visibility = If(ThemeNow = 15, Visibility.Visible, Visibility.Collapsed)
             FrmMain.CommunismRule.Visibility = FrmMain.CommunismEmblem.Visibility
             FrmMain.CommunismBackdrop.Visibility = FrmMain.CommunismEmblem.Visibility
             If FrmLaunchRight IsNot Nothing Then FrmLaunchRight.CommunismWelcome.Visibility = FrmMain.CommunismEmblem.Visibility
@@ -200,7 +200,7 @@ Friend Module ModSecret
                 Brush.GradientStops.Add(New GradientStop With {.Offset = -0.1, .Color = New MyColor().FromHSL2(ColorHue - 15, ColorSat * 0.8, 91)})
                 Brush.GradientStops.Add(New GradientStop With {.Offset = 0.4, .Color = New MyColor().FromHSL2(ColorHue, ColorSat * 0.8, 91)})
                 Brush.GradientStops.Add(New GradientStop With {.Offset = 1.1, .Color = New MyColor().FromHSL2(ColorHue + 15, ColorSat * 0.8, 91)})
-                If ThemeNow = DefaultTheme Then
+                If ThemeNow = 15 Then
                     Brush.GradientStops.Clear()
                     Brush.GradientStops.Add(New GradientStop(Color.FromRgb(255, 249, 239), 0))
                     Brush.GradientStops.Add(New GradientStop(Color.FromRgb(247, 230, 219), 1))
