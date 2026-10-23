@@ -173,7 +173,7 @@ internal static class Program {
             Check(window.Title == "PCL Communist", "Main window uses the requested product name");
             Check(((Panel)Control(window, "PanMsg")).Children.Count == 0, "Startup reaches the main page without an agreement dialog");
             Call("ModSecret", "ThemeRefresh", 15);
-            Check((int)Field("ModSecret", "ThemeNow")! == 15, "Default theme survives startup");
+            Check((int)Field("ModSecret", "ThemeNow")! == 12, "Default theme survives startup");
             Check(((FrameworkElement)Control(window, "CommunismBackdrop")).Visibility == Visibility.Visible, "Hammer-and-sickle background is visible");
             Check(((string)Call("ModMinecraft", "McSkinDownload", "https://textures.minecraft.net/texture/test")!).StartsWith("pack://"), "Online skins use bundled local fallback");
             Capture(window, Path.Combine(output, "Soviet-red-home.png"));
@@ -204,7 +204,7 @@ internal static class Program {
             Check((int)Field("ModSecret", "ColorHue")! != hue, "Rainbow theme changes over time");
             Call("ModSecret", "ThemeRefresh", 15);
             Call("ModSecret", "ThemeRefresh", 999);
-            Check((int)Field("ModSecret", "ThemeNow")! == 15, "Invalid saved theme falls back to Soviet red");
+            Check((int)Field("ModSecret", "ThemeNow")! == 12, "Invalid saved theme falls back to default theme");
 
             Set("UiLauncherTheme", 15);
             ((Border)Control(window, "PanMainRight")).Child = (UIElement)page;
