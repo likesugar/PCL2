@@ -196,7 +196,7 @@ internal static class Program {
             Set("UiLauncherLight", 30); Set("UiLauncherDelta", 10);
             Call("ModSecret", "ThemeRefresh", 12);
             Call("ModSecret", "ThemeRefresh", -1);
-            Console.WriteLine("DIAG hue=" + Field("ModSecret", "ColorHue") + " sat=" + Field("ModSecret", "ColorSat") + " light=" + Field("ModSecret", "ColorLightAdjust") + " setHue=" + Call("Settings", "Get", "UiLauncherHue") + " theme=" + Field("ModSecret", "ThemeNow"));
+            Console.WriteLine("DIAG hue=" + Field("ModSecret", "ColorHue") + " sat=" + Field("ModSecret", "ColorSat") + " light=" + Field("ModSecret", "ColorLightAdjust") + " theme=" + Field("ModSecret", "ThemeNow"));
             Check((int)Field("ModSecret", "ColorHue")! == 123 && (int)Field("ModSecret", "ColorSat")! == 45 && (int)Field("ModSecret", "ColorLightAdjust")! == 10, "Custom HSL sliders affect the rendered palette");
             Call("ModSecret", "ThemeRefresh", 14);
             int hue = (int)Field("ModSecret", "ColorHue")!;
