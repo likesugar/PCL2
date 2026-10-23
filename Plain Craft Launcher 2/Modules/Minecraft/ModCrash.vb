@@ -899,8 +899,8 @@ NextStack:
             .model = Settings.Get(Of String)("SetupAiModel"),
             .temperature = 0.3,
             .messages = New JArray() From {New JObject() From {New JProperty("role", "user"), New JProperty("content", Prompt)}}
-        }).ToString(New Newtonsoft.Json.Formatting.None)
-        Dim Resp As String = NetRequestByClientRetry(Url, Method:=HttpMethod.Post, Content:=Body, ContentType:="application/json", Timeout:=120000,
+        }).ToString()
+        Dim Resp As String = NetRequestByClientRetry(Url, Method:=HttpMethod.Post, Content:=Body, ContentType:="application/json",
             Headers:=New String(,) {{"Authorization", "Bearer " & Settings.Get(Of String)("SetupAiKey")}}, RequireJson:=True)
         Dim Result As String = JObject.Parse(Resp)("choices")(0)("message")("content").ToString()
         If String.IsNullOrWhiteSpace(Result) Then Throw New Exception("AI 返回内容为空")
