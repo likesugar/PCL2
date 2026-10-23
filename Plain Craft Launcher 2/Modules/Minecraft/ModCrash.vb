@@ -891,9 +891,7 @@ NextStack:
         OutputCore(IsManualAnalyze, ExtraFiles, Detail)
     End Sub
 
-    '''
-     调用 OpenAI 兼容接口分析崩溃日志（移植自 oaoi）。
-     </summary>
+    '调用 OpenAI 兼容接口分析崩溃日志（移植自 oaoi）。
     Private Function AiAnalyzeCrash(LogText As String) As String
         Dim Url As String = Settings.Get(Of String)("SetupAiUrl").TrimEnd("/").TrimEnd("\") & "/chat/completions"
         Dim Prompt As String = "你是 Minecraft 崩溃日志分析专家。请分析以下崩溃日志，用简洁的中文输出：1. 崩溃原因；2. 可疑的 Mod 或文件；3. 具体解决办法。不要输出多余寒暄。" & vbCrLf & vbCrLf & "=== 崩溃日志（截取尾部）===" & vbCrLf & LogText
