@@ -194,11 +194,13 @@ internal static class Program {
             Check(!(bool)Call("ModSecret", "ThemeCheckOne", -1)!, "Invalid theme IDs are rejected");
             Set("UiLauncherHue", 123); Set("UiLauncherSat", 45);
             Set("UiLauncherLight", 30); Set("UiLauncherDelta", 10);
-            Call("ModSecret", "ThemeRefresh", 12);
-            Call("ModSecret", "ThemeRefresh", -1);
+            Pump(300);
+            Call("ModSecret", "ThemeRefresh", 14);
+            Pump(300);
+            Call("ModSecret", "ThemeRefresh", 14);
             Console.WriteLine("DIAG hue=" + Field("ModSecret", "ColorHue") + " sat=" + Field("ModSecret", "ColorSat") + " light=" + Field("ModSecret", "ColorLightAdjust") + " theme=" + Field("ModSecret", "ThemeNow"));
             Check((int)Field("ModSecret", "ColorHue")! == 123 && (int)Field("ModSecret", "ColorSat")! == 45 && (int)Field("ModSecret", "ColorLightAdjust")! == 10, "Custom HSL sliders affect the rendered palette");
-            Call("ModSecret", "ThemeRefresh", 14);
+            Call("ModSecret", "ThemeRefresh", 12);
             int hue = (int)Field("ModSecret", "ColorHue")!;
             Pump(100);
             Call("ModSecret", "ThemeRefresh", -1);
