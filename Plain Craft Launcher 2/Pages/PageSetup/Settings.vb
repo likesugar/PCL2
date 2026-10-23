@@ -107,7 +107,6 @@ Public Class Settings
         New Setting("LaunchAdvanceGraphicCard", True, Source:=Sources.Registry),
         New Setting("LaunchAdvanceGC", 4),
         New Setting("LaunchRamType", 0, OnChanged:=AddressOf PageSetupLaunch.UpdateRamType),
-        'AI 崩溃分析（移植自 oaoi）
         New Setting("SetupAiCrashEnabled", False),
         New Setting("SetupAiUrl", ""),
         New Setting("SetupAiKey", "", Encrypted:=True),
