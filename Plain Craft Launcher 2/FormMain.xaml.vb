@@ -1359,6 +1359,38 @@ Public Class FormMain
     ''' <summary>
     ''' 通过点击返回按钮或手动触发返回来改变页面。
     ''' </summary>
+    '联机：释放并启动 Terracotta（AGPL-3.0，未经修改的二进制；联机功能由 Terracotta 提供）
+    Private TerracottaStarted As Boolean = False
+    Private Sub LaunchTerracotta()
+        Try
+            Dim Dir As String = Path & "PCL\Terracotta\"
+            Dim ExePath As String = Dir & "terracotta.exe"
+            If Not FileUtils.Exists(ExePath) Then
+                Directory.CreateDirectory(Dir)
+                Using Res = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PCL.Terracotta.exe")
+                    If Res Is Nothing Then Throw New FileNotFoundException("Terracotta 资源缺失")
+                    Using Fs = New FileStream(ExePath, FileMode.Create, FileAccess.Write)
+                        Res.CopyTo(Fs)
+                    End Using
+                End Using
+                Using Res = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PCL.Terracotta-VCRUNTIME140.dll")
+                    If Res IsNot Nothing Then
+                        Using Fs = New FileStream(Dir & "VCRUNTIME140.dll", FileMode.Create, FileAccess.Write)
+                            Res.CopyTo(Fs)
+                        End Using
+                    End If
+                End Using
+            End If
+            If Not TerracottaStarted Then
+                Process.Start(New ProcessStartInfo With {.FileName = ExePath, .WorkingDirectory = Dir, .UseShellExecute = True})
+                TerracottaStarted = True
+            End If
+            Hint("联机界面已在浏览器中打开（由 Terracotta 提供，AGPL-3.0）。首次启动请稍候几秒……")
+        Catch ex As Exception
+            Log(ex, "启动 Terracotta 联机失败", HintMode.Critical)
+        End Try
+    End Sub
+
     Public Sub PageBack() Handles BtnTitleInner.Click
         If PageStack.Any() Then
             PageChangeActual(PageStack(0))
@@ -1431,9 +1463,8 @@ Public Class FormMain
                     If FrmDownloadLeft Is Nothing Then FrmDownloadLeft = New PageDownloadLeft
                     'PageGet 方法会在未设置 SubType 时指定默认值，并建立相关页面的实例
                     PageChangeAnim(FrmDownloadLeft, FrmDownloadLeft.PageGet(SubType))
-                Case PageType.Link '联机
-                    If FrmLinkMain Is Nothing Then FrmLinkMain = New PageLinkMain
-                    PageChangeAnim(New MyPageLeft, FrmLinkMain)
+                Case PageType.Link '联机（Terracotta 集成）
+                    LaunchTerracotta()
                 Case PageType.Setup '设置
                     If FrmSetupLeft Is Nothing Then FrmSetupLeft = New PageSetupLeft
                     PageChangeAnim(FrmSetupLeft, FrmSetupLeft.PageGet(SubType))
