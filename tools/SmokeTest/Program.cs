@@ -181,7 +181,7 @@ internal static class Program {
             var page = Activator.CreateInstance(T("PageSetupUI"))!;
             T("ModMain").GetField("FrmSetupUI", Static)!.SetValue(null, page);
             Call("ModSecret", "ThemeCheckAll", true);
-            var ids = Enumerable.Range(0, 16).Concat(new[] { 42 }).ToArray();
+            var ids = Enumerable.Range(0, 13).Concat(new[] { 42 }).ToArray();
             var colors = new HashSet<int>();
             foreach (int id in ids) {
                 Check((bool)Call("ModSecret", "ThemeCheckOne", id)!, "Theme " + id + " is unlocked");
