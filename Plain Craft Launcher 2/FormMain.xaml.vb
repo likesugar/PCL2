@@ -1720,7 +1720,7 @@ Public Class FormMain
 
 
     '樱花飘落粒子（oaoi DIY 移植）
-    Private ReadOnly SakuraTimer As New System.Windows.Threading.DispatcherTimer With {.Interval = TimeSpan.FromMilliseconds(50)}
+    Private WithEvents SakuraTimer As New System.Windows.Threading.DispatcherTimer With {.Interval = TimeSpan.FromMilliseconds(50)}
     Private ReadOnly SakuraPetals As New List(Of TextBlock)
     Private ReadOnly SakuraRandom As New Random
 
