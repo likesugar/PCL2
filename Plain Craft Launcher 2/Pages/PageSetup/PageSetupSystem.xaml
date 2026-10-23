@@ -85,6 +85,32 @@
                     </Grid>
                 </StackPanel>
             </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="AI 崩溃分析">
+                <StackPanel Margin="25,37,25,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <local:MyCheckBox Grid.ColumnSpan="2" local:SettingService.Key="SetupAiCrashEnabled" Text="启用 AI 崩溃分析（游戏崩溃时自动调用 OpenAI 兼容接口分析日志，失败时降级为本地分析）" />
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="API 地址" Margin="0,0,25,0" />
+                        <local:MyTextBox Grid.Row="2" Grid.Column="1" local:SettingService.Key="SetupAiUrl" HintText="例如 https://api.deepseek.com/v1" MaxLength="200" />
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="API Key" Margin="0,0,25,0" />
+                        <local:MyTextBox Grid.Row="4" Grid.Column="1" local:SettingService.Key="SetupAiKey" HintText="sk-..." MaxLength="200" />
+                        <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left" Text="模型名称" Margin="0,0,25,0" />
+                        <local:MyTextBox Grid.Row="6" Grid.Column="1" local:SettingService.Key="SetupAiModel" HintText="deepseek-chat / gpt-4o-mini 等" MaxLength="100" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="辅助功能">
                 <Grid Margin="25,40,25,17">
                     <Grid.ColumnDefinitions>
