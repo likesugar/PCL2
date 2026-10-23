@@ -1363,7 +1363,7 @@ Public Class FormMain
     Private TerracottaStarted As Boolean = False
     Private Sub LaunchTerracotta()
         Try
-            Dim Dir As String = Path & "PCL\Terracotta\"
+            Dim Dir As String = PathTemp & "Terracotta\"
             Dim ExePath As String = Dir & "terracotta.exe"
             If Not FileUtils.Exists(ExePath) Then
                 Directory.CreateDirectory(Dir)
@@ -1387,7 +1387,7 @@ Public Class FormMain
             End If
             Hint("联机界面已在浏览器中打开（由 Terracotta 提供，AGPL-3.0）。首次启动请稍候几秒……")
         Catch ex As Exception
-            Log(ex, "启动 Terracotta 联机失败", HintMode.Critical)
+            Logger.Error(ex, "启动 Terracotta 联机失败")
         End Try
     End Sub
 
