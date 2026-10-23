@@ -106,7 +106,7 @@ internal static class Program {
                     if (pixel.G > 110 && pixel.R < pixel.G && pixel.B < pixel.G) green++;
                     if (pixel.R > 180 && pixel.B > 120 && pixel.G < pixel.R) pink++;
                 }
-                Check(green > 5 && pink > 5, "Executable icon contains the cherry-blossom artwork");
+                Check(pink > 100, "Executable icon contains the cherry-blossom artwork");
             }
             Check(((string)T("ModBase").GetField("VersionDisplay", Static)!.GetRawConstantValue()!).EndsWith("PCL Communist"), "Version text uses the requested product name");
             Check(launcher.GetCustomAttribute<AssemblyTitleAttribute>()?.Title == "PCL Communist" &&
