@@ -197,7 +197,7 @@ internal static class Program {
             Call("ModSecret", "ThemeRefresh", 12);
             Call("ModSecret", "ThemeRefresh", -1);
             Check((int)Field("ModSecret", "ColorHue")! == 123 && (int)Field("ModSecret", "ColorSat")! == 45 && (int)Field("ModSecret", "ColorLightAdjust")! == 10, "Custom HSL sliders affect the rendered palette");
-            Call("ModSecret", "ThemeRefresh", 12);
+            Call("ModSecret", "ThemeRefresh", 14);
             int hue = (int)Field("ModSecret", "ColorHue")!;
             Pump(100);
             Call("ModSecret", "ThemeRefresh", -1);
