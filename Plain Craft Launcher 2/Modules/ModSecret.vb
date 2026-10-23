@@ -235,7 +235,7 @@ Friend Module ModSecret
         End Sub)
     End Sub
     Friend Function ThemeCheckOne(Id As Integer) As Boolean
-        Return (Id >= 0 AndAlso Id <= DefaultTheme) OrElse Id = 42
+        Return (Id >= 0 AndAlso Id <= 15) OrElse Id = 42
     End Function
     Friend Function ThemeUnlock(Id As Integer, Optional ShowDoubleHint As Boolean = True, Optional UnlockHint As String = Nothing) As Boolean
         Return False

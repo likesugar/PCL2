@@ -172,7 +172,7 @@ internal static class Program {
             Pump(1000);
             Check(window.Title == "PCL Communist", "Main window uses the requested product name");
             Check(((Panel)Control(window, "PanMsg")).Children.Count == 0, "Startup reaches the main page without an agreement dialog");
-            Call("ModSecret", "ThemeRefresh", 12);
+            Call("ModSecret", "ThemeRefresh", 14);
             Check((int)Field("ModSecret", "ThemeNow")! == 12, "Default theme survives startup");
             Check(((FrameworkElement)Control(window, "CommunismBackdrop")).Visibility == Visibility.Visible, "Hammer-and-sickle background is visible");
             Check(((string)Call("ModMinecraft", "McSkinDownload", "https://textures.minecraft.net/texture/test")!).StartsWith("pack://"), "Online skins use bundled local fallback");
@@ -181,7 +181,7 @@ internal static class Program {
             var page = Activator.CreateInstance(T("PageSetupUI"))!;
             T("ModMain").GetField("FrmSetupUI", Static)!.SetValue(null, page);
             Call("ModSecret", "ThemeCheckAll", true);
-            var ids = Enumerable.Range(0, 13).Concat(new[] { 42 }).ToArray();
+            var ids = Enumerable.Range(0, 16).Concat(new[] { 42 }).ToArray();
             var colors = new HashSet<int>();
             foreach (int id in ids) {
                 Check((bool)Call("ModSecret", "ThemeCheckOne", id)!, "Theme " + id + " is unlocked");
