@@ -71,6 +71,13 @@ Public Class PageSetupUI
     Private Sub BtnBackgroundRefresh_Click(sender As Object, e As EventArgs) Handles BtnBackgroundRefresh.Click
         BackgroundRefresh(True, True)
     End Sub
+    '樱花数量行跟随开关显隐
+    Private Sub SakuraEnabled_Changed() Handles SakuraCheckBox.Change, Me.Initialized
+        If PanSakuraCount Is Nothing Then Return
+        PanSakuraCount.Visibility = If(Settings.Get(Of Boolean)("UiSakuraEnabled"), Visibility.Visible, Visibility.Collapsed)
+        CardBackground.TriggerForceResize()
+    End Sub
+
     Public Sub BackgroundRefreshUI(Show As Boolean, Count As Integer)
         If IsNothing(PanBackgroundOpacity) Then Return
         If Show Then

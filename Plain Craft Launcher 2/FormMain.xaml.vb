@@ -347,6 +347,8 @@ Public Class FormMain
         Logger.Info($"第二阶段加载用时：{GetTimeMs() - ApplicationStartTick} ms")
     End Sub
     Private Sub FormMain_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        '樱花飘落（oaoi DIY 移植）
+        SakuraTimer.Start()
         ApplicationStartTick = GetTimeMs()
         Handle = New WindowInteropHelper(Me).Handle
         '读取设置
@@ -1714,6 +1716,59 @@ Public Class FormMain
     Public lastMouseArg As MouseEventArgs = Nothing
     Private Sub FormMain_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
         lastMouseArg = e
+    End Sub
+
+
+    '樱花飘落粒子（oaoi DIY 移植）
+    Private ReadOnly SakuraTimer As New DispatcherTimer With {.Interval = TimeSpan.FromMilliseconds(50)}
+    Private ReadOnly SakuraPetals As New List(Of TextBlock)
+    Private ReadOnly SakuraRandom As New Random
+
+    Private Sub SakuraTimer_Tick(sender As Object, e As EventArgs) Handles SakuraTimer.Tick
+        Try
+            Dim Enabled As Boolean = Settings.Get(Of Boolean)("UiSakuraEnabled")
+            Dim TargetCount As Integer = If(Enabled, Settings.Get(Of Integer)("UiSakuraCount").Clamp(0, 60), 0)
+            '清理多余
+            While SakuraPetals.Count > TargetCount
+                Dim Last As TextBlock = SakuraPetals(SakuraPetals.Count - 1)
+                SakuraPetals.Remove(Last)
+                PanSakura.Children.Remove(Last)
+            End While
+            If Not Enabled OrElse PanSakura Is Nothing OrElse ActualWidth < 10 Then Return
+            '补充花瓣
+            While SakuraPetals.Count < TargetCount
+                Dim Petal As New TextBlock With {
+                    .Text = "🌸", .IsHitTestVisible = False,
+                    .FontSize = SakuraRandom.Next(13, 26),
+                    .Opacity = SakuraRandom.NextDouble() * 0.5 + 0.35}
+                Dim Hue As Double = SakuraRandom.NextDouble() * 20 - 10
+                Petal.RenderTransform = New RotateTransform With {.Angle = SakuraRandom.Next(0, 360)}
+                Dim Speed As Double = SakuraRandom.NextDouble() * 1.2 + 0.6
+                Dim Sway As Double = SakuraRandom.NextDouble() * 1.5 + 0.4
+                Dim Phase As Double = SakuraRandom.NextDouble() * Math.PI * 2
+                Dim RotSpeed As Double = SakuraRandom.NextDouble() * 6 - 3
+                Petal.Tag = New Double() {Speed, Sway, Phase, RotSpeed}
+                Canvas.SetLeft(Petal, SakuraRandom.Next(0, Math.Max(1, CInt(ActualWidth))))
+                Canvas.SetTop(Petal, SakuraRandom.Next(-60, -10))
+                PanSakura.Children.Add(Petal)
+                SakuraPetals.Add(Petal)
+            End While
+            '移动
+            For Each Petal In SakuraPetals
+                Dim D = CType(Petal.Tag, Double())
+                D(2) += 0.08
+                Canvas.SetTop(Petal, Canvas.GetTop(Petal) + D(0))
+                Canvas.SetLeft(Petal, Canvas.GetLeft(Petal) + Math.Sin(D(2)) * D(1))
+                CType(Petal.RenderTransform, RotateTransform).Angle += D(3)
+                If Canvas.GetTop(Petal) > ActualHeight + 30 OrElse Canvas.GetLeft(Petal) < -40 OrElse Canvas.GetLeft(Petal) > ActualWidth + 40 Then
+                    Canvas.SetTop(Petal, -30)
+                    Canvas.SetLeft(Petal, SakuraRandom.Next(0, Math.Max(1, CInt(ActualWidth))))
+                End If
+            Next
+        Catch ex As Exception
+            Logger.Error(ex, "樱花飘落动画出错")
+            SakuraTimer.Stop()
+        End Try
     End Sub
 
 End Class
