@@ -100,13 +100,13 @@ internal static class Program {
             using (var icon = System.Drawing.Icon.ExtractAssociatedIcon(launcher.Location))
             using (var bitmap = icon!.ToBitmap()) {
                 bitmap.Save(Path.Combine(output, "Executable-icon.png"), System.Drawing.Imaging.ImageFormat.Png);
-                int gold = 0, red = 0;
+                int green = 0, pink = 0;
                 for (int x = 0; x < bitmap.Width; x++) for (int y = 0; y < bitmap.Height; y++) {
                     var pixel = bitmap.GetPixel(x, y);
-                    if (pixel.R > 200 && pixel.G > 130 && pixel.B < 180) gold++;
-                    if (pixel.R > 80 && pixel.G < 70 && pixel.B < 100) red++;
+                    if (pixel.G > 110 && pixel.R < pixel.G && pixel.B < pixel.G) green++;
+                    if (pixel.R > 180 && pixel.B > 120 && pixel.G < pixel.R) pink++;
                 }
-                Check(gold > 5 && red > 5, "Executable icon contains the new red-and-gold emblem");
+                Check(green > 5 && pink > 5, "Executable icon contains the cherry-blossom artwork");
             }
             Check(((string)T("ModBase").GetField("VersionDisplay", Static)!.GetRawConstantValue()!).EndsWith("PCL Communist"), "Version text uses the requested product name");
             Check(launcher.GetCustomAttribute<AssemblyTitleAttribute>()?.Title == "PCL Communist" &&
