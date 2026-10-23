@@ -1011,7 +1011,7 @@ Public Class PageDownloadInstall
                 PanFabricApi.Children.Add(FabricApiDownloadListItem(Version, AddressOf FabricApi_Selected))
             Next
             '自动选择 Fabric API
-            If Not AutoSelectedFabricApi AndAlso SwitchFabricApi.Checked Then
+            If Not AutoSelectedFabricApi Then
                 AutoSelectedFabricApi = True
                 Dim Item As MyListItem = MyVirtualizingElement.TryInit(PanFabricApi.Children(0))
                 Logger.Info($"已自动选择 Fabric API：{Item.Title}")
@@ -1027,18 +1027,6 @@ Public Class PageDownloadInstall
         SelectedFabricApi = sender.Tag
         CardFabricApi.IsSwapped = True
         ReloadSelected()
-    End Sub
-    '同时安装 Fabric API 开关（移植自 OpenLauncher）：关闭时移除自动选择且不再自动勾选
-    Private Sub SwitchFabricApi_Changed(sender As Object, e As EventArgs) Handles SwitchFabricApi.Change
-        If SelectedFabric Is Nothing Then Return
-        If SwitchFabricApi.Checked Then
-            AutoSelectedFabricApi = False
-            FabricApi_Loaded()
-        Else
-            SelectedFabricApi = Nothing
-            CardFabricApi.IsSwapped = True
-            ReloadSelected()
-        End If
     End Sub
     Private Sub FabricApi_Clear(sender As Object, e As EventArgs) Handles BtnFabricApiClear.Click
         SelectedFabricApi = Nothing
