@@ -510,7 +510,7 @@ GroupDone:
                 Dim DepCount As Integer = 0, DepSkipped As Integer = 0, DepMissing As Integer = 0
                 If File.ResourceType = ResourceTypes.Mod AndAlso File.Dependencies.Any AndAlso Not RestrictMcDownload Then
                     Try
-                        Dim DepDir As String = DefaultFolder & If(SubFolder = "", "\", SubFolder)
+                        Dim DepDir As String = DefaultFolder & If(File.ResourceType = ResourceTypes.Mod, "mods\", "\")
                         If Not Directory.Exists(DepDir) Then Directory.CreateDirectory(DepDir)
                         Dim Visited As New HashSet(Of String)
                         Dim Queue As New Queue(Of String)(File.Dependencies)
