@@ -9,7 +9,7 @@ Public Class PageDiy
         For Each F In Directory.GetFiles(PathTemp & "Backgrounds")
             FileUtils.Delete(F)
         Next
-        BackgroundRefresh(False, True)
+        PageSetupUI.BackgroundRefresh(False, True)
         Hint("已恢复默认背景。")
     End Sub
     Private Sub BtnBgCustom_Click(sender As Object, e As EventArgs) Handles BtnBgCustom.Click
@@ -18,13 +18,13 @@ Public Class PageDiy
         Dim NewPath As String = PathTemp & "Backgrounds" & GetUuid() & PathUtils.GetExtension(Addr)
         Directory.CreateDirectory(PathTemp & "Backgrounds")
         FileUtils.Copy(Addr, NewPath)
-        BackgroundRefresh(False, True)
+        PageSetupUI.BackgroundRefresh(False, True)
         Hint("背景图片已更换！")
     End Sub
 
     '花瓣颜色
     Private Sub BtnSakuraColor_Click(sender As Object, e As EventArgs) Handles BtnSakuraColor.Click
-        Dim Dialog = New Forms.ColorDialog With {.FullOpen = True, .Color = CType(ColorConverter.ConvertFromString(Settings.Get(Of String)("UiSakuraColor")), Drawing.Color)}
+        Dim Dialog = New Forms.ColorDialog With {.FullOpen = True, .Color = CType(ColorConverter.ConvertFromString(Settings.Get(Of String)("UiSakuraColor")), System.Drawing.Color)}
         If Dialog.ShowDialog() = Forms.DialogResult.OK Then
             Settings.Set("UiSakuraColor", "#" & Dialog.Color.Name)
             Hint("花瓣颜色已更新。")
@@ -79,7 +79,7 @@ Public Class PageDiy
             For Each F In Directory.GetFiles(PathTemp & "Backgrounds")
                 FileUtils.Delete(F)
             Next
-            BackgroundRefresh(False, True)
+            PageSetupUI.BackgroundRefresh(False, True)
             Hint("已恢复默认 DIY 设置。")
         End If
     End Sub

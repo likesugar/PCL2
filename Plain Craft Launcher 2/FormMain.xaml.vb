@@ -619,7 +619,7 @@ Public Class FormMain
             Settings.Set("WindowWidth", Width)
         End If
         RectForm.Rect = New Rect(0, 0, BorderForm.ActualWidth, BorderForm.ActualHeight)
-        Dim Rad = Math.Max(0, Math.Min(30, Settings.Get(Of Integer)("UiWindowRadius", 6)))
+        Dim Rad = Math.Max(0, Math.Min(30, Settings.Get(Of Integer)("UiWindowRadius")))
         RectForm.RadiusX = Rad : RectForm.RadiusY = Rad
         PanForm.Width = BorderForm.ActualWidth + 0.001
         PanForm.Height = BorderForm.ActualHeight + 0.001
@@ -1207,6 +1207,7 @@ Public Class FormMain
         OtherHelp = 0
         OtherAbout = 1
         OtherTest = 2
+        OtherDiy = 3
         InstanceOverall = 0
         InstanceSetup = 1
         InstanceModify = 2
