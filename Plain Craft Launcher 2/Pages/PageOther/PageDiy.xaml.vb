@@ -55,6 +55,9 @@ Public Class PageDiy
     Private Sub BtnThemeOrange_Click(sender As Object, e As EventArgs) Handles BtnThemeOrange.Click
         SetTheme(30, 90, 0)
     End Sub
+    Private Sub BtnThemeLightBlue_Click(sender As Object, e As EventArgs) Handles BtnThemeLightBlue.Click
+        SetTheme(200, 45, 8)
+    End Sub
 
     '窗口大小
     Private Sub BtnWindowSize_Click(sender As Object, e As EventArgs) Handles BtnWindowSize.Click

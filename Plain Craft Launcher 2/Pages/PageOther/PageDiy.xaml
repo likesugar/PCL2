@@ -56,12 +56,14 @@
                             <ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <local:MyButton x:Name="BtnThemePink" Text="🌸 樱花粉" Height="30" />
                         <local:MyButton x:Name="BtnThemeBlue" Grid.Column="2" Text="天空蓝" Height="30" />
                         <local:MyButton x:Name="BtnThemePurple" Grid.Column="4" Text="梦幻紫" Height="30" />
                         <local:MyButton x:Name="BtnThemeGreen" Grid.Column="6" Text="清新绿" Height="30" />
                         <local:MyButton x:Name="BtnThemeOrange" Grid.Column="8" Text="暖阳橙" Height="30" />
+                        <local:MyButton x:Name="BtnThemeLightBlue" Grid.Column="10" Text="浅蓝色" Height="30" />
                     </Grid>
                 </StackPanel>
             </local:MyCard>
