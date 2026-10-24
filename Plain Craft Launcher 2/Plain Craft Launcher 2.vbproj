@@ -765,8 +765,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon.ico" />
-    <EmbeddedResource Include="Images\Terracotta.exe" LogicalName="PCL.Terracotta.exe" />
-    <EmbeddedResource Include="Images\Terracotta-VCRUNTIME140.dll" LogicalName="PCL.Terracotta-VCRUNTIME140.dll" />
     <Resource Include="Images\Red\Splash.png" />
   </ItemGroup>
   <ItemGroup>
