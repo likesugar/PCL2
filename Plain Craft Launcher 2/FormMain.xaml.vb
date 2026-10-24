@@ -619,6 +619,8 @@ Public Class FormMain
             Settings.Set("WindowWidth", Width)
         End If
         RectForm.Rect = New Rect(0, 0, BorderForm.ActualWidth, BorderForm.ActualHeight)
+        Dim Rad = Math.Max(0, Math.Min(30, Settings.Get(Of Integer)("UiWindowRadius", 6)))
+        RectForm.RadiusX = Rad : RectForm.RadiusY = Rad
         PanForm.Width = BorderForm.ActualWidth + 0.001
         PanForm.Height = BorderForm.ActualHeight + 0.001
         PanMain.Width = PanForm.Width
@@ -1726,6 +1728,7 @@ Public Class FormMain
 
     Private Sub SakuraTimer_Tick(sender As Object, e As EventArgs) Handles SakuraTimer.Tick
         Try
+            If Settings.Get(Of Boolean)("UiSakuraPauseOnBlur") AndAlso Not IsActive Then Return
             Dim Enabled As Boolean = Settings.Get(Of Boolean)("UiSakuraEnabled")
             Dim TargetCount As Integer = If(Enabled, Settings.Get(Of Integer)("UiSakuraCount").Clamp(0, 60), 0)
             '清理多余
@@ -1738,8 +1741,9 @@ Public Class FormMain
             '补充花瓣
             While SakuraPetals.Count < TargetCount
                 Dim Petal As New TextBlock With {
-                    .Text = "🌸", .IsHitTestVisible = False,
+                    .Text = {"🌸", "🍂", "❄️", "✨"}(Settings.Get(Of Integer)("UiSakuraStyle").Clamp(0, 3)), .IsHitTestVisible = False,
                     .FontSize = SakuraRandom.Next(13, 26),
+                    .Foreground = New System.Windows.Media.SolidColorBrush(CType(System.Windows.Media.ColorConverter.ConvertFromString(Settings.Get(Of String)("UiSakuraColor")), System.Windows.Media.Color)),
                     .Opacity = SakuraRandom.NextDouble() * 0.5 + 0.35}
                 Dim Hue As Double = SakuraRandom.NextDouble() * 20 - 10
                 Petal.RenderTransform = New RotateTransform With {.Angle = SakuraRandom.Next(0, 360)}

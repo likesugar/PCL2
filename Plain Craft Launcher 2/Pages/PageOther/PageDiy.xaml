@@ -1,0 +1,97 @@
+<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL"
+    mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="PageDiy" PanScroll="PanBack">
+    <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <local:MyCard Margin="0,15" Title="背景图片">
+                <StackPanel Margin="25,37,25,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnBgDefault" Text="默认（不使用背景图）" Height="36" />
+                        <local:MyButton x:Name="BtnBgCustom" Grid.Column="2" Text="自定义（选择图片）" Height="36" ColorType="Highlight" />
+                    </Grid>
+                    <local:MyCheckBox x:Name="CheckColorful" local:SettingService.Key="UiBackgroundColorful" Text="叠加彩色背景" Margin="0,12,0,0" Height="22" />
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="樱花动画">
+                <StackPanel Margin="25,37,25,15">
+                    <local:MyCheckBox x:Name="CheckSakura" local:SettingService.Key="UiSakuraEnabled" Text="飘落花瓣（开启/关闭樱花飘落效果）" Height="22" Margin="0,0,0,8" />
+                    <local:MyCheckBox x:Name="CheckSakuraPause" local:SettingService.Key="UiSakuraPauseOnBlur" Text="失焦暂停（窗口不在前台时暂停花瓣动画，节省性能）" Height="22" Margin="0,0,0,8" />
+                    <Grid Height="26" Margin="0,0,0,8">
+                        <TextBlock VerticalAlignment="Center" Text="花瓣数量" />
+                        <local:MySlider x:Name="SliderSakuraCount" Grid.Column="1" local:SettingService.Key="UiSakuraCount" MaxValue="60" Value="15" />
+                    </Grid>
+                    <Grid Height="30" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" Text="花瓣颜色" />
+                        <local:MyButton x:Name="BtnSakuraColor" Grid.Column="1" Text="选择颜色" Height="26" />
+                    </Grid>
+                    <TextBlock Text="花瓣样式" Margin="0,4,0,6" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyRadioBox x:Name="RadioStyle0" Text="🌸 樱花" local:SettingService.Key="UiSakuraStyle" local:SettingService.Value="0" />
+                        <local:MyRadioBox x:Name="RadioStyle1" Grid.Column="2" Text="🍂 落叶" local:SettingService.Key="UiSakuraStyle" local:SettingService.Value="1" />
+                        <local:MyRadioBox x:Name="RadioStyle2" Grid.Column="4" Text="❄️ 雪花" local:SettingService.Key="UiSakuraStyle" local:SettingService.Value="2" />
+                        <local:MyRadioBox x:Name="RadioStyle3" Grid.Column="6" Text="✨ 星光" local:SettingService.Key="UiSakuraStyle" local:SettingService.Value="3" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="主题色">
+                <StackPanel Margin="25,37,25,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" /><ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8" /><ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <local:MyButton x:Name="BtnThemePink" Text="🌸 樱花粉" Height="30" />
+                        <local:MyButton x:Name="BtnThemeBlue" Grid.Column="2" Text="天空蓝" Height="30" />
+                        <local:MyButton x:Name="BtnThemePurple" Grid.Column="4" Text="梦幻紫" Height="30" />
+                        <local:MyButton x:Name="BtnThemeGreen" Grid.Column="6" Text="清新绿" Height="30" />
+                        <local:MyButton x:Name="BtnThemeOrange" Grid.Column="8" Text="暖阳橙" Height="30" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="界面调整">
+                <StackPanel Margin="25,37,25,15">
+                    <Grid Height="26" Margin="0,0,0,8">
+                        <TextBlock VerticalAlignment="Center" Text="背景模糊" />
+                        <local:MySlider x:Name="SliderBlur" Grid.Column="1" local:SettingService.Key="UiBackgroundBlur" MaxValue="30" Value="0" />
+                    </Grid>
+                    <Grid Height="26" Margin="0,0,0,8">
+                        <TextBlock VerticalAlignment="Center" Text="背景透明度" />
+                        <local:MySlider x:Name="SliderOpacity" Grid.Column="1" local:SettingService.Key="UiBackgroundOpacity" MaxValue="1000" Value="1000" />
+                    </Grid>
+                    <Grid Height="26">
+                        <TextBlock VerticalAlignment="Center" Text="窗口圆角" />
+                        <local:MySlider x:Name="SliderRadius" Grid.Column="1" local:SettingService.Key="UiWindowRadius" MaxValue="30" Value="6" />
+                    </Grid>
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="窗口大小">
+                <StackPanel Margin="25,37,25,15">
+                    <TextBlock x:Name="LabWindowSize" Margin="0,0,0,10" />
+                    <local:MyButton x:Name="BtnWindowSize" Text="恢复默认窗口大小（800 × 480）" Height="36" />
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard Margin="0,0,0,15" Title="恢复">
+                <StackPanel Margin="25,37,25,15">
+                    <local:MyButton x:Name="BtnResetAll" Text="恢复默认 DIY 设置" Height="36" ColorType="Red" />
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

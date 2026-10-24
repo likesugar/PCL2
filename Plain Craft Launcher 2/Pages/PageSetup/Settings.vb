@@ -143,7 +143,10 @@ Public Class Settings
         New Setting("UiBackgroundColorful", True, OnChanged:=Sub() ThemeRefresh()),
         New Setting("UiSakuraEnabled", False),
         New Setting("UiSakuraCount", 15),
-        New Setting("UiSakuraColor", "#FFB3C6"), '不传入参数
+        New Setting("UiSakuraColor", "#FFB3C6"),
+        New Setting("UiSakuraStyle", 0),
+        New Setting("UiSakuraPauseOnBlur", True),
+        New Setting("UiWindowRadius", 6), '不传入参数
         New Setting("UiBackgroundOpacity", 1000, OnChanged:=AddressOf FormMain.UpdateBackgroundAndTitleBar),
         New Setting("UiBackgroundBlur", 0, OnChanged:=AddressOf FormMain.UpdateBackgroundAndTitleBar),
         New Setting("UiBackgroundSuit", 0, OnChanged:=AddressOf FormMain.UpdateBackgroundAndTitleBar),
