@@ -1,4 +1,4 @@
-Imports System.Windows.Threading
+﻿Imports System.Windows.Threading
 
 Public Class PageLaunchLeft
 
@@ -702,4 +702,17 @@ ExitRefresh:
         PanLaunchingInfo.Height = e.PreviousSize.Height
     End Sub
 
+
+    Private Sub RefreshVersionBig() Handles LabVersion.TargetUpdated
+        Try
+            Dim t As String = LabVersion.Text
+            If String.IsNullOrWhiteSpace(t) OrElse t.Contains("加载") OrElse t.Contains("失败") Then
+                LabVersionBig.Text = ""
+            Else
+                LabVersionBig.Text = t
+            End If
+        Catch ex As Exception
+            Logger.Warn(ex, "刷新大版本号失败")
+        End Try
+    End Sub
 End Class
