@@ -1800,6 +1800,7 @@ Public Class FormMain
     Private MascotBusy As Boolean = False
 
     Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonDown
+        e.Handled = True '阻止冒泡到全窗拖动，否则 DragMove 吞掉点击
         If e.ClickCount >= 2 Then
             Settings.Set("AIMascotHidden", True)
             MascotRefresh()
