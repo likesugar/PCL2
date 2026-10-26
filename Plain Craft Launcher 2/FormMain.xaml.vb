@@ -348,6 +348,7 @@ Public Class FormMain
     End Sub
     Private Sub FormMain_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         ApplicationStartTick = GetTimeMs()
+        SidebarInitCollapsed()
         Handle = New WindowInteropHelper(Me).Handle
         '读取设置
         UpdateBackgroundAndTitleBar()
@@ -1717,27 +1718,63 @@ Public Class FormMain
     End Sub
 
 
-    ' ---------- 可隐藏侧边栏 ----------
+    ' ---------- 可隐藏侧边栏：默认收起，悬停展开 ----------
     Private SidebarCollapsed As Boolean = False
+    Private SidebarPinned As Boolean = False
+    Private SidebarHovering As Boolean = False
     Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "联机", "设置", "更多"}
 
-    Private Sub BtnSidebarToggle_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarToggle.MouseLeftButtonUp
-        Try
-            SidebarCollapsed = Not SidebarCollapsed
-            Dim target As Double = If(SidebarCollapsed, 56.0, 200.0)
+    Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
+        SidebarCollapsed = collapsed
+        Dim target As Double = If(collapsed, 56.0, 200.0)
+        If animate Then
             Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
             }
             PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, ani)
-            PanTitleSelect.Margin = If(SidebarCollapsed, New Thickness(0, 60, 0, 0), New Thickness(13, 60, 13, 0))
-            For i As Integer = 0 To 4
-                Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
-                If b IsNot Nothing Then b.Text = If(SidebarCollapsed, "", SidebarTexts(i))
-            Next
-            BtnSidebarToggle.ToolTip = If(SidebarCollapsed, "展开侧边栏", "收起侧边栏")
+        Else
+            PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, Nothing)
+            PanSidebar.Width = target
+        End If
+        PanTitleSelect.Margin = If(collapsed, New Thickness(0, 60, 0, 0), New Thickness(13, 60, 13, 0))
+        For i As Integer = 0 To 4
+            Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
+            If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
+        Next
+        BtnSidebarToggle.ToolTip = If(SidebarPinned, "取消固定（悬停展开）", "固定展开侧边栏")
+    End Sub
+
+    Private Sub BtnSidebarToggle_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarToggle.MouseLeftButtonUp
+        Try
+            SidebarPinned = Not SidebarPinned
+            If SidebarPinned Then
+                SidebarHovering = False
+                SidebarApply(False, True)
+            Else
+                SidebarApply(True, True)
+            End If
         Catch ex As Exception
             Logger.Warn(ex, "切换侧边栏失败")
         End Try
+    End Sub
+
+    Private Sub PanSidebar_MouseEnter(sender As Object, e As Input.MouseEventArgs) Handles PanSidebar.MouseEnter
+        If SidebarPinned OrElse SidebarHovering OrElse Not SidebarCollapsed Then Return
+        SidebarHovering = True
+        SidebarApply(False, True)
+    End Sub
+
+    Private Sub PanSidebar_MouseLeave(sender As Object, e As Input.MouseEventArgs) Handles PanSidebar.MouseLeave
+        If SidebarPinned OrElse Not SidebarHovering Then Return
+        SidebarHovering = False
+        SidebarApply(True, True)
+    End Sub
+
+    ' 启动时默认收起（悬停展开模式）
+    Public Sub SidebarInitCollapsed()
+        SidebarPinned = False
+        SidebarHovering = False
+        SidebarApply(True, False)
     End Sub
 
 End Class
