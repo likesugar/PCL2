@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -310,6 +310,9 @@
     <Compile Include="Pages\PageLaunch\PageLoginNideSkin.xaml.vb">
       <DependentUpon>PageLoginNideSkin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageAI\PageAIRight.xaml.vb">
+      <DependentUpon>PageAIRight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageLink\PageLinkMain.xaml.vb">
       <DependentUpon>PageLinkMain.xaml</DependentUpon>
     </Compile>
@@ -570,6 +573,10 @@
     <None Include="Resources\Custom.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Include="Pages\PageAI\PageAIRight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PageLink\PageLinkMain.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
