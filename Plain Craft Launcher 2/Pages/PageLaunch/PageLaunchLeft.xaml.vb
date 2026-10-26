@@ -710,6 +710,24 @@ ExitRefresh:
                 LabVersionBig.Text = ""
             Else
                 LabVersionBig.Text = t
+                ' 淡入 + 上浮动画
+                Try
+                    Dim g As New TransformGroup()
+                    Dim tt As New TranslateTransform(0, 8)
+                    g.Children.Add(tt)
+                    LabVersionBig.RenderTransform = g
+                    LabVersionBig.Opacity = 0
+                    Dim aniOp As New Animation.DoubleAnimation(0, 1, New Duration(TimeSpan.FromMilliseconds(350))) With {
+                        .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
+                    }
+                    Dim aniY As New Animation.DoubleAnimation(8, 0, New Duration(TimeSpan.FromMilliseconds(350))) With {
+                        .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
+                    }
+                    LabVersionBig.BeginAnimation(OpacityProperty, aniOp)
+                    tt.BeginAnimation(TranslateTransform.YProperty, aniY)
+                Catch ex2 As Exception
+                    Logger.Warn(ex2, "版本号动画失败")
+                End Try
             End If
         Catch ex As Exception
             Logger.Warn(ex, "刷新大版本号失败")
