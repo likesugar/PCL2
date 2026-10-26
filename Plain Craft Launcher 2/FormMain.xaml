@@ -112,18 +112,18 @@
                     </Viewbox>
                     <Border Width="4" Background="#30C19547" HorizontalAlignment="Left" Margin="12,24,0,24" />
                 </Grid>
-                <Border x:Name="PanSidebar" Grid.RowSpan="2" Width="200" HorizontalAlignment="Left">
+                <Border x:Name="PanSidebar" Grid.RowSpan="2" Width="72" HorizontalAlignment="Left">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="{DynamicResource ColorObject1}" Offset="0" />
                             <GradientStop Color="{DynamicResource ColorObject2}" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <StackPanel Grid.Column="1" x:Name="PanTitleSelect" Orientation="Vertical" Margin="13,60,13,0">
-                        <Grid x:Name="PanTitleInner2" Visibility="Collapsed" Margin="0,0,0,6" HorizontalAlignment="Left" Width="174">
+                    <StackPanel Grid.Column="1" x:Name="PanTitleSelect" Orientation="Vertical" Margin="4,60,4,0">
+                        <Grid x:Name="PanTitleInner2" Visibility="Collapsed" Margin="0,0,0,6" HorizontalAlignment="Left" Width="64">
                             <local:MyIconButton HorizontalAlignment="Left" Theme="White" x:Name="BtnTitleInner2" Margin="4,0,0,0" Height="28" Width="28"
                                                  LogoScale="0.87" Logo="M1097 584 250 584 562 896C591 925 591 972 562 1001 533 1030 487 1030 458 1001L21 565C6 550-0 531 0 511L0 511 0 511C-0 492 6 472 21 457L458 21C487-7 533-7 562 21 591 50 591 97 562 126L250 438 1097 438C1137 438 1170 471 1170 511 1170 551 1137 584 1097 584L1097 584Z" />
-                            <TextBlock SnapsToDevicePixels="False" IsHitTestVisible="False" Name="LabTitleInner2" VerticalAlignment="Center" Margin="38,1,4,0" HorizontalAlignment="Left" Foreground="#DDFFFFFF" FontSize="14" TextTrimming="CharacterEllipsis" />
+                            <TextBlock SnapsToDevicePixels="False" IsHitTestVisible="False" Name="LabTitleInner2" VerticalAlignment="Center" Margin="34,1,2,0" HorizontalAlignment="Left" Foreground="#DDFFFFFF" FontSize="14" TextTrimming="CharacterEllipsis" />
                         </Grid>
 
                             <local:MyRadioButton x:Name="BtnTitleSelect0" Text="启动" Tag="0" Margin="0,5" Checked="True" Padding="2,0"
