@@ -1741,21 +1741,6 @@ Public Class FormMain
             Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
             If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
         Next
-        BtnSidebarToggle.ToolTip = If(SidebarPinned, "取消固定（悬停展开）", "固定展开侧边栏")
-    End Sub
-
-    Private Sub BtnSidebarToggle_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarToggle.MouseLeftButtonUp
-        Try
-            SidebarPinned = Not SidebarPinned
-            If SidebarPinned Then
-                SidebarHovering = False
-                SidebarApply(False, True)
-            Else
-                SidebarApply(True, True)
-            End If
-        Catch ex As Exception
-            Logger.Warn(ex, "切换侧边栏失败")
-        End Try
     End Sub
 
     Private Sub PanSidebar_MouseEnter(sender As Object, e As Input.MouseEventArgs) Handles PanSidebar.MouseEnter
