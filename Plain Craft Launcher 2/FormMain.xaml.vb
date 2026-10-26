@@ -1331,7 +1331,12 @@ Public Class FormMain
             '切换到主页面
             PageChangeExit()
             IsChangingPage = True '防止下面的勾选直接触发了 PageChangeActual
-            CType(PanTitleSelect.Children(Stack), MyRadioButton).SetChecked(True, True, PageNameGet(PageCurrent) = "")
+            '个性化子页：侧边栏高亮「个性化」项而非「设置」
+            If Stack.Page = PageType.Setup AndAlso SubType = PageSubType.SetupUI AndAlso Not PageStack.Any() Then
+                CType(PanTitleSelect.Children(2), MyRadioButton).SetChecked(True, True, True)
+            Else
+                CType(PanTitleSelect.Children(Stack), MyRadioButton).SetChecked(True, True, PageNameGet(PageCurrent) = "")
+            End If
             IsChangingPage = False
             Select Case Stack.Page
                 Case PageType.Download
@@ -1360,6 +1365,11 @@ Public Class FormMain
     ''' </summary>
     Private Sub BtnTitleSelect_Click(sender As MyRadioButton, raiseByMouse As Boolean) Handles BtnTitleSelect0.Check, BtnTitleSelect1.Check, BtnTitleSelect2.Check, BtnTitleSelect3.Check, BtnTitleSelect4.Check, BtnTitleSelect5.Check
         If IsChangingPage Then Return
+        '「个性化」直接打开设置页的个性化子页
+        If Val(sender.Tag) = 2 Then
+            PageChange(PageType.Setup, PageSubType.SetupUI)
+            Return
+        End If
         PageChangeActual(Val(sender.Tag))
     End Sub
     ''' <summary>
