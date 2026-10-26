@@ -1747,7 +1747,7 @@ Public Class FormMain
 
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
-        Dim target As Double = 72.0
+        Dim target As Double = If(collapsed, 80.0, 200.0)
         If animate Then
             Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
@@ -1757,19 +1757,23 @@ Public Class FormMain
             PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, Nothing)
             PanSidebar.Width = target
         End If
-        PanTitleSelect.Margin = New Thickness(4, 60, 4, 0)
+        PanTitleSelect.Margin = If(collapsed, New Thickness(4, 60, 4, 0), New Thickness(13, 60, 13, 0))
         For i As Integer = 0 To 5
             Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
-            If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
+            If b IsNot Nothing AndAlso b.Text = "" Then b.Text = SidebarTexts(i)
         Next
     End Sub
 
     Private Sub PanSidebar_MouseEnter(sender As Object, e As Input.MouseEventArgs) Handles PanSidebar.MouseEnter
-        ' 固定窄条，无展开
+        If SidebarPinned OrElse SidebarHovering OrElse Not SidebarCollapsed Then Return
+        SidebarHovering = True
+        SidebarApply(False, True)
     End Sub
 
     Private Sub PanSidebar_MouseLeave(sender As Object, e As Input.MouseEventArgs) Handles PanSidebar.MouseLeave
-        ' 固定窄条，无收起
+        If SidebarPinned OrElse Not SidebarHovering Then Return
+        SidebarHovering = False
+        SidebarApply(True, True)
     End Sub
 
     ' 看板娘显示刷新
@@ -1824,7 +1828,7 @@ Public Class FormMain
     Public Sub SidebarInitCollapsed()
         SidebarPinned = False
         SidebarHovering = False
-        SidebarApply(False, False)
+        SidebarApply(True, False)
     End Sub
 
 End Class
