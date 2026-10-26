@@ -1738,7 +1738,7 @@ Public Class FormMain
 
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
-        Dim target As Double = If(collapsed, 80.0, 112.0)
+        Dim target As Double = If(collapsed, 64.0, 96.0)
         If animate Then
             Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
@@ -1815,7 +1815,9 @@ Public Class FormMain
         Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
         If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
         ImgMascot.BeginAnimation(OpacityProperty, Nothing)
-        HitMascot.Margin = New Thickness(HitMascot.Margin.Left + DX, HitMascot.Margin.Top + DY, HitMascot.Margin.Right - DX, HitMascot.Margin.Bottom - DY)
+        Dim NL As Double = Math.Max(-140, Math.Min(Me.ActualWidth - 40, HitMascot.Margin.Left + DX))
+        Dim NT As Double = Math.Max(-280, Math.Min(Me.ActualHeight - 40, HitMascot.Margin.Top + DY))
+        HitMascot.Margin = New Thickness(NL, NT, HitMascot.Margin.Right - (NL - HitMascot.Margin.Left), HitMascot.Margin.Bottom - (NT - HitMascot.Margin.Top))
         MascotDragPos = P
     End Sub
 

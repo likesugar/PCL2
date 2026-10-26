@@ -3,36 +3,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
-        <StackPanel Margin="25,25,25,10">
-            <local:MyCard Margin="0,0,0,15">
+        <StackPanel Margin="16,16,16,8">
+            <local:MyCard Margin="0,0,0,8">
                 <StackPanel>
                     <Grid>
                         <TextBlock Text="AI 助手" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" />
                         <CheckBox x:Name="ChkEnabled" Content="启用 AI 助手" HorizontalAlignment="Right" VerticalAlignment="Top" />
                     </Grid>
-                    <Grid Margin="0,12,0,0">
+                    <Grid Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" /><ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="接口地址" VerticalAlignment="Center" Foreground="{DynamicResource ColorBrush2}" />
                         <ComboBox x:Name="ComboBase" Grid.Column="1" IsEditable="True" />
                     </Grid>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="模型" VerticalAlignment="Center" Foreground="{DynamicResource ColorBrush2}" />
                         <ComboBox x:Name="ComboModel" Grid.Column="1" IsEditable="True" />
-                        <local:MyButton x:Name="BtnGetModels" Grid.Column="2" Text="获取模型" Width="100" Height="30" Margin="8,0,0,0" ColorType="Highlight" />
+                        <local:MyButton x:Name="BtnGetModels" Grid.Column="2" Text="获取模型" Width="88" Height="26" Margin="8,0,0,0" ColorType="Highlight" />
                     </Grid>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" /><ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="API Key" VerticalAlignment="Center" Foreground="{DynamicResource ColorBrush2}" />
-                        <TextBox x:Name="TextKey" Grid.Column="1" Height="28" />
+                        <TextBox x:Name="TextKey" Grid.Column="1" Height="26" />
                     </Grid>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" /><ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -44,7 +44,7 @@
                     </Grid>
                     <CheckBox x:Name="ChkMascot" Content="显示看板娘（右下角小人）" Margin="0,10,0,0" IsChecked="True" />
                     <CheckBox x:Name="ChkNetAccess" Content="允许访问本机与内网地址" Margin="0,10,0,0" />
-                    <local:MyButton x:Name="BtnSaveConfig" Text="保存设置" Width="140" Height="32" Margin="0,12,0,0" HorizontalAlignment="Left" ColorType="Highlight" />
+                    <local:MyButton x:Name="BtnSaveConfig" Text="保存设置" Width="110" Height="28" Margin="0,12,0,0" HorizontalAlignment="Left" ColorType="Highlight" />
                 </StackPanel>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,10">
@@ -54,14 +54,14 @@
                         <local:MyButton x:Name="BtnClearChat" Text="清空" Width="70" Height="28" HorizontalAlignment="Right" />
                     </Grid>
                     <Border x:Name="PanChat" Background="{DynamicResource ColorBrush7}" CornerRadius="6" Margin="0,12,0,0" Padding="12">
-                        <StackPanel x:Name="PanChatList" MinHeight="160" />
+                        <StackPanel x:Name="PanChatList" MinHeight="120" />
                     </Border>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,6,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="TextInput" Height="52" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
-                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" Width="86" Height="52" Margin="8,0,0,0" ColorType="Highlight" />
+                        <TextBox x:Name="TextInput" Height="38" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
+                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" Width="70" Height="38" Margin="8,0,0,0" ColorType="Highlight" />
                     </Grid>
                 </StackPanel>
             </local:MyCard>
