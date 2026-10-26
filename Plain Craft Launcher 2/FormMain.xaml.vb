@@ -864,6 +864,8 @@ Public Class FormMain
         Catch ex As Exception
             Logger.Error(ex, "切回窗口时出错")
         End Try
+    End Sub
+
     '文件拖放
     Private Sub HandleDrag(sender As Object, e As DragEventArgs)
         Try
