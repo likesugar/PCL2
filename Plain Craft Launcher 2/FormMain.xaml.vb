@@ -546,8 +546,6 @@ Public Class FormMain
                 Next
             End Sub, "强行停止下载任务")
         End If
-        '关闭联机？
-        If FrmLinkMain?.TryExit(Not SendWarning, True) Then Return
         '关闭
         RunInUiWait(
         Sub()
@@ -866,25 +864,6 @@ Public Class FormMain
         Catch ex As Exception
             Logger.Error(ex, "切回窗口时出错")
         End Try
-        '读取剪贴板，自动加入联机房间
-        Return 'TODO: 联机复活赛
-        If PageLinkMain.LinkState <> PageLinkMain.LinkStates.Waiting Then Return '已启动联机
-        If PageCurrent = PageType.Link Then Return '已在联机界面
-        Dim Code = ClipboardGetText() : If Code Is Nothing Then Return '剪贴板无文本
-        If Settings.Get(Of String)("LinkLastAutoJoinInviteCode") = Code Then Return
-        If PageLinkMain.ValidateCodeFormat(Code) IsNot Nothing Then Return '不是邀请码
-        Settings.Set("LinkLastAutoJoinInviteCode", Code)
-        RunInThread(
-        Sub()
-            If MyMsgBox("嘿，是否使用复制的邀请码加入房间？", "加入联机房间", "加入", "取消") = 2 Then Return '防止弹窗阻碍主线程，所以必须放在工作线程
-            RunInUi(
-            Sub()
-                PageLinkMain.Join(Code)
-                ClipboardSet(Nothing, False)
-            End Sub)
-        End Sub)
-    End Sub
-
     '文件拖放
     Private Sub HandleDrag(sender As Object, e As DragEventArgs)
         Try
@@ -1385,38 +1364,6 @@ Public Class FormMain
     ''' <summary>
     ''' 通过点击返回按钮或手动触发返回来改变页面。
     ''' </summary>
-    '联机：释放并启动 Terracotta（AGPL-3.0，未经修改的二进制；联机功能由 Terracotta 提供）
-    Private TerracottaStarted As Boolean = False
-    Private Sub LaunchTerracotta()
-        Try
-            Dim Dir As String = PathTemp & "Terracotta\"
-            Dim ExePath As String = Dir & "terracotta.exe"
-            If Not FileUtils.Exists(ExePath) Then
-                Directory.CreateDirectory(Dir)
-                Using Res = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PCL.Terracotta.exe")
-                    If Res Is Nothing Then Throw New FileNotFoundException("Terracotta 资源缺失")
-                    Using Fs = New FileStream(ExePath, FileMode.Create, FileAccess.Write)
-                        Res.CopyTo(Fs)
-                    End Using
-                End Using
-                Using Res = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PCL.Terracotta-VCRUNTIME140.dll")
-                    If Res IsNot Nothing Then
-                        Using Fs = New FileStream(Dir & "VCRUNTIME140.dll", FileMode.Create, FileAccess.Write)
-                            Res.CopyTo(Fs)
-                        End Using
-                    End If
-                End Using
-            End If
-            If Not TerracottaStarted Then
-                Process.Start(New ProcessStartInfo With {.FileName = ExePath, .WorkingDirectory = Dir, .UseShellExecute = True})
-                TerracottaStarted = True
-            End If
-            Hint("联机界面已在浏览器中打开（由 Terracotta 提供，AGPL-3.0）。首次启动请稍候几秒……")
-        Catch ex As Exception
-            Logger.Error(ex, "启动 Terracotta 联机失败")
-        End Try
-    End Sub
-
     Public Sub PageBack() Handles BtnTitleInner.Click, BtnTitleInner2.Click
         If PageStack.Any() Then
             PageChangeActual(PageStack(0))
@@ -1490,8 +1437,6 @@ Public Class FormMain
                     If FrmDownloadLeft Is Nothing Then FrmDownloadLeft = New PageDownloadLeft
                     'PageGet 方法会在未设置 SubType 时指定默认值，并建立相关页面的实例
                     PageChangeAnim(FrmDownloadLeft, FrmDownloadLeft.PageGet(SubType))
-                Case PageType.Link '联机（Terracotta 集成）
-                    LaunchTerracotta()
                 Case PageType.Setup '设置
                     If FrmSetupLeft Is Nothing Then FrmSetupLeft = New PageSetupLeft
                     PageChangeAnim(FrmSetupLeft, FrmSetupLeft.PageGet(SubType))

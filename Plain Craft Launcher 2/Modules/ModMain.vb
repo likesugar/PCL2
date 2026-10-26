@@ -1,4 +1,4 @@
-Imports System.Collections.ObjectModel
+﻿Imports System.Collections.ObjectModel
 Imports System.Windows.Interop
 Imports System.Windows.Threading
 
@@ -374,7 +374,6 @@ EndHint:
     Public FrmSpeedRight As PageSpeedRight
 
     '联机页面声明
-    Public FrmLinkMain As PageLinkMain
 
     '下载页面声明
     Public FrmDownloadLeft As PageDownloadLeft
@@ -390,7 +389,6 @@ EndHint:
     Public FrmSetupLaunch As PageSetupLaunch
     Public FrmSetupUI As PageSetupUI
     Public FrmSetupSystem As PageSetupSystem
-    Public FrmSetupLink As PageSetupLink
 
     '其他页面声明
     Public FrmOtherLeft As PageOtherLeft

@@ -1,4 +1,4 @@
-
+﻿
 
 #Region "附加属性"
 
@@ -332,17 +332,6 @@ Public Class CustomEvent
                     Catch ex As Exception
                         Logger.Warn(ex, $"写入变量失败：{Arg0} → {Args(1)}", LogBehavior.Toast)
                     End Try
-
-                Case EventType.加入房间
-                    RunInUi(
-                    Sub()
-                        If String.IsNullOrWhiteSpace(Arg) Then
-                            PageLinkMain.Join()
-                        Else
-                            If Not EventSafetyConfirm("即将加入第三方联机房间。") Then Return
-                            PageLinkMain.Join(Arg)
-                        End If
-                    End Sub)
 
                 Case EventType.检查更新
                     UpdateCheckByButton()
