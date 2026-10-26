@@ -468,24 +468,13 @@ Refresh:
     Private Sub HiddenSetupMain() Handles CheckHiddenPageSetup.Change
         '设置主页面
         If CheckHiddenPageSetup.Checked Then
-            '开启
             CheckHiddenSetupLaunch.Checked = True
             CheckHiddenSetupSystem.Checked = True
             CheckHiddenSetupUI.Checked = True
         Else
-            '关闭
-                CheckHiddenSetupLaunch.Checked = False
-                CheckHiddenSetupSystem.Checked = False
-                CheckHiddenSetupUI.Checked = False
-            End If
-        End If
-    End Sub
-        '设置子页面
-            '已被全部隐藏
-            CheckHiddenPageSetup.Checked = True
-        Else
-            '未被全部隐藏
-            CheckHiddenPageSetup.Checked = False
+            CheckHiddenSetupLaunch.Checked = False
+            CheckHiddenSetupSystem.Checked = False
+            CheckHiddenSetupUI.Checked = False
         End If
     End Sub
     Private Sub HiddenOtherMain() Handles CheckHiddenPageOther.Change
