@@ -605,7 +605,17 @@ Public Class FormMain
     End Sub
 
     '移动
-    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanBack.MouseLeftButtonDown, PanLeft.MouseLeftButtonDown, PanMain.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
+    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonDown
+        Try
+            '交互控件不拖窗
+            Dim Src = e.OriginalSource
+            Dim N As String = Src.GetType().Name
+            If TypeOf Src Is System.Windows.Controls.TextBox OrElse TypeOf Src Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf Src Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf Src Is System.Windows.Controls.ComboBox OrElse TypeOf Src Is System.Windows.Controls.ListBoxItem OrElse TypeOf Src Is System.Windows.Controls.Slider OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyRadio") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("CheckBox") OrElse N.StartsWith("MyCheckBox") Then Return
+            DragMove()
+        Catch ex As Exception
+        End Try
+    End Sub
+    Private Sub FormDragMove_Old_Disabled() Handles PanTitle.MouseLeftButtonDown
         On Error Resume Next
         If sender.IsMouseDirectlyOver Then DragMove()
     End Sub
