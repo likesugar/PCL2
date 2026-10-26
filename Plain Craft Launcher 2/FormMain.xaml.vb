@@ -351,13 +351,7 @@ Public Class FormMain
         ApplicationStartTick = GetTimeMs()
         SidebarInitCollapsed()
         ' 看板娘淡入
-        Try
-            ImgMascot.Opacity = 0
-            Dim aniM As New Animation.DoubleAnimation(0, 1, New Duration(TimeSpan.FromMilliseconds(900))) With {.BeginTime = New TimeSpan(0, 0, 0, 0, 500)}
-            ImgMascot.BeginAnimation(OpacityProperty, aniM)
-        Catch ex As Exception
-            Logger.Warn(ex, "看板娘加载失败")
-        End Try
+        MascotRefresh()
         Handle = New WindowInteropHelper(Me).Handle
         '读取设置
         UpdateBackgroundAndTitleBar()
@@ -1767,6 +1761,18 @@ Public Class FormMain
         If SidebarPinned OrElse Not SidebarHovering Then Return
         SidebarHovering = False
         SidebarApply(True, True)
+    End Sub
+
+    ' 看板娘显示刷新
+    Public Sub MascotRefresh()
+        Try
+            Dim Show As Boolean = Not Settings.Get(Of Boolean)("AIMascotHidden")
+            Dim aniM As New Animation.DoubleAnimation(If(Show, 1, 0), New Duration(TimeSpan.FromMilliseconds(300)))
+            ImgMascot.BeginAnimation(OpacityProperty, aniM)
+            ImgMascot.IsHitTestVisible = False
+        Catch ex As Exception
+            Logger.Warn(ex, "看板娘刷新失败")
+        End Try
     End Sub
 
     ' 启动时默认收起（悬停展开模式）

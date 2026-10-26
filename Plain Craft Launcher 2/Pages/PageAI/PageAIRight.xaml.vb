@@ -17,6 +17,7 @@
             ChkEnabled.IsChecked = Settings.Get(Of Boolean)("AIClientEnabled")
             ChkNetAccess.IsChecked = Settings.Get(Of Boolean)("AIClientNetAccess")
             ComboSafety.SelectedIndex = If(Settings.Get(Of Boolean)("AIClientAutoExec"), 1, 0)
+            ChkMascot.IsChecked = Not Settings.Get(Of Boolean)("AIMascotHidden")
         End If
     End Sub
 
@@ -27,6 +28,8 @@
         Settings.Set("AIClientEnabled", ChkEnabled.IsChecked = True)
         Settings.Set("AIClientNetAccess", ChkNetAccess.IsChecked = True)
         Settings.Set("AIClientAutoExec", ComboSafety.SelectedIndex = 1)
+        Settings.Set("AIMascotHidden", ChkMascot.IsChecked = False)
+        Try : CType(Application.Current.Windows.OfType(Of FormMain).FirstOrDefault(), FormMain)?.MascotRefresh() : Catch ex As Exception : End Try
         Hint("AI 助手设置已保存！", HintType.Green)
     End Sub
 

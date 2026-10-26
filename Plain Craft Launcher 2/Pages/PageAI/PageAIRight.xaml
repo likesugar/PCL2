@@ -42,6 +42,7 @@
                             <ComboBoxItem Content="宽松：所有操作自动执行" />
                         </ComboBox>
                     </Grid>
+                    <CheckBox x:Name="ChkMascot" Content="显示看板娘（右下角小人）" Margin="0,10,0,0" IsChecked="True" />
                     <CheckBox x:Name="ChkNetAccess" Content="允许访问本机与内网地址" Margin="0,10,0,0" />
                     <local:MyButton x:Name="BtnSaveConfig" Text="保存设置" Width="140" Height="32" Margin="0,12,0,0" HorizontalAlignment="Left" ColorType="Highlight" />
                 </StackPanel>
