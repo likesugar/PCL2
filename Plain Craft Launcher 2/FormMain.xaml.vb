@@ -1844,7 +1844,7 @@ Public Class FormMain
             PopMascot.IsOpen = False
             Return
         End If
-        If SafeGetB2("AIClientEnabled", False) = False OrElse SafeGetS2("AIClientKey") = "" Then
+        If PageAIRight.CfgGet("Enabled", "0") <> "1" OrElse PageAIRight.CfgGet("Key", "") = "" Then
             LabMascotMsg.Text = "还没有配置 AI 助手哦～请到侧边栏「AI」页填写接口和 Key"
             TextMascotInput.IsEnabled = False
             PopMascot.IsOpen = True
@@ -1877,10 +1877,10 @@ Public Class FormMain
     Private Sub BtnMascotSend_Click(sender As Object, e As EventArgs) Handles BtnMascotSend.Click
         Dim Msg As String = TextMascotInput.Text.Trim()
         If Msg = "" OrElse MascotBusy Then Return
-        Dim Key As String = SafeGetS2("AIClientKey")
-        Dim Base As String = SafeGetS2("AIClientBase")
+        Dim Key As String = PageAIRight.CfgGet("Key", "")
+        Dim Base As String = PageAIRight.CfgGet("Base", "")
         If Base = "" Then Base = "https://api.deepseek.com/v1"
-        Dim Model As String = SafeGetS2("AIClientModel")
+        Dim Model As String = PageAIRight.CfgGet("Model", "")
         If Model = "" Then Model = "deepseek-chat"
         MascotBusy = True
         LabMascotMsg.Text = "思考中…"

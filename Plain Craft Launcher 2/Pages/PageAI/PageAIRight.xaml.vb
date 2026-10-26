@@ -10,24 +10,23 @@
             ComboBase.Items.Add(DefaultBase)
             ComboBase.Items.Add("https://api.openai.com/v1")
             ComboBase.Items.Add("https://api.moonshot.cn/v1")
-            ComboBase.Text = SafeGetS("AIClientBase", "")
-            If ComboBase.Text = "" Then ComboBase.Text = DefaultBase
-            ComboModel.Text = SafeGetS("AIClientModel", "")
-            TextKey.Text = SafeGetS("AIClientKey", "")
-            ChkEnabled.IsChecked = SafeGetB("AIClientEnabled", False)
-            ChkNetAccess.IsChecked = SafeGetB("AIClientNetAccess", False)
-            ComboSafety.SelectedIndex = If(SafeGetB("AIClientAutoExec", False), 1, 0)
+            ComboBase.Text = CfgGet("Base", DefaultBase)
+            ComboModel.Text = CfgGet("Model", "")
+            TextKey.Text = CfgGet("Key", "")
+            ChkEnabled.IsChecked = CfgGet("Enabled", "0") = "1"
+            ChkNetAccess.IsChecked = CfgGet("NetAccess", "0") = "1"
+            ComboSafety.SelectedIndex = If(CfgGet("AutoExec", "0") = "1", 1, 0)
             ChkMascot.IsChecked = Not FormMain.MascotIsHidden()
         End If
     End Sub
 
     Private Sub BtnSaveConfig_Click(sender As Object, e As EventArgs) Handles BtnSaveConfig.Click
-        Settings.Set("AIClientBase", ComboBase.Text.Trim())
-        Settings.Set("AIClientModel", ComboModel.Text.Trim())
-        Settings.Set("AIClientKey", TextKey.Text.Trim())
-        Settings.Set("AIClientEnabled", ChkEnabled.IsChecked = True)
-        Settings.Set("AIClientNetAccess", ChkNetAccess.IsChecked = True)
-        Settings.Set("AIClientAutoExec", ComboSafety.SelectedIndex = 1)
+        CfgSet("Base", ComboBase.Text.Trim())
+        CfgSet("Model", ComboModel.Text.Trim())
+        CfgSet("Key", TextKey.Text.Trim())
+        CfgSet("Enabled", If(ChkEnabled.IsChecked = True, "1", "0"))
+        CfgSet("NetAccess", If(ChkNetAccess.IsChecked = True, "1", "0"))
+        CfgSet("AutoExec", If(ComboSafety.SelectedIndex = 1, "1", "0"))
         Try
             If ChkMascot.IsChecked = False Then
                 IO.File.WriteAllText(FormMain.MascotHiddenFile(), "1")
@@ -89,7 +88,7 @@
         If ChkEnabled.IsChecked = False Then Hint("请先启用 AI 助手并保存设置！", HintType.Red) : Return
         Dim Msg As String = TextInput.Text.Trim()
         If Msg = "" Then Return
-        If SafeGetS("AIClientKey", "") = "" Then Hint("请先填写 API Key！", HintType.Red) : Return
+        If CfgGet("Key", "") = "" Then Hint("请先填写 API Key！", HintType.Red) : Return
         TextInput.Text = ""
         AddBubble("user", Msg)
         ChatHistory.Add(New KeyValuePair(Of String, String)("user", Msg))
@@ -199,5 +198,46 @@
             Return Def
         End Try
     End Function
+
+
+    Public Shared Function ConfigFile() As String
+        Return PathTemp & "ai_client.cfg"
+    End Function
+
+    Private Shared CfgCache As Dictionary(Of String, String)
+
+    Private Shared Sub CfgLoad()
+        If CfgCache IsNot Nothing Then Return
+        CfgCache = New Dictionary(Of String, String)
+        Try
+            If IO.File.Exists(ConfigFile()) Then
+                For Each Line In IO.File.ReadAllLines(ConfigFile())
+                    Dim P = Line.Split("="c, 2)
+                    If P.Length = 2 Then CfgCache(P(0)) = P(1)
+                Next
+            End If
+        Catch ex As Exception
+            Logger.Warn(ex, "AI 配置读取失败")
+        End Try
+    End Sub
+
+    Public Shared Function CfgGet(Key As String, Def As String) As String
+        CfgLoad()
+        Try : Return If(CfgCache.ContainsKey(Key), CfgCache(Key), Def) : Catch ex As Exception : Return Def : End Try
+    End Function
+
+    Public Shared Sub CfgSet(Key As String, Value As String)
+        CfgLoad()
+        CfgCache(Key) = Value
+        Try
+            Dim Sb As New System.Text.StringBuilder()
+            For Each KV In CfgCache
+                Sb.AppendLine(KV.Key & "=" & KV.Value)
+            Next
+            IO.File.WriteAllText(ConfigFile(), Sb.ToString())
+        Catch ex As Exception
+            Logger.Warn(ex, "AI 配置保存失败")
+        End Try
+    End Sub
 
 End Class
