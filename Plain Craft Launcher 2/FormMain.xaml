@@ -209,6 +209,9 @@
                     </Border>
                 </Grid>
                 <Border x:Name="HitMascot" Background="Transparent" Width="170" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Cursor="Hand" Panel.ZIndex="400">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="TfMascot" X="0" Y="0" />
+                    </Border.RenderTransform>
                     <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="False" Opacity="0" />
                 </Border>
         <Popup x:Name="PopMascot" PlacementTarget="{Binding ElementName=ImgMascot}" Placement="Top" VerticalOffset="6" StaysOpen="False" AllowsTransparency="True">

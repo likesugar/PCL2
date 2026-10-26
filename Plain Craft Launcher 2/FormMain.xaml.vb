@@ -1815,9 +1815,8 @@ Public Class FormMain
         Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
         If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
         ImgMascot.BeginAnimation(OpacityProperty, Nothing)
-        Dim NL As Double = Math.Max(-140, Math.Min(Me.ActualWidth - 40, HitMascot.Margin.Left + DX))
-        Dim NT As Double = Math.Max(-280, Math.Min(Me.ActualHeight - 40, HitMascot.Margin.Top + DY))
-        HitMascot.Margin = New Thickness(NL, NT, HitMascot.Margin.Right - (NL - HitMascot.Margin.Left), HitMascot.Margin.Bottom - (NT - HitMascot.Margin.Top))
+        TfMascot.X = Math.Max(-650, Math.Min(60, TfMascot.X + DX))
+        TfMascot.Y = Math.Max(-480, Math.Min(60, TfMascot.Y + DY))
         MascotDragPos = P
     End Sub
 
