@@ -528,21 +528,21 @@ UseDefault:
                 FrmLaunchLeft.BtnLaunch.IsEnabled = False
                 FrmLaunchLeft.LabVersion.Text = "正在加载中，请稍候"
                 FrmLaunchLeft.BtnVersion.IsEnabled = False
-                FrmLaunchLeft.BtnMore.Visibility = Visibility.Collapsed
+                FrmLaunchLeft.BtnMore.Visibility = Visibility.Visible
             Case 1
                 Logger.Info("启动按钮：无 Minecraft 版本，下载已禁用")
                 FrmLaunchLeft.BtnLaunch.Text = "启动游戏"
                 FrmLaunchLeft.BtnLaunch.IsEnabled = False
                 FrmLaunchLeft.LabVersion.Text = "未找到可用的游戏版本"
                 FrmLaunchLeft.BtnVersion.IsEnabled = True
-                FrmLaunchLeft.BtnMore.Visibility = Visibility.Collapsed
+                FrmLaunchLeft.BtnMore.Visibility = Visibility.Visible
             Case 2
                 Logger.Info("启动按钮：无 Minecraft 版本，要求下载")
                 FrmLaunchLeft.BtnLaunch.Text = "下载游戏"
                 FrmLaunchLeft.BtnLaunch.IsEnabled = True
                 FrmLaunchLeft.LabVersion.Text = "未找到可用的游戏版本"
                 FrmLaunchLeft.BtnVersion.IsEnabled = True
-                FrmLaunchLeft.BtnMore.Visibility = Visibility.Collapsed
+                FrmLaunchLeft.BtnMore.Visibility = Visibility.Visible
             Case 3
                 Logger.Info($"启动按钮：Minecraft 版本：{McInstanceSelected.PathVersion}")
                 FrmLaunchLeft.BtnLaunch.Text = "启动游戏"
@@ -554,9 +554,7 @@ UseDefault:
 ExitRefresh:
         '功能隐藏
         FrmLaunchLeft.BtnVersion.Visibility = If(Not PageSetupUI.HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenFunctionSelect"), Visibility.Collapsed, Visibility.Visible)
-        If CurrentState = 3 Then
-            FrmLaunchLeft.BtnMore.Visibility = FrmLaunchLeft.BtnVersion.Visibility
-        End If
+        FrmLaunchLeft.BtnMore.Visibility = FrmLaunchLeft.BtnVersion.Visibility
     End Sub
     '取消按钮
     Public Sub BtnCancel_Click() Handles BtnCancel.Click
