@@ -1805,6 +1805,7 @@ Public Class FormMain
 
     Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonDown
         e.Handled = True '阻止冒泡到全窗拖动，否则 DragMove 吞掉点击
+        Logger.Info("看板娘：鼠标按下 ClickCount=" & e.ClickCount)
         If e.ClickCount >= 2 Then
             Settings.Set("AIMascotHidden", True)
             MascotRefresh()
@@ -1846,6 +1847,8 @@ Public Class FormMain
 
 
     Private Sub MascotToggleChat()
+        Logger.Info("看板娘：打开对话气泡")
+        Try
         If PopMascot.IsOpen Then
             PopMascot.IsOpen = False
             Return
@@ -1859,6 +1862,9 @@ Public Class FormMain
         TextMascotInput.IsEnabled = True
         LabMascotMsg.Text = "在下面输入，按发送和我聊天！"
         PopMascot.IsOpen = True
+        Catch ex As Exception
+            Logger.Error(ex, "看板娘气泡打开失败")
+        End Try
     End Sub
 
     Private Function SafeGetS2(Key As String) As String
