@@ -403,7 +403,8 @@
     <Compile Include="Pages\PageSpeedRight.xaml.vb">
       <DependentUpon>PageSpeedRight.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\MyExtraTextButton.xaml">
+        <Resource Include="Images\mascot.png" />
+<Page Include="Controls\MyExtraTextButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

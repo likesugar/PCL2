@@ -350,6 +350,14 @@ Public Class FormMain
     Private Sub FormMain_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         ApplicationStartTick = GetTimeMs()
         SidebarInitCollapsed()
+        ' 看板娘淡入
+        Try
+            ImgMascot.Opacity = 0
+            Dim aniM As New Animation.DoubleAnimation(0, 1, New Duration(TimeSpan.FromMilliseconds(900))) With {.BeginTime = New TimeSpan(0, 0, 0, 0, 500)}
+            ImgMascot.BeginAnimation(OpacityProperty, aniM)
+        Catch ex As Exception
+            Logger.Warn(ex, "看板娘加载失败")
+        End Try
         Handle = New WindowInteropHelper(Me).Handle
         '读取设置
         UpdateBackgroundAndTitleBar()
