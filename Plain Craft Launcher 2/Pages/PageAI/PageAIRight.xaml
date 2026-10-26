@@ -67,6 +67,7 @@
                         <TextBox x:Name="TextInput" Height="38" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
                         <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" Width="70" Height="38" Margin="8,0,0,0" ColorType="Highlight" />
                     </Grid>
+                </StackPanel>
                 </local:MyCard>
             </Grid>
     </local:MyScrollViewer>
