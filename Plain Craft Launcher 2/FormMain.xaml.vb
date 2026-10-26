@@ -1798,7 +1798,7 @@ Public Class FormMain
         e.Handled = True '阻止冒泡到全窗拖动，否则 DragMove 吞掉点击
         Logger.Info("看板娘：鼠标按下 ClickCount=" & e.ClickCount)
         If e.ClickCount >= 2 Then
-            Settings.Set("AIMascotHidden", True)
+            Try : IO.File.WriteAllText(MascotHiddenFile(), "1") : Catch ex As Exception : End Try
             MascotRefresh()
             Hint("看板娘已隐藏，可在 AI 助手页重新开启", HintType.Blue)
             Return
@@ -1814,7 +1814,6 @@ Public Class FormMain
         Dim P As Point = e.GetPosition(Me)
         Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
         If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
-        ImgMascot.BeginAnimation(OpacityProperty, Nothing)
         TfMascot.X = Math.Max(-650, Math.Min(60, TfMascot.X + DX))
         TfMascot.Y = Math.Max(-480, Math.Min(60, TfMascot.Y + DY))
         MascotDragPos = P
