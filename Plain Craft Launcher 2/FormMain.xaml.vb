@@ -1747,7 +1747,7 @@ Public Class FormMain
 
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
-        Dim target As Double = If(collapsed, 80.0, 200.0)
+        Dim target As Double = If(collapsed, 80.0, 112.0)
         If animate Then
             Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
@@ -1757,7 +1757,7 @@ Public Class FormMain
             PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, Nothing)
             PanSidebar.Width = target
         End If
-        PanTitleSelect.Margin = If(collapsed, New Thickness(4, 60, 4, 0), New Thickness(13, 60, 13, 0))
+        PanTitleSelect.Margin = New Thickness(4, 60, 4, 0)
         For i As Integer = 0 To 5
             Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
             If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
