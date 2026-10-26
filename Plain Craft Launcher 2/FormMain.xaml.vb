@@ -1885,11 +1885,13 @@ Public Class FormMain
         TextMascotInput.Text = ""
         RunInNewThread(Sub()
                            Try
-                               Dim Body As String = "{"model":"" & Model & "","stream":false,"messages":[{"role":"user","content":"" & Msg.Replace(BS, BS+BS).Replace(Q, BS+Q).Replace(vbCr, "").Replace(vbLf, BS+"n") & ""}]}"
+                               Dim JsonMsg As String = Msg.Replace("\\", "\\\\").Replace("""", "\"\"\"").Replace(vbCr, "").Replace(vbLf, "\\n")
+                               Dim Body As String = "{""model"":""" & Model & """,""stream"":false,""messages"":[{""role"":""user"",""content"":""" & JsonMsg & """}]}"
                                Dim Reply As String = PageAIRight.NetRequestCore(Base.TrimEnd("/"c) & "/chat/completions", "POST", Key, Body)
                                Dim Content As String = ""
-                               Dim M As System.Text.RegularExpressions.Match = System.Text.RegularExpressions.Regex.Match(Reply, ""content"\s*:"((?:[^"\\]|\\.)*)"")
-                               If M.Success Then Content = M.Groups(1).Value.Replace(BS+"n", vbCrLf).Replace(BS+Q, Q).Replace(BS+BS, BS)
+                               Dim M As System.Text.RegularExpressions.Match = System.Text.RegularExpressions.Regex.Match(Reply, """content""\s*:\s*""((?:[^""\\]|\\.)*)""")
+                               If M.Success Then Content = M.Groups(1).Value.Replace("\\n", vbCrLf).Replace("\""", """").Replace("\\\\", "\\")
+                               
                                If Content = "" Then Content = "（返回解析失败）"
                                RunInUi(Sub()
                                            LabMascotMsg.Text = Content
