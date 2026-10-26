@@ -74,7 +74,7 @@
     End Sub
 
     Private Sub BtnSend_Click(sender As Object, e As EventArgs) Handles BtnSend.Click
-        If IsBusy Then Hint("AI 正在回复中…", HintType.Yellow) : Return
+        If IsBusy Then Hint("AI 正在回复中…", HintType.Blue) : Return
         If ChkEnabled.IsChecked = False Then Hint("请先启用 AI 助手并保存设置！", HintType.Red) : Return
         Dim Msg As String = TextInput.Text.Trim()
         If Msg = "" Then Return
