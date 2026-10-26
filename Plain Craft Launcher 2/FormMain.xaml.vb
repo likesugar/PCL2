@@ -336,9 +336,10 @@ Public Class FormMain
         If Not IsNothing(FrmLaunchRight.Parent) Then FrmLaunchRight.SetValue(ContentPresenter.ContentProperty, Nothing)
         PanMainLeft.Child = FrmLaunchLeft
         PageLeft = FrmLaunchLeft
-        PanMainRight.Child = FrmLaunchRight
-        PageRight = FrmLaunchRight
-        FrmLaunchRight.PageState = MyPageRight.PageStates.ContentStay
+        '首页去掉日志/主页栏：右侧留空（贴近视频布局）
+        Dim EmptyRight As New MyPageRight()
+        PanMainRight.Child = EmptyRight
+        PageRight = EmptyRight
         '模式提醒
         If BuildType = BuildTypes.Debug Then Hint("[开发者模式] PCL 正以开发者模式运行，这可能会造成严重的性能下降，请务必立即向开发者反馈此问题！", HintType.Red)
         If ModeDebug Then Hint("[调试模式] PCL 正以调试模式运行，这可能会导致性能下降，若无必要请不要开启！")
