@@ -1781,7 +1781,7 @@ Public Class FormMain
             Dim Show As Boolean = Not MascotIsHidden()
             Dim aniM As New Animation.DoubleAnimation(If(Show, 1, 0), New Duration(TimeSpan.FromMilliseconds(300)))
             ImgMascot.BeginAnimation(OpacityProperty, aniM)
-            ImgMascot.IsHitTestVisible = False
+            HitMascot.IsHitTestVisible = Show
         Catch ex As Exception
             Logger.Warn(ex, "看板娘刷新失败")
         End Try
@@ -1794,7 +1794,7 @@ Public Class FormMain
     Private MascotDragStart As Point?
     Private MascotBusy As Boolean = False
 
-    Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonDown
+    Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles HitMascot.PreviewMouseLeftButtonDown
         e.Handled = True '阻止冒泡到全窗拖动，否则 DragMove 吞掉点击
         Logger.Info("看板娘：鼠标按下 ClickCount=" & e.ClickCount)
         If e.ClickCount >= 2 Then
@@ -1806,22 +1806,22 @@ Public Class FormMain
         MascotDragging = True
         MascotDragStart = e.GetPosition(Me)
         MascotDragPos = MascotDragStart.Value
-        ImgMascot.CaptureMouse()
+        HitMascot.CaptureMouse()
     End Sub
 
-    Private Sub ImgMascot_MouseMove(sender As Object, e As Input.MouseEventArgs) Handles ImgMascot.MouseMove
+    Private Sub ImgMascot_MouseMove(sender As Object, e As Input.MouseEventArgs) Handles HitMascot.PreviewMouseMove
         If Not MascotDragging Then Return
         Dim P As Point = e.GetPosition(Me)
         Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
         If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
         ImgMascot.BeginAnimation(OpacityProperty, Nothing)
-        ImgMascot.Margin = New Thickness(ImgMascot.Margin.Left + DX, ImgMascot.Margin.Top + DY, ImgMascot.Margin.Right - DX, ImgMascot.Margin.Bottom - DY)
+        HitMascot.Margin = New Thickness(HitMascot.Margin.Left + DX, HitMascot.Margin.Top + DY, HitMascot.Margin.Right - DX, HitMascot.Margin.Bottom - DY)
         MascotDragPos = P
     End Sub
 
-    Private Sub ImgMascot_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonUp
+    Private Sub ImgMascot_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles HitMascot.PreviewMouseLeftButtonUp
         MascotDragging = False
-        ImgMascot.ReleaseMouseCapture()
+        HitMascot.ReleaseMouseCapture()
         ' 未发生拖动 → 单击打开对话气泡
         If MascotDragStart IsNot Nothing AndAlso Math.Abs(MascotDragStart.Value.X - MascotDragPos.X) < 3 AndAlso Math.Abs(MascotDragStart.Value.Y - MascotDragPos.Y) < 3 Then
             MascotToggleChat()

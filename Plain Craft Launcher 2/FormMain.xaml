@@ -208,7 +208,9 @@
                         </Border>
                     </Border>
                 </Grid>
-                <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="True" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Opacity="0" />
+                <Border x:Name="HitMascot" Background="Transparent" Width="170" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Cursor="Hand" Panel.ZIndex="400">
+                    <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="False" Opacity="0" />
+                </Border>
         <Popup x:Name="PopMascot" PlacementTarget="{Binding ElementName=ImgMascot}" Placement="Top" VerticalOffset="6" StaysOpen="False" AllowsTransparency="True">
                     <Border Background="White" CornerRadius="10" Padding="12" Width="260" BorderBrush="#DDD" BorderThickness="1">
                         <Border.Effect><DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.25" /></Border.Effect>
