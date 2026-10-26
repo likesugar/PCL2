@@ -617,7 +617,7 @@ Public Class FormMain
     End Sub
     Private Sub FormDragMove_Old_Disabled() Handles PanTitle.MouseLeftButtonDown
         On Error Resume Next
-        If sender.IsMouseDirectlyOver Then DragMove()
+        If e.OriginalSource IsNot Nothing AndAlso TryCast(e.OriginalSource, System.Windows.Controls.TextBox) Is Nothing Then DragMove()
     End Sub
 
     '改变大小
