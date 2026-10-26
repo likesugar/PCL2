@@ -1,4 +1,4 @@
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Windows.Interop
 
 Public Class FormMain
@@ -1714,6 +1714,30 @@ Public Class FormMain
     Public lastMouseArg As MouseEventArgs = Nothing
     Private Sub FormMain_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
         lastMouseArg = e
+    End Sub
+
+
+    ' ---------- 可隐藏侧边栏 ----------
+    Private SidebarCollapsed As Boolean = False
+    Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "联机", "设置", "更多"}
+
+    Private Sub BtnSidebarToggle_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarToggle.MouseLeftButtonUp
+        Try
+            SidebarCollapsed = Not SidebarCollapsed
+            Dim target As Double = If(SidebarCollapsed, 56.0, 200.0)
+            Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
+                .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
+            }
+            PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, ani)
+            PanTitleSelect.Margin = If(SidebarCollapsed, New Thickness(0, 60, 0, 0), New Thickness(13, 60, 13, 0))
+            For i As Integer = 0 To 4
+                Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
+                If b IsNot Nothing Then b.Text = If(SidebarCollapsed, "", SidebarTexts(i))
+            Next
+            BtnSidebarToggle.ToolTip = If(SidebarCollapsed, "展开侧边栏", "收起侧边栏")
+        Catch ex As Exception
+            Logger.Warn(ex, "切换侧边栏失败")
+        End Try
     End Sub
 
 End Class
