@@ -3,8 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
-        <StackPanel Margin="16,16,16,8">
-            <local:MyCard Margin="0,0,0,8">
+        <Grid Margin="16,16,16,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1.2*" />
+            </Grid.ColumnDefinitions>
+<local:MyCard Grid.Column="0" Margin="0,0,0,8">
                 <StackPanel>
                     <Grid>
                         <TextBlock Text="AI 助手" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" />
@@ -47,7 +51,7 @@
                     <local:MyButton x:Name="BtnSaveConfig" Text="保存设置" Width="110" Height="28" Margin="0,12,0,0" HorizontalAlignment="Left" ColorType="Highlight" />
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard Margin="0,0,0,10">
+            <local:MyCard Grid.Column="1" Margin="0,0,0,10">
                 <StackPanel>
                     <Grid>
                         <TextBlock Text="对话" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" />
@@ -63,8 +67,6 @@
                         <TextBox x:Name="TextInput" Height="38" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
                         <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" Width="70" Height="38" Margin="8,0,0,0" ColorType="Highlight" />
                     </Grid>
-                </StackPanel>
-            </local:MyCard>
-        </StackPanel>
+                        </Grid>
     </local:MyScrollViewer>
 </local:MyPageRight>
