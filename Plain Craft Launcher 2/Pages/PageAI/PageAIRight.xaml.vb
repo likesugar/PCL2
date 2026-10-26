@@ -17,7 +17,7 @@
             ChkEnabled.IsChecked = SafeGetB("AIClientEnabled", False)
             ChkNetAccess.IsChecked = SafeGetB("AIClientNetAccess", False)
             ComboSafety.SelectedIndex = If(SafeGetB("AIClientAutoExec", False), 1, 0)
-            ChkMascot.IsChecked = Not SafeGetB("AIMascotHidden", False)
+            ChkMascot.IsChecked = Not FormMain.MascotIsHidden()
         End If
     End Sub
 
@@ -28,7 +28,15 @@
         Settings.Set("AIClientEnabled", ChkEnabled.IsChecked = True)
         Settings.Set("AIClientNetAccess", ChkNetAccess.IsChecked = True)
         Settings.Set("AIClientAutoExec", ComboSafety.SelectedIndex = 1)
-        Settings.Set("AIMascotHidden", ChkMascot.IsChecked = False)
+        Try
+            If ChkMascot.IsChecked = False Then
+                IO.File.WriteAllText(FormMain.MascotHiddenFile(), "1")
+            Else
+                If IO.File.Exists(FormMain.MascotHiddenFile()) Then IO.File.Delete(FormMain.MascotHiddenFile())
+            End If
+        Catch ex As Exception
+            Logger.Warn(ex, "看板娘开关写入失败")
+        End Try
         Try : CType(Application.Current.Windows.OfType(Of FormMain).FirstOrDefault(), FormMain)?.MascotRefresh() : Catch ex As Exception : End Try
         Hint("AI 助手设置已保存！", HintType.Green)
     End Sub
