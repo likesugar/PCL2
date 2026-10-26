@@ -605,7 +605,7 @@ Public Class FormMain
     End Sub
 
     '移动
-    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
+    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanBack.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
         On Error Resume Next
         If sender.IsMouseDirectlyOver Then DragMove()
     End Sub
@@ -1790,6 +1790,38 @@ Public Class FormMain
         Catch ex As Exception
             Logger.Warn(ex, "看板娘刷新失败")
         End Try
+    End Sub
+
+
+    ' ---------- 看板娘拖动 / 双击隐藏 ----------
+    Private MascotDragging As Boolean = False
+    Private MascotDragPos As Point
+
+    Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonDown
+        If e.ClickCount >= 2 Then
+            Settings.Set("AIMascotHidden", True)
+            MascotRefresh()
+            Hint("看板娘已隐藏，可在 AI 助手页重新开启", HintType.Blue)
+            Return
+        End If
+        MascotDragging = True
+        MascotDragPos = e.GetPosition(Me)
+        ImgMascot.CaptureMouse()
+    End Sub
+
+    Private Sub ImgMascot_MouseMove(sender As Object, e As Input.MouseEventArgs) Handles ImgMascot.MouseMove
+        If Not MascotDragging Then Return
+        Dim P As Point = e.GetPosition(Me)
+        Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
+        If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
+        ImgMascot.BeginAnimation(OpacityProperty, Nothing)
+        ImgMascot.Margin = New Thickness(ImgMascot.Margin.Left + DX, ImgMascot.Margin.Top + DY, ImgMascot.Margin.Right - DX, ImgMascot.Margin.Bottom - DY)
+        MascotDragPos = P
+    End Sub
+
+    Private Sub ImgMascot_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonUp
+        MascotDragging = False
+        ImgMascot.ReleaseMouseCapture()
     End Sub
 
     ' 启动时默认收起（悬停展开模式）

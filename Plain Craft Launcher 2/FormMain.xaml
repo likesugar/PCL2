@@ -112,7 +112,13 @@
                     </Viewbox>
                     <Border Width="4" Background="#30C19547" HorizontalAlignment="Left" Margin="12,24,0,24" />
                 </Grid>
-                <Border x:Name="PanSidebar" Grid.RowSpan="2" Width="200" HorizontalAlignment="Left" Background="#F0202024">
+                <Border x:Name="PanSidebar" Grid.RowSpan="2" Width="200" HorizontalAlignment="Left">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="{DynamicResource ColorObject1}" Offset="0" />
+                            <GradientStop Color="{DynamicResource ColorObject2}" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <StackPanel Grid.Column="1" x:Name="PanTitleSelect" Orientation="Vertical" Margin="13,60,13,0">
                         <Grid x:Name="PanTitleInner2" Visibility="Collapsed" Margin="0,0,0,6" HorizontalAlignment="Left" Width="174">
                             <local:MyIconButton HorizontalAlignment="Left" Theme="White" x:Name="BtnTitleInner2" Margin="4,0,0,0" Height="28" Width="28"
@@ -204,7 +210,7 @@
                         </Border>
                     </Border>
                 </Grid>
-                <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Opacity="0" />
+                <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="True" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Opacity="0" />
         <StackPanel x:Name="PanHint" IsHitTestVisible="False" UseLayoutRounding="True" SnapsToDevicePixels="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,20" Grid.Column="1" Grid.RowSpan="2" />
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Margin="15">
                     <local:MyExtraButton x:Name="BtnExtraBack" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="返回顶部" Visibility="Collapsed"

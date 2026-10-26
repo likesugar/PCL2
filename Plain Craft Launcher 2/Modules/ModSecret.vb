@@ -1,4 +1,4 @@
-'由于包含加解密等安全信息，本文件中的部分代码已被删除
+﻿'由于包含加解密等安全信息，本文件中的部分代码已被删除
 
 Friend Module ModSecret
 
@@ -187,6 +187,8 @@ Friend Module ModSecret
                 Brush.GradientStops.Add(New GradientStop(Color.FromRgb(163, 13, 26), 1))
             End If
             FrmMain.PanTitle.Background = Brush
+            FrmMain.PanBack.Background = CType(Brush, LinearGradientBrush).Clone()
+            FrmMain.PanBack.Background.Freeze()
             FrmMain.PanTitle.Background.Freeze()
             FrmMain.ImgTitle.Source = If(ThemeNow >= 5 AndAlso ThemeNow <> 14 AndAlso ThemeNow <> 15, $"{PathImage}Themes/{ThemeNow}.png", Nothing)
             FrmMain.ImgTitle.Opacity = If(ThemeNow = 13, 0.25, 0.5)
