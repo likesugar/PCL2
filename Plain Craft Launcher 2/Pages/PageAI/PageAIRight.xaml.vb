@@ -1,4 +1,4 @@
-Public Class PageAIRight
+﻿Public Class PageAIRight
 
     Private ChatHistory As New List(Of KeyValuePair(Of String, String)) 'role, content
     Private IsBusy As Boolean = False
@@ -125,10 +125,10 @@ Public Class PageAIRight
             .FontSize = 13
         }
         If Role = "user" Then
-            Dim Run As New Run("你：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(0x2A, 0x2D, 0x32))}
+            Dim Run As New Run("你：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(&H2A, &H2D, &H32))}
             Tb.Inlines.Add(Run)
         Else
-            Dim Run As New Run("AI：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(0x22, 0x66, 0xCC))}
+            Dim Run As New Run("AI：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(&H22, &H66, &HCC))}
             Tb.Inlines.Add(Run)
         End If
         PanChatList.Children.Add(Tb)
