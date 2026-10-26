@@ -6,6 +6,10 @@ Public Class PageLaunchLeft
     Private IsLoad As Boolean = False
     Private IsLoadFinished As Boolean = False
     Public Sub PageLaunchLeft_Loaded() Handles Me.Loaded
+        Try
+            PanBack.Width = Math.Max(460, FrmMain.PanForm.ActualWidth - 60)
+        Catch ex As Exception
+        End Try
         If IsLoad Then RefreshPage(True, False)
 
         AprilPosTrans.X = 0
