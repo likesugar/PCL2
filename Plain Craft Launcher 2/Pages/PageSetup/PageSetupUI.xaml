@@ -132,6 +132,22 @@
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="不透明度" Margin="0,0,25,0" />
                         <local:MySlider local:SettingService.Key="UiBackgroundOpacity" x:Name="SliderBackgroundOpacity" MaxValue="1000" ValueByKey="10" Grid.Column="1" />
                     </Grid>
+                    <Grid Height="22" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="启动卡透明度" Margin="0,0,25,0" />
+                        <local:MySlider local:SettingService.Key="UiCardLeftOpacity" x:Name="SliderCardLeft" MaxValue="100" ValueByKey="100" Grid.Column="1" />
+                    </Grid>
+                    <Grid Height="22" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="登录卡透明度" Margin="0,0,25,0" />
+                        <local:MySlider local:SettingService.Key="UiCardRightOpacity" x:Name="SliderCardRight" MaxValue="100" ValueByKey="100" Grid.Column="1" />
+                    </Grid>
                     <Grid x:Name="PanBackgroundBlur" Height="22" Margin="0,0,0,10" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />

@@ -731,4 +731,20 @@ ExitRefresh:
             Logger.Warn(ex, "刷新大版本号失败")
         End Try
     End Sub
+
+    ' ---------- 卡片透明度（0-100，设置页可调） ----------
+    Public Shared Sub ApplyCardOpacity()
+        Try
+            If FrmLaunchLeft Is Nothing Then Return
+            Dim L As Integer = 100, R As Integer = 100
+            Try : L = Settings.Get(Of Integer)("UiCardLeftOpacity") : Catch ex As Exception : End Try
+            Try : R = Settings.Get(Of Integer)("UiCardRightOpacity") : Catch ex As Exception : End Try
+            L = Math.Max(0, Math.Min(100, L)) : R = Math.Max(0, Math.Min(100, R))
+            FrmLaunchLeft.BorderCardLeft.Background = New SolidColorBrush(Color.FromArgb(CByte(255 * L / 100), 255, 255, 255))
+            FrmLaunchLeft.BorderCardRight.Background = New SolidColorBrush(Color.FromArgb(CByte(255 * R / 100), 255, 255, 255))
+        Catch ex As Exception
+            Logger.Warn(ex, "卡片透明度刷新失败")
+        End Try
+    End Sub
+
 End Class
