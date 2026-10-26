@@ -1440,8 +1440,8 @@ Public Class FormMain
                     '子页面 → 另一个子页面，更新
                     AniStart({
                         AaOpacity(LabTitleInner, -LabTitleInner.Opacity, 130),
-                        AaCode(Sub() LabTitleInner.Text = PageName
-                                   LabTitleInner2.Text = PageName,, True),
+                        AaCode(Sub() LabTitleInner.Text = PageName,, True),
+                        AaCode(Sub() LabTitleInner2.Text = PageName,, True),
                         AaOpacity(LabTitleInner, 1, 150, 30)
                     }, "FrmMain Titlebar SubLayer")
                     If PageStack.Contains(Stack) Then
@@ -1589,8 +1589,8 @@ Public Class FormMain
                 AaX(PanTitleInner, -18 - PanTitleInner.Margin.Left, 150,, New AniEaseInFluent),
                 AaOpacity(PanTitleMain, 1 - PanTitleMain.Opacity, 150, 200),
                 AaX(PanTitleMain, -PanTitleMain.Margin.Left, 350, 200, New AniEaseOutBack(AniEasePower.Weak)),
-                AaCode(Sub() PanTitleInner.Visibility = Visibility.Collapsed
-                               PanTitleInner2.Visibility = Visibility.Collapsed,, True)
+                AaCode(Sub() PanTitleInner.Visibility = Visibility.Collapsed,, True),
+                AaCode(Sub() PanTitleInner2.Visibility = Visibility.Collapsed,, True)
             }, "FrmMain Titlebar FirstLayer")
             PageStack.Clear()
         Else
