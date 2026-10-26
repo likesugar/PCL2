@@ -611,7 +611,7 @@ Public Class FormMain
             '交互控件不拖窗
             Dim Src = e.OriginalSource
             Dim N As String = Src.GetType().Name
-            If TypeOf Src Is System.Windows.Controls.TextBox OrElse TypeOf Src Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf Src Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf Src Is System.Windows.Controls.ComboBox OrElse TypeOf Src Is System.Windows.Controls.ListBoxItem OrElse TypeOf Src Is System.Windows.Controls.Slider OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyRadio") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("CheckBox") OrElse N.StartsWith("MyCheckBox") Then Return
+            If TypeOf Src Is System.Windows.Controls.TextBox OrElse TypeOf Src Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf Src Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf Src Is System.Windows.Controls.ComboBox OrElse TypeOf Src Is System.Windows.Controls.ListBoxItem OrElse TypeOf Src Is System.Windows.Controls.Slider OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyRadio") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("CheckBox") OrElse N.StartsWith("MyCheckBox") OrElse N.StartsWith("Resizer") Then Return
             DragMove()
         Catch ex As Exception
         End Try
@@ -1742,7 +1742,7 @@ Public Class FormMain
     Private SidebarCollapsed As Boolean = False
     Private SidebarPinned As Boolean = False
     Private SidebarHovering As Boolean = False
-    Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "联机", "设置", "", "AI"}
+    Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "", "设置", "", "AI"}
 
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
