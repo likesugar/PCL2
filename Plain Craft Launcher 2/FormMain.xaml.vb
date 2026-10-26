@@ -600,12 +600,12 @@ Public Class FormMain
         If ReturnCode <> ProcessReturnValues.Success Then Environment.Exit(ReturnCode)
         Process.GetCurrentProcess.Kill()
     End Sub
-    Private Sub BtnTitleClose_Click(sender As Object, e As RoutedEventArgs) Handles BtnTitleClose.Click
+    Private Sub BtnTitleClose_Click(sender As Object, e As RoutedEventArgs) Handles BtnTitleClose.Click, BtnTitleClose2.Click
         EndProgram(True)
     End Sub
 
     '移动
-    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
+    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
         On Error Resume Next
         If sender.IsMouseDirectlyOver Then DragMove()
     End Sub
@@ -629,7 +629,7 @@ Public Class FormMain
     End Sub
 
     '最小化
-    Private Sub BtnTitleMin_Click() Handles BtnTitleMin.Click
+    Private Sub BtnTitleMin_Click() Handles BtnTitleMin.Click, BtnTitleMin2.Click
         WindowState = WindowState.Minimized
     End Sub
 
@@ -1240,6 +1240,7 @@ Public Class FormMain
     ''' </summary>
     Public Sub PageNameRefresh(Type As PageStackData)
         LabTitleInner.Text = PageNameGet(Type)
+        LabTitleInner2.Text = LabTitleInner.Text
     End Sub
     ''' <summary>
     ''' 刷新次级页面的名称。
@@ -1407,7 +1408,7 @@ Public Class FormMain
         End Try
     End Sub
 
-    Public Sub PageBack() Handles BtnTitleInner.Click
+    Public Sub PageBack() Handles BtnTitleInner.Click, BtnTitleInner2.Click
         If PageStack.Any() Then
             PageChangeActual(PageStack(0))
         Else
@@ -1439,7 +1440,8 @@ Public Class FormMain
                     '子页面 → 另一个子页面，更新
                     AniStart({
                         AaOpacity(LabTitleInner, -LabTitleInner.Opacity, 130),
-                        AaCode(Sub() LabTitleInner.Text = PageName,, True),
+                        AaCode(Sub() LabTitleInner.Text = PageName
+                                   LabTitleInner2.Text = PageName,, True),
                         AaOpacity(LabTitleInner, 1, 150, 30)
                     }, "FrmMain Titlebar SubLayer")
                     If PageStack.Contains(Stack) Then
@@ -1587,7 +1589,8 @@ Public Class FormMain
                 AaX(PanTitleInner, -18 - PanTitleInner.Margin.Left, 150,, New AniEaseInFluent),
                 AaOpacity(PanTitleMain, 1 - PanTitleMain.Opacity, 150, 200),
                 AaX(PanTitleMain, -PanTitleMain.Margin.Left, 350, 200, New AniEaseOutBack(AniEasePower.Weak)),
-                AaCode(Sub() PanTitleInner.Visibility = Visibility.Collapsed,, True)
+                AaCode(Sub() PanTitleInner.Visibility = Visibility.Collapsed
+                               PanTitleInner2.Visibility = Visibility.Collapsed,, True)
             }, "FrmMain Titlebar FirstLayer")
             PageStack.Clear()
         Else
