@@ -1,4 +1,4 @@
-Public Class PageSetupUI
+﻿Public Class PageSetupUI
 
     Private Sub PageSetupUI_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         '重复加载部分
@@ -408,7 +408,6 @@ Refresh:
                 FrmMain.BtnTitleSelect1.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageDownload"), Visibility.Collapsed, Visibility.Visible)
                 FrmMain.BtnTitleSelect2.Visibility = Visibility.Visible '联机入口：Terracotta 集成
                 FrmMain.BtnTitleSelect3.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageSetup"), Visibility.Collapsed, Visibility.Visible)
-                FrmMain.BtnTitleSelect4.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageOther"), Visibility.Collapsed, Visibility.Visible)
             End If
             '功能
             FrmLaunchLeft.RefreshButtonsUI()
@@ -451,14 +450,10 @@ Refresh:
             End If
             If OtherAvaliableCount = 1 AndAlso Not HiddenForceShow Then
                 If Not Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then
-                    FrmMain.BtnTitleSelect4.Text = "帮助"
                 ElseIf Not Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then
-                    FrmMain.BtnTitleSelect4.Text = "关于"
                 Else
-                    FrmMain.BtnTitleSelect4.Text = "百宝箱"
                 End If
             Else
-                FrmMain.BtnTitleSelect4.Text = "更多"
             End If
             '各个页面的入口
             If FrmMain.PageCurrent = FormMain.PageType.InstanceSelect Then FrmSelectRight.BtnEmptyDownload_Loaded()
