@@ -1777,13 +1777,17 @@ Public Class FormMain
     End Sub
 
     ' 看板娘显示刷新
+    Public Shared Function MascotHiddenFile() As String
+        Return PathTemp & "mascot_hidden.txt"
+    End Function
+
+    Public Shared Function MascotIsHidden() As Boolean
+        Try : Return IO.File.Exists(MascotHiddenFile()) : Catch ex As Exception : Return False : End Try
+    End Function
+
     Public Sub MascotRefresh()
         Try
-            Dim Show As Boolean = True
-            Try
-                If Settings.HasSaved("AIMascotHidden") Then Show = Settings.GetSafe("AIMascotHidden")?.ToString() <> "True"
-            Catch ex2 As Exception
-            End Try
+            Dim Show As Boolean = Not MascotIsHidden()
             Dim aniM As New Animation.DoubleAnimation(If(Show, 1, 0), New Duration(TimeSpan.FromMilliseconds(300)))
             ImgMascot.BeginAnimation(OpacityProperty, aniM)
             ImgMascot.IsHitTestVisible = False
