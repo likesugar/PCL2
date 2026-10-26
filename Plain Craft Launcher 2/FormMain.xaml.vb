@@ -1760,7 +1760,7 @@ Public Class FormMain
         PanTitleSelect.Margin = If(collapsed, New Thickness(4, 60, 4, 0), New Thickness(13, 60, 13, 0))
         For i As Integer = 0 To 5
             Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
-            If b IsNot Nothing AndAlso b.Text = "" Then b.Text = SidebarTexts(i)
+            If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
         Next
     End Sub
 
