@@ -1796,6 +1796,8 @@ Public Class FormMain
     ' ---------- 看板娘拖动 / 双击隐藏 ----------
     Private MascotDragging As Boolean = False
     Private MascotDragPos As Point
+    Private MascotDragStart As Point?
+    Private MascotBusy As Boolean = False
 
     Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonDown
         If e.ClickCount >= 2 Then
@@ -1805,7 +1807,8 @@ Public Class FormMain
             Return
         End If
         MascotDragging = True
-        MascotDragPos = e.GetPosition(Me)
+        MascotDragStart = e.GetPosition(Me)
+        MascotDragPos = MascotDragStart.Value
         ImgMascot.CaptureMouse()
     End Sub
 
@@ -1822,6 +1825,11 @@ Public Class FormMain
     Private Sub ImgMascot_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles ImgMascot.MouseLeftButtonUp
         MascotDragging = False
         ImgMascot.ReleaseMouseCapture()
+        ' 未发生拖动 → 单击打开对话气泡
+        If MascotDragStart IsNot Nothing AndAlso Math.Abs(MascotDragStart.Value.X - MascotDragPos.X) < 3 AndAlso Math.Abs(MascotDragStart.Value.Y - MascotDragPos.Y) < 3 Then
+            MascotToggleChat()
+        End If
+        MascotDragStart = Nothing
     End Sub
 
     ' 启动时默认收起（悬停展开模式）
@@ -1831,4 +1839,76 @@ Public Class FormMain
         SidebarApply(True, False)
     End Sub
 
+
+    Private Sub MascotToggleChat()
+        If PopMascot.IsOpen Then
+            PopMascot.IsOpen = False
+            Return
+        End If
+        If SafeGetB2("AIClientEnabled", False) = False OrElse SafeGetS2("AIClientKey") = "" Then
+            LabMascotMsg.Text = "还没有配置 AI 助手哦～请到侧边栏「AI」页填写接口和 Key"
+            TextMascotInput.IsEnabled = False
+            PopMascot.IsOpen = True
+            Return
+        End If
+        TextMascotInput.IsEnabled = True
+        LabMascotMsg.Text = "在下面输入，按发送和我聊天！"
+        PopMascot.IsOpen = True
+    End Sub
+
+    Private Function SafeGetS2(Key As String) As String
+        Try
+            If Settings.HasSaved(Key) Then Return Settings.GetSafe(Key)?.ToString() : Else Return ""
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
+
+    Private Function SafeGetB2(Key As String, Def As Boolean) As Boolean
+        Try
+            If Settings.HasSaved(Key) Then Return (Settings.GetSafe(Key)?.ToString() = "True") : Else Return Def
+        Catch ex As Exception
+            Return Def
+        End Try
+    End Function
+
+    Private Sub BtnMascotSend_Click(sender As Object, e As EventArgs) Handles BtnMascotSend.Click
+        Dim Msg As String = TextMascotInput.Text.Trim()
+        If Msg = "" OrElse MascotBusy Then Return
+        Dim Key As String = SafeGetS2("AIClientKey")
+        Dim Base As String = SafeGetS2("AIClientBase")
+        If Base = "" Then Base = "https://api.deepseek.com/v1"
+        Dim Model As String = SafeGetS2("AIClientModel")
+        If Model = "" Then Model = "deepseek-chat"
+        MascotBusy = True
+        LabMascotMsg.Text = "思考中…"
+        TextMascotInput.Text = ""
+        RunInNewThread(Sub()
+                           Try
+                               Dim Body As String = "{"model":"" & Model & "","stream":false,"messages":[{"role":"user","content":"" & Msg.Replace(BS, BS+BS).Replace(Q, BS+Q).Replace(vbCr, "").Replace(vbLf, BS+"n") & ""}]}"
+                               Dim Reply As String = PageAIRight.NetRequestCore(Base.TrimEnd("/"c) & "/chat/completions", "POST", Key, Body)
+                               Dim Content As String = ""
+                               Dim M As System.Text.RegularExpressions.Match = System.Text.RegularExpressions.Regex.Match(Reply, ""content"\s*:"((?:[^"\\]|\\.)*)"")
+                               If M.Success Then Content = M.Groups(1).Value.Replace(BS+"n", vbCrLf).Replace(BS+Q, Q).Replace(BS+BS, BS)
+                               If Content = "" Then Content = "（返回解析失败）"
+                               RunInUi(Sub()
+                                           LabMascotMsg.Text = Content
+                                           MascotBusy = False
+                                           TextMascotInput.Focus()
+                                       End Sub)
+                           Catch ex As Exception
+                               RunInUi(Sub()
+                                           LabMascotMsg.Text = "请求失败：" & ex.Message
+                                           MascotBusy = False
+                                       End Sub)
+                           End Try
+                       End Sub)
+    End Sub
+
+    Private Sub TextMascotInput_KeyDown(sender As Object, e As Input.KeyEventArgs) Handles TextMascotInput.KeyDown
+        If e.Key = Input.Key.Enter Then
+            BtnMascotSend_Click(Nothing, Nothing)
+            e.Handled = True
+        End If
+    End Sub
 End Class

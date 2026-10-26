@@ -154,7 +154,7 @@
         End Try
     End Function
 
-    Private Shared Function NetRequestCore(Url As String, Method As String, Key As String, Body As String) As String
+    Friend Shared Function NetRequestCore(Url As String, Method As String, Key As String, Body As String) As String
         Dim Req As Net.HttpWebRequest = CType(Net.WebRequest.Create(Url), Net.HttpWebRequest)
         Req.Method = Method
         Req.Timeout = 60000
