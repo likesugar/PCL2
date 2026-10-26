@@ -10,14 +10,14 @@
             ComboBase.Items.Add(DefaultBase)
             ComboBase.Items.Add("https://api.openai.com/v1")
             ComboBase.Items.Add("https://api.moonshot.cn/v1")
-            ComboBase.Text = Settings.Get(Of String)("AIClientBase")
+            ComboBase.Text = SafeGetS("AIClientBase", "")
             If ComboBase.Text = "" Then ComboBase.Text = DefaultBase
-            ComboModel.Text = Settings.Get(Of String)("AIClientModel")
-            TextKey.Text = Settings.Get(Of String)("AIClientKey")
-            ChkEnabled.IsChecked = Settings.Get(Of Boolean)("AIClientEnabled")
-            ChkNetAccess.IsChecked = Settings.Get(Of Boolean)("AIClientNetAccess")
-            ComboSafety.SelectedIndex = If(Settings.Get(Of Boolean)("AIClientAutoExec"), 1, 0)
-            ChkMascot.IsChecked = Not Settings.Get(Of Boolean)("AIMascotHidden")
+            ComboModel.Text = SafeGetS("AIClientModel", "")
+            TextKey.Text = SafeGetS("AIClientKey", "")
+            ChkEnabled.IsChecked = SafeGetB("AIClientEnabled", False)
+            ChkNetAccess.IsChecked = SafeGetB("AIClientNetAccess", False)
+            ComboSafety.SelectedIndex = If(SafeGetB("AIClientAutoExec", False), 1, 0)
+            ChkMascot.IsChecked = Not SafeGetB("AIMascotHidden", False)
         End If
     End Sub
 
@@ -81,16 +81,16 @@
         If ChkEnabled.IsChecked = False Then Hint("请先启用 AI 助手并保存设置！", HintType.Red) : Return
         Dim Msg As String = TextInput.Text.Trim()
         If Msg = "" Then Return
-        If Settings.Get(Of String)("AIClientKey") = "" Then Hint("请先填写 API Key！", HintType.Red) : Return
+        If SafeGetS("AIClientKey", "") = "" Then Hint("请先填写 API Key！", HintType.Red) : Return
         TextInput.Text = ""
         AddBubble("user", Msg)
         ChatHistory.Add(New KeyValuePair(Of String, String)("user", Msg))
         IsBusy = True
         BtnSend.Text = "思考中…"
-        Dim Base As String = Settings.Get(Of String)("AIClientBase").TrimEnd("/"c)
+        Dim Base As String = SafeGetS("AIClientBase", DefaultBase).TrimEnd("/"c)
         If Base = "" Then Base = DefaultBase
-        Dim Key As String = Settings.Get(Of String)("AIClientKey")
-        Dim Model As String = Settings.Get(Of String)("AIClientModel")
+        Dim Key As String = SafeGetS("AIClientKey", "")
+        Dim Model As String = SafeGetS("AIClientModel", "")
         RunInNewThread(Sub()
                            Try
                                Dim Body As New System.Text.StringBuilder
@@ -173,6 +173,23 @@
                 Return Sr.ReadToEnd()
             End Using
         End Using
+    End Function
+
+
+    Private Shared Function SafeGetS(Key As String, Def As String) As String
+        Try
+            If Settings.HasSaved(Key) Then Return Settings.GetSafe(Key)?.ToString() : Else Return Def
+        Catch ex As Exception
+            Return Def
+        End Try
+    End Function
+
+    Private Shared Function SafeGetB(Key As String, Def As Boolean) As Boolean
+        Try
+            If Settings.HasSaved(Key) Then Return (Settings.GetSafe(Key)?.ToString() = "True") : Else Return Def
+        Catch ex As Exception
+            Return Def
+        End Try
     End Function
 
 End Class

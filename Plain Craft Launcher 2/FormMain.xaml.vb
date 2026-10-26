@@ -605,7 +605,7 @@ Public Class FormMain
     End Sub
 
     '移动
-    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown
+    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
         On Error Resume Next
         If sender.IsMouseDirectlyOver Then DragMove()
     End Sub
@@ -1740,11 +1740,11 @@ Public Class FormMain
     Private SidebarCollapsed As Boolean = False
     Private SidebarPinned As Boolean = False
     Private SidebarHovering As Boolean = False
-    Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "联机", "设置", "更多"}
+    Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "联机", "设置", "更多", "AI"}
 
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
-        Dim target As Double = If(collapsed, 56.0, 200.0)
+        Dim target As Double = If(collapsed, 40.0, 200.0)
         If animate Then
             Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(180))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
@@ -1755,7 +1755,7 @@ Public Class FormMain
             PanSidebar.Width = target
         End If
         PanTitleSelect.Margin = If(collapsed, New Thickness(0, 60, 0, 0), New Thickness(13, 60, 13, 0))
-        For i As Integer = 0 To 4
+        For i As Integer = 0 To 5
             Dim b As MyRadioButton = CType(FindName("BtnTitleSelect" & i), MyRadioButton)
             If b IsNot Nothing Then b.Text = If(collapsed, "", SidebarTexts(i))
         Next
@@ -1776,7 +1776,11 @@ Public Class FormMain
     ' 看板娘显示刷新
     Public Sub MascotRefresh()
         Try
-            Dim Show As Boolean = Not Settings.Get(Of Boolean)("AIMascotHidden")
+            Dim Show As Boolean = True
+            Try
+                If Settings.HasSaved("AIMascotHidden") Then Show = Settings.GetSafe("AIMascotHidden")?.ToString() <> "True"
+            Catch ex2 As Exception
+            End Try
             Dim aniM As New Animation.DoubleAnimation(If(Show, 1, 0), New Duration(TimeSpan.FromMilliseconds(300)))
             ImgMascot.BeginAnimation(OpacityProperty, aniM)
             ImgMascot.IsHitTestVisible = False
