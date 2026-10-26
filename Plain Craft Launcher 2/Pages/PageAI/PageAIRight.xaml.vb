@@ -212,7 +212,7 @@
         Try
             If IO.File.Exists(ConfigFile()) Then
                 For Each Line In IO.File.ReadAllLines(ConfigFile())
-                    Dim P = Line.Split("="c, 2)
+                    Dim P = Line.Split(New Char() {"="c}, 2)
                     If P.Length = 2 Then CfgCache(P(0)) = P(1)
                 Next
             End If
