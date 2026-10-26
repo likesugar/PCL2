@@ -750,6 +750,7 @@ ExitRefresh:
             ' 登录卡：整块
             FrmLaunchLeft.PanLogin.Opacity = R / 100.0
             FrmLaunchLeft.PanLogin.IsHitTestVisible = R > 0
+            Logger.Info($"卡片透明度：L={L} R={R} PanLogin.Opacity={FrmLaunchLeft.PanLogin.Opacity} Children={FrmLaunchLeft.PanLogin.Children.Count} 可见={FrmLaunchLeft.PanLogin.Visibility} HasAnimatedBase={FrmLaunchLeft.PanLogin.IsLoaded}")
         Catch ex As Exception
             Logger.Warn(ex, "卡片透明度刷新失败")
         End Try
