@@ -605,7 +605,7 @@ Public Class FormMain
     End Sub
 
     '移动
-    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanBack.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
+    Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles PanTitle.MouseLeftButtonDown, PanMsg.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown, PanBack.MouseLeftButtonDown, PanLeft.MouseLeftButtonDown, PanMain.MouseLeftButtonDown, PanSidebar.MouseLeftButtonDown
         On Error Resume Next
         If sender.IsMouseDirectlyOver Then DragMove()
     End Sub
