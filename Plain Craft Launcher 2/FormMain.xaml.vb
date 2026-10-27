@@ -1775,10 +1775,11 @@ End Sub
     Private SakuraParticles As New List(Of ParticleInfo)
     Private SakuraRand As New Random
     Private Class ParticleInfo
-        Public Shape As Windows.Shapes.Ellipse
+        Public Shape As Windows.UIElement
+        Public Rotate As Windows.Media.RotateTransform = Nothing
         Public X As Double, Y As Double
         Public Speed As Double, Drift As Double, Phase As Double
-        Public Size As Double
+        Public Size As Double, RotSpeed As Double
     End Class
     Public Sub SakuraRefresh()
         If SakuraTimer Is Nothing Then
@@ -1809,10 +1810,50 @@ End Sub
                 .Speed = 0.6 + SakuraRand.NextDouble() * 1.4,
                 .Drift = 0.4 + SakuraRand.NextDouble() * 1.2,
                 .Phase = SakuraRand.NextDouble() * Math.PI * 2}
-            Dim E As New Windows.Shapes.Ellipse With {.Width = P.Size, .Height = P.Size * If(Style = "Sakura", 0.8, 1), .Opacity = 0.75}
-            E.Fill = New Media.SolidColorBrush(SakuraColor(Style, SakuraRand.Next(3)))
-            PanSakura.Children.Add(E)
-            P.Shape = E
+            Dim El As Windows.UIElement = Nothing
+            Dim Opacity As Double = 0.85
+            Select Case Style
+                Case "Sakura" '真实樱花花瓣：带顶部 V 形缺口的瓣形 + 粉白渐变 + 随机自转
+                    Dim Flower As New Windows.Shapes.Path With {
+                        .Data = Windows.Media.Geometry.Parse("M8,16 C2.5,12.5 0,8 1.2,3.8 C2.2,0.8 5.2,0 6.3,2.2 L8,5.2 L9.7,2.2 C10.8,0 13.8,0.8 14.8,3.8 C16,8 13.5,12.5 8,16 Z")}
+                    Dim Base = SakuraColor("Sakura", SakuraRand.Next(3))
+                    Dim Brush As New Windows.Media.RadialGradientBrush(Windows.Media.Color.FromArgb(230, 255, 255, 255), Base)
+                    Brush.GradientOrigin = New Windows.Point(0.5, 0.3)
+                    Brush.RadiusX = 0.7 : Brush.RadiusY = 0.7
+                    Flower.Fill = Brush
+                    Dim Scale = P.Size / 16.0
+                    Flower.RenderTransform = New Windows.Media.ScaleTransform(Scale, Scale)
+                    Dim Grp As New Windows.Media.TransformGroup()
+                    Grp.Children.Add(New Windows.Media.ScaleTransform(Scale, Scale))
+                    Dim Rot As New Windows.Media.RotateTransform(SakuraRand.Next(360))
+                    P.Rotate = Rot
+                    Grp.Children.Add(Rot)
+                    Flower.RenderTransform = Grp
+                    Flower.Opacity = Opacity
+                    El = Flower
+                Case "Leaf" '落叶：旋转矩形叶片
+                    Dim Leaf As New Windows.Shapes.Rectangle With {.Width = P.Size * 1.2, .Height = P.Size * 0.55, .RadiusX = P.Size * 0.25, .RadiusY = P.Size * 0.25, .Opacity = 0.8}
+                    Leaf.Fill = New Media.SolidColorBrush(SakuraColor("Leaf", SakuraRand.Next(3)))
+                    Dim Rot As New Windows.Media.RotateTransform(SakuraRand.Next(360))
+                    P.Rotate = Rot
+                    Leaf.RenderTransform = Rot
+                    El = Leaf
+                Case "Star" '星光：四角星
+                    Dim Star As New Windows.Shapes.Path With {
+                        .Data = Windows.Media.Geometry.Parse("M8,0 L9.8,6.2 L16,8 L9.8,9.8 L8,16 L6.2,9.8 L0,8 L6.2,6.2 Z")}
+                    Star.Fill = New Media.SolidColorBrush(SakuraColor("Star", SakuraRand.Next(3)))
+                    Dim Scale = P.Size / 16.0
+                    Star.RenderTransform = New Windows.Media.ScaleTransform(Scale, Scale)
+                    Star.Opacity = 0.9
+                    El = Star
+                Case Else '雪花：白色圆
+                    Dim E As New Windows.Shapes.Ellipse With {.Width = P.Size * 0.8, .Height = P.Size * 0.8, .Opacity = 0.9}
+                    E.Fill = New Media.SolidColorBrush(SakuraColor("Snow", 0))
+                    El = E
+            End Select
+            P.RotSpeed = (SakuraRand.NextDouble() - 0.5) * 2.5
+            PanSakura.Children.Add(El)
+            P.Shape = El
             SakuraParticles.Add(P)
         Next
     End Sub
@@ -1840,6 +1881,7 @@ End Sub
             If P.X < -20 Then P.X = W + 15
             Canvas.SetLeft(P.Shape, P.X)
             Canvas.SetTop(P.Shape, P.Y)
+            If P.Rotate IsNot Nothing Then P.Rotate.Angle += P.RotSpeed * 2
         Next
     End Sub
     Public Sub UpdateSidebarLogin()
