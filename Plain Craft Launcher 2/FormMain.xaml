@@ -86,12 +86,12 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-                        <Canvas x:Name="PanSakura" Grid.Column="1" Grid.RowSpan="2" IsHitTestVisible="False" Panel.ZIndex="300" />
-<Border Margin="8" x:Name="BorderForm">
+        <Border Margin="8" x:Name="BorderForm">
             <Border.Clip>
                 <RectangleGeometry x:Name="RectForm" RadiusX="14" RadiusY="14" />
             </Border.Clip>
             <Grid x:Name="PanForm" SnapsToDevicePixels="False" UseLayoutRounding="False">
+                <Canvas x:Name="PanSakura" Grid.ColumnSpan="2" Grid.RowSpan="2" IsHitTestVisible="False" Panel.ZIndex="300" ClipToBounds="True" />
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="1*" />
