@@ -311,6 +311,7 @@
                         <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Text="下载" x:Name="CheckHiddenPageDownload" local:SettingService.Key="UiHiddenPageDownload" />
                         <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Text="联机" x:Name="CheckHiddenPageLink" local:SettingService.Key="UiHiddenPageLink" IsEnabled="False" />
                         <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" Text="设置" x:Name="CheckHiddenPageSetup" local:SettingService.Key="UiHiddenPageSetup" />
+                        <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="5" Text="DIY" x:Name="CheckHiddenPageDiy" local:SettingService.Key="UiHiddenPageDiy" />
                                                                         <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="设置 子页面" />
                         <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="启动" x:Name="CheckHiddenSetupLaunch" local:SettingService.Key="UiHiddenSetupLaunch" />
                         <local:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="4" Text="个性化" x:Name="CheckHiddenSetupUI" local:SettingService.Key="UiHiddenSetupUi" />

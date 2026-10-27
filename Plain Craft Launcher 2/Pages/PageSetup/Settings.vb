@@ -159,6 +159,7 @@ Public Class Settings
         New Setting("UiHiddenPageDownload", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),
         New Setting("UiHiddenPageLink", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),
         New Setting("UiHiddenPageSetup", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),
+        New Setting("UiHiddenPageDiy", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),
         New Setting("UiCardLeftOpacity", 100, OnChanged:=Sub(Value As Integer) PageLaunchLeft.ApplyCardOpacity()),
         New Setting("UiCardRightOpacity", 100, OnChanged:=Sub(Value As Integer) PageLaunchLeft.ApplyCardOpacity()),
         New Setting("UiHiddenFunctionSelect", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),
