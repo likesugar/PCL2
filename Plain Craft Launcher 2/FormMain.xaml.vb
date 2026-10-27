@@ -485,11 +485,6 @@ Public Class FormMain
             FileUtils.Copy(PathTemp & "CustomSkin.png", Paths.AppDataThenName & "CustomSkin.png")
             Logger.Info("已移动离线自定义皮肤 (264)")
         End If
-        '解除帮助页面的隐藏
-        If LastVersionCode <= 205 Then
-            Settings.Set("UiHiddenOtherHelp", False)
-            Logger.Info("已解除帮助页面的隐藏")
-        End If
         '单向迁移微软登录结果（#4836）
         If Not Settings.Get(Of Boolean)("CacheMsV2Migrated") Then
             Settings.Set("CacheMsV2Migrated", True)
