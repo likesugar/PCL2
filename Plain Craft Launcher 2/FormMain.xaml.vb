@@ -1734,4 +1734,23 @@ Public Class FormMain
     End Sub
 
     ' 看板娘显示刷新
+
+    '侧边栏底部登录卡
+    Private Sub BtnSidebarLogin_Click(sender As Object, e As EventArgs) Handles BtnSidebarLogin.Click
+        PageChange(PageType.Launch)
+    End Sub
+    Private Sub BtnSidebarLegacy_Click(sender As Object, e As EventArgs) Handles BtnSidebarLegacy.Click
+        Settings.Set("LoginType", 0)
+        RunInUi(Sub()
+                    If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType0.Checked = True
+                End Sub)
+        PageChange(PageType.Launch)
+    End Sub
+    Private Sub BtnSidebarMs_Click(sender As Object, e As EventArgs) Handles BtnSidebarMs.Click
+        Settings.Set("LoginType", 5)
+        RunInUi(Sub()
+                    If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType5.Checked = True
+                End Sub)
+        PageChange(PageType.Launch)
+    End Sub
 End Class
