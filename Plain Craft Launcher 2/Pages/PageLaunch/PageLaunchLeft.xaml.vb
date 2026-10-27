@@ -316,6 +316,28 @@ Public Class PageLaunchLeft
     ''' <summary>
     ''' 确认当前显示的子页面正确，并刷新该页面。
     ''' </summary>
+    Public Sub RelaunchInstanceLoad()
+        RunInNewThread(
+        Sub()
+            Try
+                If McInstanceListLoader.State = LoadState.Loading OrElse McInstanceListLoader.State = LoadState.Waiting Then
+                    McInstanceListLoader.WaitForExit(IsForceRestart:=True)
+                ElseIf McInstanceListLoader.State <> LoadState.Finished Then
+                    LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\", WaitForExit:=True)
+                End If
+                If McFolderListLoader.State <> LoadState.Finished Then McFolderListLoader.WaitForExit(IsForceRestart:=True)
+                Dim Instance As McInstance = Nothing
+                If McInstanceList.Any() Then Instance = McInstanceList.First.Value(0)
+                RunInUi(Sub()
+                            If McInstanceSelected Is Nothing AndAlso Instance IsNot Nothing Then McInstanceSelected = Instance
+                            IsLoadFinished = True
+                            RefreshButtonsUI()
+                        End Sub)
+            Catch ex As Exception
+                Logger.Warn(ex, "启动页版本加载自愈失败")
+            End Try
+        End Sub)
+    End Sub
     Public Sub RefreshPage(KeepInput As Boolean, Anim As Boolean)
         '获取页面的可用种类并回写缓存
         Dim Type As PageType
@@ -505,6 +527,14 @@ UseDefault:
     End Sub
     '启动按钮
     Public Sub LaunchButtonClick() Handles BtnLaunch.Click
+        '诊断+自愈：版本加载卡住时点启动会无反应，这里给出原因并触发重载
+        If Not IsLoadFinished OrElse McInstanceListLoader.State = LoadState.Loading OrElse McFolderListLoader.State = LoadState.Loading Then
+            Hint($"版本加载未完成（按钮:{BtnLaunch.Text}，列表:{McInstanceListLoader.State}，文件夹:{McFolderListLoader.State}），正在重新加载……", HintType.Info)
+            RelaunchInstanceLoad()
+        End If
+        If BtnLaunch.IsEnabled AndAlso BtnLaunch.Text <> "启动游戏" AndAlso BtnLaunch.Text <> "下载游戏" Then
+            Hint($"启动按钮当前状态：{BtnLaunch.Text}", HintType.Info)
+        End If
         If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled OrElse
             (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then Return
         '愚人节处理
