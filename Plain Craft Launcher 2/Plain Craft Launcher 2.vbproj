@@ -310,9 +310,6 @@
     <Compile Include="Pages\PageLaunch\PageLoginNideSkin.xaml.vb">
       <DependentUpon>PageLoginNideSkin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageAI\PageAIRight.xaml.vb">
-      <DependentUpon>PageAIRight.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\PageInstance\PageInstanceExport.xaml.vb">
       <DependentUpon>PageInstanceExport.xaml</DependentUpon>
     </Compile>
@@ -549,10 +546,6 @@
     </Page>
     <None Include="app.manifest" />
     <None Include="Resources\Custom.xaml" />
-    <Page Include="Pages\PageAI\PageAIRight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\PageInstance\PageInstanceExport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -133,7 +133,6 @@
                             <local:MyRadioButton x:Name="BtnTitleSelect3" Text="设置" Tag="3" Margin="0,5" Padding="2,0"
                                              LogoScale="1.1" Logo="M940.4 463.7L773.3 174.2c-17.3-30-49.2-48.4-83.8-48.4H340.2c-34.6 0-66.5 18.5-83.8 48.4L89.2 463.7c-17.3 30-17.3 66.9 0 96.8L256.4 850c17.3 30 49.2 48.4 83.8 48.4h349.2c34.6 0 66.5-18.5 83.8-48.4l167.2-289.5c17.3-29.9 17.3-66.8 0-96.8z m-94.6 96.8L725.9 768.1c-17.3 30-49.2 48.4-83.8 48.4H387.5c-34.6 0-66.5-18.5-83.8-48.4L183.9 560.5c-17.3-30-17.3-66.9 0-96.8l119.8-207.5c17.3-30 49.2-48.4 83.8-48.4h254.6c34.6 0 66.5 18.5 83.8 48.4l119.8 207.5c17.3 30 17.3 66.9 0.1 96.8z M522.3 321.2c-2.5-0.1-5-0.2-7.5-0.2-119.9 0-214 110.3-186.3 235 15.8 70.9 71.5 126.6 142.4 142.4 17.5 3.9 34.7 5.4 51.4 4.7 102.1-3.9 183.6-87.9 183.6-191 0.1-103-81.5-187-183.6-190.9z m68.6 269.1c-18.5 18-43 28.9-68.6 30.7l-6 0.3c-30.2 0.4-58.6-11.4-79.7-33-19.5-20.1-30.7-47-30.9-75-0.3-29.6 11.1-57.4 32-78.3 20.6-20.6 48-32 77.2-32 2.5 0 5 0.1 7.5 0.3 26.7 1.8 51.5 13.2 70.5 32.5 19.6 20 30.8 46.9 31.2 74.9 0.2 30.2-11.5 58.6-33.2 79.6z"/>
 
-<local:MyRadioButton x:Name="BtnTitleSelect5" Text="AI" Tag="10" Margin="0,5" Padding="2,0" LogoScale="0.9" Logo="M256,64C114.6,64,0,145.6,0,256S114.6,448,256,448c26.6,0,52.6-3.7,77.4-10.8L464,480l-24.4-97.6C486.7,342.2,512,301.7,512,256,512,145.6,397.4,64,256,64z" />
                         </StackPanel>
                 </Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Grid.Column="1" Grid.RowSpan="2" Panel.ZIndex="500">
@@ -206,25 +205,8 @@
                         </Border>
                     </Border>
                 </Grid>
-                <Border x:Name="HitMascot" Background="Transparent" Width="170" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,4" Grid.Column="1" Grid.RowSpan="2" Cursor="Hand" Panel.ZIndex="400">
-                    <Border.RenderTransform>
-                        <TranslateTransform x:Name="TfMascot" X="0" Y="0" />
-                    </Border.RenderTransform>
-                    <Image x:Name="ImgMascot" Source="/Plain Craft Launcher 2;component/Images/mascot.png" Width="170" Stretch="Uniform" IsHitTestVisible="False" Opacity="0" />
-                </Border>
-        <Popup x:Name="PopMascot" PlacementTarget="{Binding ElementName=ImgMascot}" Placement="Top" VerticalOffset="6" StaysOpen="False" AllowsTransparency="True">
-                    <Border Background="White" CornerRadius="10" Padding="12" Width="260" BorderBrush="#DDD" BorderThickness="1">
-                        <Border.Effect><DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.25" /></Border.Effect>
-                        <StackPanel>
-                            <TextBlock x:Name="LabMascotMsg" TextWrapping="Wrap" FontSize="13" Foreground="#333" Text="你好！点我可以聊天~" />
-                            <Grid Margin="0,8,0,0">
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <TextBox x:Name="TextMascotInput" Height="28" FontSize="12" VerticalContentAlignment="Center" />
-                                <local:MyButton x:Name="BtnMascotSend" Grid.Column="1" Text="发送" Width="56" Height="28" Margin="6,0,0,0" ColorType="Highlight" />
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-                </Popup>
+                
+        
                 <StackPanel x:Name="PanHint" IsHitTestVisible="False" UseLayoutRounding="True" SnapsToDevicePixels="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,20" Grid.Column="1" Grid.RowSpan="2" />
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Margin="15">
                     <local:MyExtraButton x:Name="BtnExtraBack" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="返回顶部" Visibility="Collapsed"

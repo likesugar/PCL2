@@ -2,7 +2,6 @@
 Imports System.Windows.Interop
 
 Public Class FormMain
-    Private FrmAIRight As PageAIRight
 
 #Region "基础"
 
@@ -352,7 +351,6 @@ Public Class FormMain
         ApplicationStartTick = GetTimeMs()
         SidebarInitCollapsed()
         ' 看板娘淡入
-        MascotRefresh()
         Handle = New WindowInteropHelper(Me).Handle
         '读取设置
         UpdateBackgroundAndTitleBar()
@@ -1179,8 +1177,6 @@ Public Class FormMain
         ''' 帮助详情。这是一个副页面。
         ''' </summary>
         HelpDetail = 9
-        ' AI 助手
-        AIClient = 10
     End Enum
     ''' <summary>
     ''' 次要页面种类。其数值必须与 StackPanel 中的下标一致。
@@ -1331,7 +1327,6 @@ Public Class FormMain
                     Case PageType.Launch : BtnSel = BtnTitleSelect0
                     Case PageType.Download : BtnSel = BtnTitleSelect1
                     Case PageType.Setup : BtnSel = BtnTitleSelect3
-                    Case PageType.AIClient : BtnSel = BtnTitleSelect5
                 End Select
                 If BtnSel IsNot Nothing Then BtnSel.SetChecked(True, True, PageNameGet(PageCurrent) = "")
             End If
@@ -1461,9 +1456,6 @@ Public Class FormMain
                 Case PageType.ResourceDetail '社区资源详情
                     If FrmDownloadResourceDetail Is Nothing Then FrmDownloadResourceDetail = New PageDownloadResourceDetail
                     PageChangeAnim(New MyPageLeft, FrmDownloadResourceDetail)
-                Case PageType.AIClient 'AI 助手
-                    If FrmAIRight Is Nothing Then FrmAIRight = New PageAIRight
-                    PageChangeAnim(New MyPageLeft, FrmAIRight)
                 Case PageType.HelpDetail '帮助详情
                     PageChangeAnim(New MyPageLeft, Stack.Additional(1))
             End Select
@@ -1736,151 +1728,4 @@ Public Class FormMain
     End Sub
 
     ' 看板娘显示刷新
-    Public Shared Function MascotHiddenFile() As String
-        Return PathTemp & "mascot_hidden.txt"
-    End Function
-
-    Public Shared Function MascotIsHidden() As Boolean
-        Try : Return IO.File.Exists(MascotHiddenFile()) : Catch ex As Exception : Return False : End Try
-    End Function
-
-    Public Sub MascotRefresh()
-        Try
-            Dim Show As Boolean = Not MascotIsHidden()
-            Dim aniM As New Animation.DoubleAnimation(If(Show, 1, 0), New Duration(TimeSpan.FromMilliseconds(300)))
-            ImgMascot.BeginAnimation(OpacityProperty, aniM)
-            HitMascot.IsHitTestVisible = Show
-        Catch ex As Exception
-            Logger.Warn(ex, "看板娘刷新失败")
-        End Try
-    End Sub
-
-
-    ' ---------- 看板娘拖动 / 双击隐藏 ----------
-    Private MascotDragging As Boolean = False
-    Private MascotDragPos As Point
-    Private MascotDragStart As Point?
-    Private MascotBusy As Boolean = False
-
-    Private Sub ImgMascot_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles HitMascot.PreviewMouseLeftButtonDown
-        e.Handled = True '阻止冒泡到全窗拖动，否则 DragMove 吞掉点击
-        Logger.Info("看板娘：鼠标按下 ClickCount=" & e.ClickCount)
-        If e.ClickCount >= 2 Then
-            Try : IO.File.WriteAllText(MascotHiddenFile(), "1") : Catch ex As Exception : End Try
-            MascotRefresh()
-            Hint("看板娘已隐藏，可在 AI 助手页重新开启", HintType.Blue)
-            Return
-        End If
-        MascotDragging = True
-        MascotDragStart = e.GetPosition(Me)
-        MascotDragPos = MascotDragStart.Value
-        HitMascot.CaptureMouse()
-    End Sub
-
-    Private Sub ImgMascot_MouseMove(sender As Object, e As Input.MouseEventArgs) Handles HitMascot.PreviewMouseMove
-        If Not MascotDragging Then Return
-        Dim P As Point = e.GetPosition(Me)
-        Dim DX As Double = P.X - MascotDragPos.X, DY As Double = P.Y - MascotDragPos.Y
-        If Math.Abs(DX) < 1 AndAlso Math.Abs(DY) < 1 Then Return
-        TfMascot.X = Math.Max(-650, Math.Min(60, TfMascot.X + DX))
-        TfMascot.Y = Math.Max(-480, Math.Min(60, TfMascot.Y + DY))
-        MascotDragPos = P
-    End Sub
-
-    Private Sub ImgMascot_MouseLeftButtonUp(sender As Object, e As Input.MouseButtonEventArgs) Handles HitMascot.PreviewMouseLeftButtonUp
-        MascotDragging = False
-        HitMascot.ReleaseMouseCapture()
-        ' 未发生拖动 → 单击打开对话气泡
-        If MascotDragStart IsNot Nothing AndAlso Math.Abs(MascotDragStart.Value.X - MascotDragPos.X) < 3 AndAlso Math.Abs(MascotDragStart.Value.Y - MascotDragPos.Y) < 3 Then
-            MascotToggleChat()
-        End If
-        MascotDragStart = Nothing
-    End Sub
-
-    ' 启动时默认收起（悬停展开模式）
-    Public Sub SidebarInitCollapsed()
-        SidebarPinned = False
-        SidebarHovering = False
-        SidebarApply(True, False)
-    End Sub
-
-
-    Private Sub MascotToggleChat()
-        Logger.Info("看板娘：打开对话气泡")
-        Try
-        If PopMascot.IsOpen Then
-            PopMascot.IsOpen = False
-            Return
-        End If
-        If PageAIRight.CfgGet("Enabled", "0") <> "1" OrElse PageAIRight.CfgGet("Key", "") = "" Then
-            LabMascotMsg.Text = "还没有配置 AI 助手哦～请到侧边栏「AI」页填写接口和 Key"
-            TextMascotInput.IsEnabled = False
-            PopMascot.IsOpen = True
-            Return
-        End If
-        TextMascotInput.IsEnabled = True
-        LabMascotMsg.Text = "在下面输入，按发送和我聊天！"
-        PopMascot.IsOpen = True
-        Catch ex As Exception
-            Logger.Error(ex, "看板娘气泡打开失败")
-        End Try
-    End Sub
-
-    Private Function SafeGetS2(Key As String) As String
-        Try
-            If Settings.HasSaved(Key) Then Return Settings.GetSafe(Key)?.ToString() : Else Return ""
-        Catch ex As Exception
-            Return ""
-        End Try
-    End Function
-
-    Private Function SafeGetB2(Key As String, Def As Boolean) As Boolean
-        Try
-            If Settings.HasSaved(Key) Then Return (Settings.GetSafe(Key)?.ToString() = "True") : Else Return Def
-        Catch ex As Exception
-            Return Def
-        End Try
-    End Function
-
-    Private Sub BtnMascotSend_Click(sender As Object, e As EventArgs) Handles BtnMascotSend.Click
-        Dim Msg As String = TextMascotInput.Text.Trim()
-        If Msg = "" OrElse MascotBusy Then Return
-        Dim Key As String = PageAIRight.CfgGet("Key", "")
-        Dim Base As String = PageAIRight.CfgGet("Base", "")
-        If Base = "" Then Base = "https://api.deepseek.com/v1"
-        Dim Model As String = PageAIRight.CfgGet("Model", "")
-        If Model = "" Then Model = "deepseek-chat"
-        MascotBusy = True
-        LabMascotMsg.Text = "思考中…"
-        TextMascotInput.Text = ""
-        RunInNewThread(Sub()
-                           Try
-                               Dim JsonMsg As String = Msg.Replace(Chr(92), Chr(92) & Chr(92)).Replace(Chr(34), Chr(34) & Chr(34)).Replace(vbCr, "").Replace(vbLf, Chr(92) & "n")
-                               Dim Body As String = "{""model"":""" & Model & """,""stream"":false,""messages"":[{""role"":""user"",""content"":""" & JsonMsg & """}]}"
-                               Dim Reply As String = PageAIRight.NetRequestCore(Base.TrimEnd("/"c) & "/chat/completions", "POST", Key, Body)
-                               Dim Content As String = ""
-                               Dim M As System.Text.RegularExpressions.Match = System.Text.RegularExpressions.Regex.Match(Reply, """content""\s*:\s*""((?:[^""\\]|\\.)*)""")
-                               If M.Success Then Content = M.Groups(1).Value.Replace(Chr(92) & "n", vbCrLf).Replace(Chr(92) & Chr(34), Chr(34)).Replace(Chr(92) & Chr(92), Chr(92))
-                               
-                               If Content = "" Then Content = "（返回解析失败）"
-                               RunInUi(Sub()
-                                           LabMascotMsg.Text = Content
-                                           MascotBusy = False
-                                           TextMascotInput.Focus()
-                                       End Sub)
-                           Catch ex As Exception
-                               RunInUi(Sub()
-                                           LabMascotMsg.Text = "请求失败：" & ex.Message
-                                           MascotBusy = False
-                                       End Sub)
-                           End Try
-                       End Sub)
-    End Sub
-
-    Private Sub TextMascotInput_KeyDown(sender As Object, e As Input.KeyEventArgs) Handles TextMascotInput.KeyDown
-        If e.Key = Input.Key.Enter Then
-            BtnMascotSend_Click(Nothing, Nothing)
-            e.Handled = True
-        End If
-    End Sub
 End Class
