@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -216,21 +216,7 @@ internal static class Program {
             ((Border)Control(window, "PanMainRight")).Child = (UIElement)page;
             Pump(500);
             Capture(window, Path.Combine(output, "All-themes-unlocked.png"));
-            var about = (UIElement)Activator.CreateInstance(T("PageOtherAbout"))!;
-            ((Border)Control(window, "PanMainRight")).Child = about;
-            Pump(200);
-            about.GetType().GetMethod("PageOnEnter")!.Invoke(about, null);
-            Pump(500);
-            Check(((TextBlock)Control(about, "TextCommunistAgreement")).Text.Contains("使用权不以地区、身份、政治立场、赞助或付费为条件"), "About page shows the new sharing agreement without a network request");
-            Check(((TextBlock)Control(about, "TextBundledLicence")).Text.Contains("PCL 分发有限许可"), "About page shows bundled distribution licence without a sidecar file");
-            var agreementCard = (FrameworkElement)Control(about, "CardCommunistAgreement");
-            agreementCard.GetType().GetProperty("UseAnimation")!.SetValue(agreementCard, false);
-            agreementCard.GetType().GetProperty("IsSwapped")!.SetValue(agreementCard, false);
-            Pump(200);
-            ((ScrollViewer)Control(about, "PanBack")).ScrollToVerticalOffset(
-                agreementCard.TranslatePoint(new Point(0, 0), (UIElement)Control(about, "PanMain")).Y);
-            Pump(200);
-            Capture(window, Path.Combine(output, "Communist-agreement.png"));
+// PageOtherAbout removed
             File.WriteAllLines(Path.Combine(output, "smoke-results.txt"), report);
             Console.WriteLine("PASS: " + checks + " runtime checks; home and theme screenshots saved.");
             Environment.Exit(0);
