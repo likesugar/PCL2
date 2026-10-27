@@ -91,7 +91,6 @@
                 <RectangleGeometry x:Name="RectForm" RadiusX="14" RadiusY="14" />
             </Border.Clip>
             <Grid x:Name="PanForm" SnapsToDevicePixels="False" UseLayoutRounding="False">
-                <Canvas x:Name="PanSakura" Grid.ColumnSpan="2" Grid.RowSpan="2" IsHitTestVisible="False" Panel.ZIndex="300" ClipToBounds="True" />
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="1*" />
@@ -100,6 +99,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
+                <Canvas x:Name="PanSakura" Grid.ColumnSpan="2" Grid.RowSpan="2" IsHitTestVisible="False" Panel.ZIndex="300" ClipToBounds="True" />
                 <Canvas x:Name="ImgBack" IsHitTestVisible="False" Grid.Column="1" Grid.Row="1" RenderOptions.BitmapScalingMode="LowQuality"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 <Grid x:Name="CommunismBackdrop" Grid.Column="1" Grid.Row="1" IsHitTestVisible="False" Visibility="Collapsed" ClipToBounds="True">
