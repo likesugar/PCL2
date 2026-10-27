@@ -529,11 +529,11 @@ UseDefault:
     Public Sub LaunchButtonClick() Handles BtnLaunch.Click
         '诊断+自愈：版本加载卡住时点启动会无反应，这里给出原因并触发重载
         If Not IsLoadFinished OrElse McInstanceListLoader.State = LoadState.Loading OrElse McFolderListLoader.State = LoadState.Loading Then
-            Hint($"版本加载未完成（按钮:{BtnLaunch.Text}，列表:{McInstanceListLoader.State}，文件夹:{McFolderListLoader.State}），正在重新加载……", HintType.Normal)
+            Hint($"版本加载未完成（按钮:{BtnLaunch.Text}，列表:{McInstanceListLoader.State}，文件夹:{McFolderListLoader.State}），正在重新加载……", HintType.Blue)
             RelaunchInstanceLoad()
         End If
         If BtnLaunch.IsEnabled AndAlso BtnLaunch.Text <> "启动游戏" AndAlso BtnLaunch.Text <> "下载游戏" Then
-            Hint($"启动按钮当前状态：{BtnLaunch.Text}", HintType.Normal)
+            Hint($"启动按钮当前状态：{BtnLaunch.Text}", HintType.Blue)
         End If
         If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled OrElse
             (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then Return
