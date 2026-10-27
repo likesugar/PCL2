@@ -357,6 +357,7 @@ Public Class FormMain
         PageSetupUI.HiddenRefresh()
         PageSetupUI.BackgroundRefresh(False, True)
         MusicRefreshPlay(False, True)
+        UpdateSidebarLogin()
         '扩展按钮
         BtnExtraDownload.ShowCheck = AddressOf BtnExtraDownload_ShowCheck
         BtnExtraBack.ShowCheck = AddressOf BtnExtraBack_ShowCheck
@@ -1758,9 +1759,15 @@ End Sub
     End Sub
     Private Sub SidebarLoginShow()
         PageChange(PageType.Launch)
-        RunInUi(Sub()
-                    If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.PanLoginArea.Visibility = Visibility.Visible
-                End Sub)
+        Dispatcher.BeginInvoke(DispatcherPriority.Loaded, New Action(Sub()
+                    Try
+                        If FrmLaunchLeft IsNot Nothing AndAlso FrmLaunchLeft.PanLoginArea IsNot Nothing Then
+                            FrmLaunchLeft.PanLoginArea.Visibility = Visibility.Visible
+                        End If
+                    Catch ex As Exception
+                        Logger.Warn(ex, "展开侧栏登录卡失败")
+                    End Try
+                End Sub))
     End Sub
     '点头像 = 正版登录
     Private Sub BtnSidebarLogin_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarLogin.MouseLeftButtonDown
