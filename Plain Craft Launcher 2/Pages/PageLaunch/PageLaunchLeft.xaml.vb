@@ -10,7 +10,32 @@ Public Class PageLaunchLeft
             PanBack.Width = Math.Max(460, FrmMain.PanForm.ActualWidth - 60)
         Catch ex As Exception
         End Try
-        If IsLoad Then RefreshPage(True, False)
+        If IsLoad Then
+            RefreshPage(True, False)
+            '自愈：若初始版本加载未完成（按钮会一直“正在加载”），强制重启版本列表加载
+            If Not IsLoadFinished Then
+                RunInNewThread(
+                Sub()
+                    Try
+                        If McInstanceListLoader.State = LoadState.Loading OrElse McInstanceListLoader.State = LoadState.Waiting Then
+                            McInstanceListLoader.WaitForExit(IsForceRestart:=True)
+                        ElseIf McInstanceListLoader.State <> LoadState.Finished Then
+                            LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions", WaitForExit:=True)
+                        End If
+                        If McFolderListLoader.State <> LoadState.Finished Then McFolderListLoader.WaitForExit(IsForceRestart:=True)
+                        Dim Instance As McInstance = Nothing
+                        If McInstanceList.Any() Then Instance = McInstanceList.First.Value(0)
+                        RunInUi(Sub()
+                                    If McInstanceSelected Is Nothing AndAlso Instance IsNot Nothing Then McInstanceSelected = Instance
+                                    IsLoadFinished = True
+                                    RefreshButtonsUI()
+                                End Sub)
+                    Catch ex As Exception
+                        Logger.Warn(ex, "启动页版本加载自愈失败")
+                    End Try
+                End Sub)
+            End If
+        End If
 
         AprilPosTrans.X = 0
         AprilPosTrans.Y = 0
