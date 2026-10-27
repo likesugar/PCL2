@@ -1775,7 +1775,7 @@ End Sub
     Private SakuraParticles As New List(Of ParticleInfo)
     Private SakuraRand As New Random
     Private Class ParticleInfo
-        Public Shape As Ellipse
+        Public Shape As Windows.Shapes.Ellipse
         Public X As Double, Y As Double
         Public Speed As Double, Drift As Double, Phase As Double
         Public Size As Double
@@ -1809,7 +1809,7 @@ End Sub
                 .Speed = 0.6 + SakuraRand.NextDouble() * 1.4,
                 .Drift = 0.4 + SakuraRand.NextDouble() * 1.2,
                 .Phase = SakuraRand.NextDouble() * Math.PI * 2}
-            Dim E As New Ellipse With {.Width = P.Size, .Height = P.Size * If(Style = "Sakura", 0.8, 1), .Opacity = 0.75}
+            Dim E As New Windows.Shapes.Ellipse With {.Width = P.Size, .Height = P.Size * If(Style = "Sakura", 0.8, 1), .Opacity = 0.75}
             E.Fill = New Media.SolidColorBrush(SakuraColor(Style, SakuraRand.Next(3)))
             PanSakura.Children.Add(E)
             P.Shape = E
