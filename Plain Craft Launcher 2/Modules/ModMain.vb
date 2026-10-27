@@ -391,10 +391,6 @@ EndHint:
     Public FrmSetupSystem As PageSetupSystem
 
     '其他页面声明
-    Public FrmOtherLeft As PageOtherLeft
-    Public FrmOtherHelp As PageOtherHelp
-    Public FrmOtherAbout As PageOtherAbout
-    Public FrmOtherTest As PageOtherTest
 
     '登录页面声明
     Public FrmLoginLegacy As PageLoginLegacy
@@ -551,7 +547,6 @@ EndHint:
             CustomEventService.SetEventType(Item, CustomEvent.EventType.None) '清空自定义事件属性，它们会被下面的点击事件处理
             CustomEventService.SetEventData(Item, Nothing)
             '项目的点击事件
-            AddHandler Item.Click, Sub(sender, e) PageOtherHelp.OnItemClick(sender.Tag)
             Return Item
         End Function
 
@@ -890,8 +885,6 @@ NextFile:
             Text = Text.Replace("{login}", Replacer(Nothing))
         End If
         '高级
-        Text = Text.RegexReplace("\{hint\}", Function() Replacer(PageOtherTest.GetRandomHint()))
-        Text = Text.RegexReplace("\{cave\}", Function() Replacer(PageOtherTest.GetRandomCave()))
         Text = Text.RegexReplace("\{setup:([a-zA-Z0-9]+)\}", Function(m) Replacer(Settings.GetSafe(m.Groups(1).Value, McInstanceSelected)))
         Text = Text.RegexReplace("\{varible:([^:\}]+)(?::([^\}]+))?\}", Function(m) Replacer(RegistryUtils.TryRead($"HKEY_CURRENT_USER\Software\{RegFolder}", $"CustomEvent{m.Groups(1).Value}", m.Groups(2).Value)))
         Text = Text.RegexReplace("\{variable:([^:\}]+)(?::([^\}]+))?\}", Function(m) Replacer(RegistryUtils.TryRead($"HKEY_CURRENT_USER\Software\{RegFolder}", $"CustomEvent{m.Groups(1).Value}", m.Groups(2).Value)))

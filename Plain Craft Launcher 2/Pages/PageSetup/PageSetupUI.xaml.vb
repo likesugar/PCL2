@@ -399,7 +399,7 @@ Refresh:
         If FrmMain.PanTitleSelect Is Nothing OrElse Not FrmMain.PanTitleSelect.IsLoaded Then Return
         Try
             '顶部栏
-            If Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageDownload") AndAlso Settings.Get(Of Boolean)("UiHiddenPageLink") AndAlso Settings.Get(Of Boolean)("UiHiddenPageSetup") AndAlso Settings.Get(Of Boolean)("UiHiddenPageOther") Then
+            If Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageDownload") AndAlso Settings.Get(Of Boolean)("UiHiddenPageSetup") Then
                 '顶部栏已被全部隐藏
                 FrmMain.PanTitleSelect.Visibility = Visibility.Collapsed
             Else
@@ -477,51 +477,10 @@ Refresh:
             CheckHiddenSetupUI.Checked = False
         End If
     End Sub
-    Private Sub HiddenOtherMain() Handles CheckHiddenPageOther.Change
-        '更多主页面
-        If CheckHiddenPageOther.Checked Then
-            '开启
-            CheckHiddenOtherAbout.Checked = True
-            CheckHiddenOtherTest.Checked = True
-            CheckHiddenOtherFeedback.Checked = True
-            CheckHiddenOtherVote.Checked = True
-            CheckHiddenOtherHelp.Checked = True
-        Else
-            '关闭
-            If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") AndAlso
-                Settings.Get(Of Boolean)("UiHiddenOtherVote") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherFeedback") Then
-                CheckHiddenOtherAbout.Checked = False
-                CheckHiddenOtherTest.Checked = False
-                CheckHiddenOtherFeedback.Checked = False
-                CheckHiddenOtherVote.Checked = False
-                CheckHiddenOtherHelp.Checked = False
-            End If
-        End If
-    End Sub
-    Private Sub HiddenOtherSub(sender As Object, user As Boolean) Handles CheckHiddenOtherHelp.Change, CheckHiddenOtherAbout.Change, CheckHiddenOtherTest.Change
-        '更多子页面（有具体内容的）
-        If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") Then
-            '已被全部隐藏
-            CheckHiddenPageOther.Checked = True
-        Else
-            '未被全部隐藏
-            CheckHiddenPageOther.Checked = False
-        End If
-        '修改无具体内容的项
-        If Not user Then Return
-        If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") Then
-            CheckHiddenOtherFeedback.Checked = True
-            CheckHiddenOtherVote.Checked = True
-        End If
-    End Sub
-    Private Sub HiddenOtherNet(sender As Object, user As Boolean) Handles CheckHiddenOtherFeedback.Change, CheckHiddenOtherVote.Change
         '更多子页面（无具体内容的）
         If Not user Then Return
         If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") AndAlso
             (Not Settings.Get(Of Boolean)("UiHiddenOtherFeedback") OrElse Not Settings.Get(Of Boolean)("UiHiddenOtherVote")) Then
-            CheckHiddenOtherAbout.Checked = False
-            CheckHiddenOtherTest.Checked = False
-            CheckHiddenOtherHelp.Checked = False
         End If
     End Sub
 

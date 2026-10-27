@@ -204,7 +204,6 @@ Public Class CustomEvent
                             Logger.Info($"打开类自定义事件实际路径：{Location}，工作目录：{WorkingDir}")
                             '执行
                             If Type = EventType.打开帮助 Then
-                                PageOtherHelp.EnterHelpPage(Location)
                             Else
                                 If Not EventSafetyConfirm("即将执行：" & Location & If(Args.Length >= 2, " " & Arg1, "")) Then Return
                                 Dim Info As New ProcessStartInfo With {
@@ -255,17 +254,13 @@ Public Class CustomEvent
                     End If
 
                 Case EventType.刷新帮助
-                    RunInUiWait(Sub() PageOtherLeft.RefreshHelp())
                     If String.IsNullOrEmpty(Arg) Then Hint("已刷新！", HintType.Green)
 
                 Case EventType.今日人品
-                    PageOtherTest.Jrrp()
 
                 Case EventType.内存优化
-                    RunInThread(Sub() PageOtherTest.MemoryOptimize(True))
 
                 Case EventType.清理垃圾
-                    RunInThread(Sub() PageOtherTest.RubbishClear())
 
                 Case EventType.弹出窗口
                     If Args.Length = 1 Then Throw New Exception($"EventType {Type} 需要至少 2 个以 | 分割的参数，例如 弹窗标题|弹窗内容")
@@ -308,14 +303,10 @@ Public Class CustomEvent
                         Try
                             Select Case Args.Length
                                 Case 1
-                                    PageOtherTest.StartCustomDownload(Arg0, PathUtils.GetLastPart(Arg0))
                                 Case 2
-                                    PageOtherTest.StartCustomDownload(Arg0, Arg1)
                                 Case Else
-                                    PageOtherTest.StartCustomDownload(Arg0, Args(1), Args(2))
                             End Select
                         Catch
-                            PageOtherTest.StartCustomDownload(Arg0, "未知")
                         End Try
                     End Sub)
 

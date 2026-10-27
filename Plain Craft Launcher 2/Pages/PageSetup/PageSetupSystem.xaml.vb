@@ -1,4 +1,4 @@
-Public Class PageSetupSystem
+﻿Public Class PageSetupSystem
 
 
     Private Sub PageSetupSystem_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
@@ -66,7 +66,6 @@ Public Class PageSetupSystem
 
     '识别码/土豆码替代入口
     Private Sub BtnSystemIdentify_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemIdentify.Click
-        PageOtherAbout.CopyIdentify()
     End Sub
     Private Sub BtnSystemUnlock_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemUnlock.Click
         InputPotatoCode(False)

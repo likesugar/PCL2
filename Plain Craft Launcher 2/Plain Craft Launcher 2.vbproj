@@ -194,8 +194,8 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="Application.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="Controls\Behaviors\ClipboardInterceptor.vb" />
     <Compile Include="Controls\Behaviors\Interfaces.vb" />
@@ -313,9 +313,6 @@
     <Compile Include="Pages\PageAI\PageAIRight.xaml.vb">
       <DependentUpon>PageAIRight.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageOther\PageOtherHelpDetail.xaml.vb">
-      <DependentUpon>PageOtherHelpDetail.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\PageInstance\PageInstanceExport.xaml.vb">
       <DependentUpon>PageInstanceExport.xaml</DependentUpon>
     </Compile>
@@ -341,9 +338,6 @@
     <Compile Include="Modules\Minecraft\ModDownload.vb" />
     <Compile Include="Modules\Minecraft\ModLaunch.vb" />
     <Compile Include="Modules\Minecraft\ModMinecraft.vb" />
-    <Compile Include="Pages\PageOther\PageOtherTest.xaml.vb">
-      <DependentUpon>PageOtherTest.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\PageLaunch\MySkin.xaml.vb">
       <DependentUpon>MySkin.xaml</DependentUpon>
     </Compile>
@@ -365,17 +359,8 @@
     <Compile Include="Pages\PageLaunch\PageLaunchRight.xaml.vb">
       <DependentUpon>PageLaunchRight.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageOther\PageOtherAbout.xaml.vb">
-      <DependentUpon>PageOtherAbout.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\PageOther\PageOtherHelp.xaml.vb">
-      <DependentUpon>PageOtherHelp.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\PageDownload\PageDownloadLeft.xaml.vb">
       <DependentUpon>PageDownloadLeft.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\PageOther\PageOtherLeft.xaml.vb">
-      <DependentUpon>PageOtherLeft.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageSetup\PageSetupLeft.xaml.vb">
       <DependentUpon>PageSetupLeft.xaml</DependentUpon>
@@ -399,9 +384,9 @@
     </Compile>
         <Resource Include="Images\mascot.png" />
 <Page Include="Controls\MyExtraTextButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+  <SubType>Designer</SubType>
+  <Generator>MSBuild:Compile</Generator>
+</Page>
     <Page Include="Controls\MyExtraButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -431,8 +416,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MyMsg\MyMsgInput.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MyMsg\MyMsgSelect.xaml">
       <SubType>Designer</SubType>
@@ -447,8 +432,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MyIconTextButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MySearchBox.xaml">
       <SubType>Designer</SubType>
@@ -463,12 +448,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FormMain.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Application.xaml.vb">
       <DependentUpon>Application.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\MyListItem.xaml.vb">
       <DependentUpon>MyListItem.xaml</DependentUpon>
@@ -497,32 +481,31 @@
     </Compile>
     <Compile Include="FormMain.xaml.vb">
       <DependentUpon>FormMain.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
 
     <Page Include="Pages\PageInstance\MyLocalModItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\MyResourceItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageDownloadDataPack.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageDownloadPack.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageDownloadShader.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageDownloadResourcePack.xaml">
       <SubType>Designer</SubType>
@@ -533,24 +516,24 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\PageDownloadInstall.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageDownload\Resource\PageDownloadCompDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\MyMsgLogin.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\PageLoginAuth.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\PageLoginAuthSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\PageLoginMs.xaml">
       <SubType>Designer</SubType>
@@ -561,26 +544,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\PageLoginNideSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Include="app.manifest" />
-    <None Include="Resources\Custom.xaml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Resources\Custom.xaml" />
     <Page Include="Pages\PageAI\PageAIRight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PageOther\PageOtherHelpDetail.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\PageInstance\PageInstanceExport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\PageOther\PageOtherTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -597,12 +570,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSelectRight.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSelectLeft.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageLaunch\PageLaunchLeft.xaml">
       <SubType>Designer</SubType>
@@ -612,29 +585,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PageOther\PageOtherAbout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\PageOther\PageOtherHelp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\PageDownload\PageDownloadLeft.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\PageOther\PageOtherLeft.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PageSetup\PageSetupLeft.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSetup\PageSetupLaunch.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageSetup\PageSetupSystem.xaml">
       <SubType>Designer</SubType>
@@ -722,17 +683,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx" />
     <None Include="My Project\app.manifest" />
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
+    <None Include="My Project\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

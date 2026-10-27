@@ -1,4 +1,4 @@
-Public Module ModLaunch
+﻿Public Module ModLaunch
 
 #Region "开始"
 
@@ -214,7 +214,6 @@ NextInner:
         Dim Finished As Boolean = False
         RunInNewThread(
         Sub()
-            PageOtherTest.MemoryOptimize(False)
             Finished = True
         End Sub, "Launch Memory Optimize")
         Do While Not Finished AndAlso Not Loader.IsCanceled

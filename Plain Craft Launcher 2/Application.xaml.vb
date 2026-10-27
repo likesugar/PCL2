@@ -1,4 +1,4 @@
-Imports System.Reflection
+﻿Imports System.Reflection
 Imports System.Windows.Threading
 
 Public Class Application
@@ -54,7 +54,6 @@ Public Class Application
                     '内存优化
                     Dim Ram = My.Computer.Info.AvailablePhysicalMemory
                     Try
-                        PageOtherTest.MemoryOptimizeInternal(False)
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "内存优化失败")
                         Environment.Exit(-1)
