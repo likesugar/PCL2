@@ -748,8 +748,8 @@ ExitRefresh:
             FrmLaunchLeft.PanLaunchCard.Opacity = L / 100.0
             FrmLaunchLeft.PanLaunchCard.IsHitTestVisible = L > 0
             ' 登录滑条：整张登录卡（tab+头像+用户名）全隐
-            FrmLaunchLeft.PanLogin.Opacity = R / 100.0
-            FrmLaunchLeft.PanLogin.IsHitTestVisible = R > 0
+            FrmLaunchLeft.PanLoginArea.Opacity = R / 100.0
+            FrmLaunchLeft.PanLoginArea.IsHitTestVisible = R > 0
         Catch ex As Exception
             Logger.Warn(ex, "卡片透明度刷新失败")
         End Try

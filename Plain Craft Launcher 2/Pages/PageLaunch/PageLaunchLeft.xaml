@@ -54,7 +54,7 @@
         </Grid>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,22,0">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,22,0" x:Name="PanLoginArea">
 <Grid Name="PanType" Visibility="Collapsed" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
