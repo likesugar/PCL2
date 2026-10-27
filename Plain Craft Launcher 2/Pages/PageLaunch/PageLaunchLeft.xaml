@@ -54,26 +54,8 @@
         </Grid>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" Margin="24,10,22,14" VerticalAlignment="Center" x:Name="PanLogin">
-            <Grid.RenderTransform>
-                <ScaleTransform x:Name="TransformLogin" />
-            </Grid.RenderTransform>
-            <Border x:Name="BorderCardRight" Background="#00FFFFFF" CornerRadius="10" Margin="-8,-8,-8,-8" IsHitTestVisible="False" />
-        </Grid>
-        <Grid Grid.ColumnSpan="5" Margin="20,24,20,-4" Name="PanTypeOne">
-            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource ColorBrushSemiTransparent}" CornerRadius="13" MinHeight="27" MaxHeight="27">
-                <StackPanel Orientation="Horizontal">
-                    <Path Name="PathTypeOne" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Margin="12,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorBrush3}" MaxHeight="16" MaxWidth="16" VerticalAlignment="Center"
-                          Data="">
-                        <Path.RenderTransform>
-                            <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
-                        </Path.RenderTransform>
-                    </Path>
-                    <TextBlock Name="LabTypeOne" Text="" FontSize="14" VerticalAlignment="Center" Grid.Column="1" Foreground="{DynamicResource ColorBrush3}" Margin="15,0,12,0" Grid.ColumnSpan="2" SnapsToDevicePixels="False" UseLayoutRounding="False" />
-                </StackPanel>
-            </Border>
-        </Grid>
-        <Grid Grid.Column="3" Grid.Row="0" Margin="8,4,20,0" Name="PanType" Visibility="Collapsed" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,22,0">
+<Grid Name="PanType" Visibility="Collapsed" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="Auto" />
@@ -88,6 +70,27 @@
             <!--<local:MyRadioButton x:Name="RadioLoginType2" Tag="LoginType/2" Grid.Column="4" ColorType="Highlight" Text="统一通行证" Visibility="Collapsed"
                              LogoScale="1.1" Logo="M834.5 684.1c-31.2-70.4-98.9-120.9-179.1-127.3 63.5-8.5 112.6-63 112.6-128.8 0-71.8-58.2-130-130-130s-130 58.2-130 130c0 65.9 49 120.3 112.6 128.8-80.2 6.4-148 57-179.1 127.3-8.7 19.7 6 42 27.6 42 12.1 0 22.7-7.5 27.7-18.5 24.3-53.9 78.5-91.5 141.3-91.5s117 37.6 141.3 91.5c5 11.1 15.6 18.5 27.7 18.5 21.4 0 36.1-22.3 27.4-42zM567.9 427.9c0-38.6 31.4-70 70-70s70 31.4 70 70-31.4 70-70 70-70-31.4-70-70zM460.3 347.9H216.9c-16.6 0-30 13.4-30 30s13.4 30 30 30h243.3c16.6 0 30-13.4 30-30 0.1-16.5-13.4-30-29.9-30zM367.4 459.6H216.9c-16.6 0-30 13.4-30 30s13.4 30 30 30h150.4c16.6 0 30-13.4 30-30 0.1-16.6-13.4-30-29.9-30zM297.4 571.2H217c-16.6 0-30 13.4-30 30s13.4 30 30 30h80.4c16.6 0 30-13.4 30-30 0-16.5-13.5-30-30-30zM900 236v552H124V236h776m0-60H124c-33.1 0-60 26.9-60 60v552c0 33.1 26.9 60 60 60h776c33.1 0 60-26.9 60-60V236c0-33.1-26.9-60-60-60z" />-->
         </Grid>
+<Grid Margin="0,14,0,0" VerticalAlignment="Center" x:Name="PanLogin">
+            <Grid.RenderTransform>
+                <ScaleTransform x:Name="TransformLogin" />
+            </Grid.RenderTransform>
+            <Border x:Name="BorderCardRight" Background="#00FFFFFF" CornerRadius="10" Margin="-8,-8,-8,-8" IsHitTestVisible="False" />
+        </Grid>
+        </StackPanel>
+        <Grid Grid.ColumnSpan="5" Margin="20,24,20,-4" Name="PanTypeOne">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource ColorBrushSemiTransparent}" CornerRadius="13" MinHeight="27" MaxHeight="27">
+                <StackPanel Orientation="Horizontal">
+                    <Path Name="PathTypeOne" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Margin="12,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorBrush3}" MaxHeight="16" MaxWidth="16" VerticalAlignment="Center"
+                          Data="">
+                        <Path.RenderTransform>
+                            <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
+                        </Path.RenderTransform>
+                    </Path>
+                    <TextBlock Name="LabTypeOne" Text="" FontSize="14" VerticalAlignment="Center" Grid.Column="1" Foreground="{DynamicResource ColorBrush3}" Margin="15,0,12,0" Grid.ColumnSpan="2" SnapsToDevicePixels="False" UseLayoutRounding="False" />
+                </StackPanel>
+            </Border>
+        </Grid>
+        
     </Grid>
     <Grid Name="PanLaunching" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Opacity="0">
         <Grid.RenderTransform>
