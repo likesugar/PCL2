@@ -1557,6 +1557,7 @@ Public Class FormMain
         PanMainLeft_Resize(e.NewSize.Width)
     End Sub
     Private Sub PanMainLeft_Resize(NewWidth As Double)
+        If PageCurrent = PageType.Launch Then NewWidth = Math.Min(NewWidth, 272) '启动页背景条只罩启动卡
         Dim Delta As Double = NewWidth - RectLeftBackground.Width
         If Math.Abs(Delta) > 0.1 AndAlso AniControlEnabled = 0 Then
             If PanMain.Opacity < 0.1 Then PanMainLeft.IsHitTestVisible = False '避免左边栏指向背景未能完美覆盖左边栏
