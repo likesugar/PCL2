@@ -1862,7 +1862,15 @@ End Sub
             Case "Leaf" : Return Media.Color.FromRgb(CByte(120 + Seed * 20), CByte(190), CByte(90))
             Case "Snow" : Return Media.Color.FromRgb(&HF5, &HF8, &HFF)
             Case "Star" : Return If(Seed = 0, Media.Color.FromRgb(&HFF, &HE8, &H9A), Media.Color.FromRgb(&HFF, &HF7, &HD1))
-            Case Else : Return Media.Color.FromRgb(CByte(250 - Seed * 8), CByte(180 + Seed * 15), CByte(200))
+            Case Else
+                Dim UserColor = Settings.Get(Of String)("DiySakuraColor")
+                Try
+                    Dim C2 = (CType(New Media.BrushConverter().ConvertFromString(If(String.IsNullOrWhiteSpace(UserColor), "#FAB4C8", UserColor)), Media.SolidColorBrush)).Color
+                    If Seed > 0 Then Return Media.Color.FromRgb(CByte(C2.R * 0.92), CByte(C2.G * 0.92), CByte(C2.B * 0.92))
+                    Return C2
+                Catch
+                    Return Media.Color.FromRgb(CByte(250 - Seed * 8), CByte(180 + Seed * 15), CByte(200))
+                End Try
         End Select
     End Function
     Private Sub SakuraTick(sender As Object, e As EventArgs)

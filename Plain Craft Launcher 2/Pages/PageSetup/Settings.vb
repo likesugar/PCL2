@@ -154,6 +154,7 @@ Public Class Settings
         New Setting("DiySakuraPause", False),
         New Setting("DiySakuraCount", 15),
         New Setting("DiySakuraStyle", "Sakura"),
+        New Setting("DiySakuraColor", "#FAB4C8"),
         New Setting("DiyWindowRadius", 14),
         New Setting("DiyWindowOpacity", 100),
         New Setting("UiHiddenPageDownload", False, OnChanged:=AddressOf PageSetupUI.HiddenRefresh),

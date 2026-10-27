@@ -15,6 +15,7 @@
         SliderDiyOpacity.Value = Settings.Get(Of Integer)("DiyWindowOpacity")
         LabDiyOpacity.Text = SliderDiyOpacity.Value
         RefreshStyleButtons()
+        RefreshColorBlocks()
         IsLoading = False
     End Sub
 
@@ -79,4 +80,37 @@
         FrmMain.Opacity = SliderDiyOpacity.Value / 100.0
     End Sub
 
+
+    '花瓣颜色（图1：色块选择）
+    Private SakuraColors() As String = {"#FAB4C8", "#FFFFFF", "#FF8FA3", "#C3A6E8", "#A3C9F7", "#F7D794"}
+    Private Sub SakuraColorPick(Idx As Integer)
+        Settings.Set("DiySakuraColor", SakuraColors(Idx))
+        RefreshColorBlocks()
+        FrmMain.SakuraRefresh()
+    End Sub
+    Private Sub RefreshColorBlocks()
+        Dim Current = Settings.Get(Of String)("DiySakuraColor").ToLower()
+        For I = 0 To 5
+            Dim B As Border = CType(FindName("DiySakuraColor" & I), Border)
+            If B IsNot Nothing Then B.BorderBrush = If(SakuraColors(I).ToLower() = Current, Media.Brushes.DodgerBlue, Media.Brushes.Transparent)
+        Next
+    End Sub
+    Private Sub DiySakuraColor0_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor0.MouseLeftButtonDown
+        SakuraColorPick(0)
+    End Sub
+    Private Sub DiySakuraColor1_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor1.MouseLeftButtonDown
+        SakuraColorPick(1)
+    End Sub
+    Private Sub DiySakuraColor2_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor2.MouseLeftButtonDown
+        SakuraColorPick(2)
+    End Sub
+    Private Sub DiySakuraColor3_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor3.MouseLeftButtonDown
+        SakuraColorPick(3)
+    End Sub
+    Private Sub DiySakuraColor4_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor4.MouseLeftButtonDown
+        SakuraColorPick(4)
+    End Sub
+    Private Sub DiySakuraColor5_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles DiySakuraColor5.MouseLeftButtonDown
+        SakuraColorPick(5)
+    End Sub
 End Class

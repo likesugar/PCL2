@@ -5,37 +5,60 @@
              PanScroll="{Binding ElementName=PanBack}">
     <local:MyScrollViewer x:Name="PanBack" Margin="15,0,0,0">
         <StackPanel Margin="0,0,15,15">
-            <local:MyCard Margin="0,0,0,15" Title="樱花飘落动画">
-                <StackPanel Margin="25,38,23,15">
-                    <Grid>
+            <local:MyCard Margin="0,0,0,15" Title="樱花动画">
+                <StackPanel Margin="25,38,23,8">
+                    <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" /><ColumnDefinition Width="1*" />
+                            <ColumnDefinition /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="启用飘落动画" VerticalAlignment="Center" FontSize="13" />
-                        <local:MyCheckBox Grid.Column="1" x:Name="CheckDiySakura" Text="" HorizontalAlignment="Right" />
+                        <StackPanel>
+                            <TextBlock Text="飘落花瓣" FontSize="13" FontWeight="Bold" />
+                            <TextBlock Text="开启后窗口中会飘落樱花花瓣" FontSize="11" Opacity="0.55" Margin="0,2,0,0" />
+                        </StackPanel>
+                        <local:MyCheckBox Grid.Column="1" x:Name="CheckDiySakura" Text="" VerticalAlignment="Center" />
                     </Grid>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" />
+                            <ColumnDefinition /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="花瓣数量" VerticalAlignment="Center" FontSize="13" />
-                        <Slider Grid.Column="1" x:Name="SliderDiySakuraCount" Minimum="5" Maximum="35" Value="15" Margin="20,0,20,0" TickFrequency="1" IsSnapToTickEnabled="True" />
-                        <TextBlock Grid.Column="2" x:Name="LabDiySakuraCount" Text="15" VerticalAlignment="Center" FontSize="13" />
+                        <StackPanel>
+                            <TextBlock Text="失焦暂停" FontSize="13" FontWeight="Bold" />
+                            <TextBlock Text="窗口不在前台时暂停动画，节省性能" FontSize="11" Opacity="0.55" Margin="0,2,0,0" />
+                        </StackPanel>
+                        <local:MyCheckBox Grid.Column="1" x:Name="CheckDiySakuraPause" Text="" VerticalAlignment="Center" />
                     </Grid>
-                    <Grid Margin="0,10,0,0">
+                    <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition Width="34" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="失焦时暂停" VerticalAlignment="Center" FontSize="13" />
-                        <local:MyCheckBox Grid.Column="2" x:Name="CheckDiySakuraPause" Text="" />
+                        <TextBlock Text="花瓣数量" FontSize="13" VerticalAlignment="Center" />
+                        <Slider Grid.Column="1" x:Name="SliderDiySakuraCount" Minimum="5" Maximum="35" Value="15" Margin="18,0,12,0" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" x:Name="LabDiySakuraCount" Text="15" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="13" />
                     </Grid>
-                    <TextBlock Text="花瓣样式" FontSize="13" Margin="0,10,0,5" />
-                    <WrapPanel>
-                        <local:MyButton x:Name="BtnDiyStyleSakura" Text="樱花" MinWidth="80" Height="28" Margin="0,0,10,0" />
-                        <local:MyButton x:Name="BtnDiyStyleLeaf" Text="落叶" MinWidth="80" Height="28" Margin="0,0,10,0" />
-                        <local:MyButton x:Name="BtnDiyStyleSnow" Text="雪花" MinWidth="80" Height="28" Margin="0,0,10,0" />
-                        <local:MyButton x:Name="BtnDiyStyleStar" Text="星光" MinWidth="80" Height="28" />
-                    </WrapPanel>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="花瓣颜色" FontSize="13" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="18,0,0,0" x:Name="PanDiySakuraColors">
+                            <Border x:Name="DiySakuraColor0" Width="26" Height="20" CornerRadius="5" Margin="0,0,8,0" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#FAB4C8" ToolTip="樱花粉" />
+                            <Border x:Name="DiySakuraColor1" Width="26" Height="20" CornerRadius="5" Margin="0,0,8,0" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#FFFFFF" ToolTip="纯白" />
+                            <Border x:Name="DiySakuraColor2" Width="26" Height="20" CornerRadius="5" Margin="0,0,8,0" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#FF8FA3" ToolTip="桃花红" />
+                            <Border x:Name="DiySakuraColor3" Width="26" Height="20" CornerRadius="5" Margin="0,0,8,0" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#C3A6E8" ToolTip="紫藤" />
+                            <Border x:Name="DiySakuraColor4" Width="26" Height="20" CornerRadius="5" Margin="0,0,8,0" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#A3C9F7" ToolTip="淡蓝" />
+                            <Border x:Name="DiySakuraColor5" Width="26" Height="20" CornerRadius="5" Cursor="Hand" BorderThickness="2" BorderBrush="Transparent" Background="#F7D794" ToolTip="暖黄" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Margin="0,0,0,8">
+                        <TextBlock Text="花瓣样式" FontSize="13" FontWeight="Bold" />
+                        <TextBlock Text="切换飘落粒子的样式" FontSize="11" Opacity="0.55" Margin="0,2,0,8" />
+                        <UniformGrid Columns="4">
+                            <local:MyButton x:Name="BtnDiyStyleSakura" Text="🌸 樱花" MinWidth="0" Margin="0,0,6,0" Height="30" />
+                            <local:MyButton x:Name="BtnDiyStyleLeaf" Text="🍃 落叶" MinWidth="0" Margin="6,0,6,0" Height="30" />
+                            <local:MyButton x:Name="BtnDiyStyleSnow" Text="❄️ 雪花" MinWidth="0" Margin="6,0,6,0" Height="30" />
+                            <local:MyButton x:Name="BtnDiyStyleStar" Text="⭐ 星光" MinWidth="0" Margin="6,0,0,0" Height="30" />
+                        </UniformGrid>
+                    </StackPanel>
                 </StackPanel>
             </local:MyCard>
                         <local:MyCard Margin="0,0,0,15" Title="界面调整">
