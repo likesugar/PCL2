@@ -92,7 +92,7 @@ Public Class Settings
         New Setting("LaunchArgumentJavaAll", "[]", Source:=Sources.Registry),
         New Setting("LaunchArgumentIndie", 0),
         New Setting("LaunchArgumentIndieV2", 4),
-        New Setting("LaunchArgumentVisible", 5, Source:=Sources.Registry),
+        New Setting("LaunchArgumentVisible", 0, Source:=Sources.Registry),
         New Setting("LaunchArgumentPriority", 1, Source:=Sources.Registry),
         New Setting("LaunchArgumentWindowWidth", 854),
         New Setting("LaunchArgumentWindowHeight", 480),
