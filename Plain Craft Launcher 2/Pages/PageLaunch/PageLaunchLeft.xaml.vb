@@ -111,6 +111,15 @@ Public Class PageLaunchLeft
                 McInstanceSelected = Instance '绕这一圈是为了避免 McVersionCheck 触发第二次版本改变
                 IsLoadFinished = True
                 RefreshButtonsUI()
+                '主动拉正页面状态（防止初始 PageOnEnter 未触发导致状态卡在 Empty）
+                Try
+                    If FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState = MyPageRight.PageStates.Empty Then
+                        Logger.Warn("检测到启动页状态为 Empty，主动触发 PageOnEnter")
+                        FrmMain.PageRight.PageOnEnter()
+                    End If
+                Catch ex As Exception
+                    Logger.Warn(ex, "主动拉正页面状态失败")
+                End Try
                 RefreshPage(False, False) '有可能选择的版本变化了，需要重新刷新
                 If McLoginAble() = "" Then McLoginLoader.Start() '自动登录
                 '用于自动化测试生成的程序是否可以正常运行
@@ -535,16 +544,15 @@ UseDefault:
         If BtnLaunch.IsEnabled AndAlso BtnLaunch.Text <> "启动游戏" AndAlso BtnLaunch.Text <> "下载游戏" Then
             Hint($"启动按钮当前状态：{BtnLaunch.Text}", HintType.Blue)
         End If
-        If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled OrElse
-            (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then
-            '页面状态卡死自愈：显示具体状态并强制恢复
-            Hint($"页面状态异常（{FrmMain.PageRight.PageState}），正在自动恢复……", HintType.Blue)
+        If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled Then Return
+        If FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter Then
+            '页面状态卡死（Empty）：强制拉正后继续启动，无需第二次点击
+            Logger.Warn($"启动时页面状态异常：{FrmMain.PageRight.PageState}，已自动恢复")
             Try
                 FrmMain.PageRight.PageOnEnter()
             Catch ex As Exception
                 Logger.Warn(ex, "页面状态自愈失败")
             End Try
-            Return
         End If
         '愚人节处理
         If IsAprilEnabled AndAlso Not IsAprilGiveup Then
