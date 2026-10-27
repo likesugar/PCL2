@@ -579,6 +579,7 @@ Public Class FormMain
         AniControlEnabled += 1
         If IsUpdateWaitingRestart Then UpdateRestart(False)
         If ReturnCode = ProcessReturnValues.Exception Then
+            TryCast(Logger.Instance, PclLogger)?.DumpToDisk()
             If Not IsLogShown Then
                 FeedbackInfo()
                 Logger.Info("请在 https://github.com/Meloong-Git/PCL/issues 提交错误报告，以便于作者解决此问题！")

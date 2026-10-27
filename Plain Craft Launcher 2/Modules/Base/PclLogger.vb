@@ -1,5 +1,37 @@
-Public Class PclLogger
+﻿Public Class PclLogger
     Inherits FileLogger
+
+    Private MemoryLog As New List(Of String)
+    Private Dumped As Boolean = False
+
+    Public Overrides Sub Init()
+    End Sub
+
+    Public Overrides Sub Output(Entry As LogEntry)
+        MyBase.Output(Entry)
+        Try
+            SyncLock MemoryLog
+                MemoryLog.Add(Entry.message)
+                If MemoryLog.Count > 800 Then MemoryLog.RemoveAt(0)
+            End SyncLock
+        Catch
+        End Try
+    End Sub
+
+    Public Sub DumpToDisk()
+        If Dumped Then Return
+        Dumped = True
+        Try
+            DirectoryUtils.Create(logFolder)
+            Dim Lines As String()
+            SyncLock MemoryLog
+                Lines = MemoryLog.ToArray()
+            End SyncLock
+            If Lines.Length = 0 Then Return
+            IO.File.WriteAllLines(PathUtils.ForApi(IO.Path.Combine(logFolder, fileNamePrefix & "1" & fileNameSuffix)), Lines)
+        Catch
+        End Try
+    End Sub
 
     ''' <inheritdoc/>
     Public Overrides Function Format(Text As String, Level As LogLevel, FilePath As String, Ex As Exception) As String
@@ -32,6 +64,7 @@ Public Class PclLogger
                     MyMsgBox(DetailText & vbCrLf & vbCrLf & "将 PCL 更新至最新版或许可以解决这个问题……", "错误", IsWarn:=True)
                 End If
             Case LogBehavior.AlertThenCrash
+                DumpToDisk()
                 Static FirstTrigger As Boolean = True
                 If FirstTrigger Then
                     '首次触发
