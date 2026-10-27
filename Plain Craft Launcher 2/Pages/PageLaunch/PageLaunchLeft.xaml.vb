@@ -536,7 +536,16 @@ UseDefault:
             Hint($"启动按钮当前状态：{BtnLaunch.Text}", HintType.Blue)
         End If
         If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled OrElse
-            (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then Return
+            (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then
+            '页面状态卡死自愈：显示具体状态并强制恢复
+            Hint($"页面状态异常（{FrmMain.PageRight.PageState}），正在自动恢复……", HintType.Blue)
+            Try
+                FrmMain.PageRight.PageOnEnter()
+            Catch ex As Exception
+                Logger.Warn(ex, "页面状态自愈失败")
+            End Try
+            Return
+        End If
         '愚人节处理
         If IsAprilEnabled AndAlso Not IsAprilGiveup Then
             ThemeUnlock(12, False, "隐藏主题 滑稽彩 已解锁！")
