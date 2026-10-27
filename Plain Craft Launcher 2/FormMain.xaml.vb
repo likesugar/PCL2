@@ -1816,12 +1816,12 @@ End Sub
             SakuraParticles.Add(P)
         Next
     End Sub
-    Private Function SakuraColor(Style As String, Variant As Integer) As Media.Color
+    Private Function SakuraColor(Style As String, Seed As Integer) As Media.Color
         Select Case Style
-            Case "Leaf" : Return Media.Color.FromRgb(CByte(120 + Variant * 20), CByte(190), CByte(90))
+            Case "Leaf" : Return Media.Color.FromRgb(CByte(120 + Seed * 20), CByte(190), CByte(90))
             Case "Snow" : Return Media.Color.FromRgb(&HF5, &HF8, &HFF)
-            Case "Star" : Return If(Variant = 0, Media.Color.FromRgb(&HFF, &HE8, &H9A), Media.Color.FromRgb(&HFF, &HF7, &HD1))
-            Case Else : Return Media.Color.FromRgb(CByte(250 - Variant * 8), CByte(180 + Variant * 15), CByte(200))
+            Case "Star" : Return If(Seed = 0, Media.Color.FromRgb(&HFF, &HE8, &H9A), Media.Color.FromRgb(&HFF, &HF7, &HD1))
+            Case Else : Return Media.Color.FromRgb(CByte(250 - Seed * 8), CByte(180 + Seed * 15), CByte(200))
         End Select
     End Function
     Private Sub SakuraTick(sender As Object, e As EventArgs)
