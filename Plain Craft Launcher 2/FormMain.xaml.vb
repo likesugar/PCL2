@@ -1741,10 +1741,9 @@ End Sub
         Try
             Dim Name As String = McLoginName()
             If String.IsNullOrWhiteSpace(Name) Then Name = "未登录"
-            LabSidebarName.Text = Name
+            If TextSidebarName.Text.Trim() = "" Then TextSidebarName.Text = If(Name = "未登录", "", Name)
             LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
         Catch ex As Exception
-            LabSidebarName.Text = "未登录"
             LabSidebarAvatar.Text = "?"
         End Try
     End Sub
@@ -1758,7 +1757,7 @@ End Sub
         SidebarLoginShow()
     End Sub
     Private Sub BtnSidebarLegacy_Click(sender As Object, e As EventArgs) Handles BtnSidebarLegacy.Click
-        Settings.Set("LoginType", 0)
+        Settings.Set("LoginType", McLoginType.Legacy)
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType0.Checked = True
                 End Sub)
@@ -1766,11 +1765,32 @@ End Sub
         UpdateSidebarLogin()
     End Sub
     Private Sub BtnSidebarMs_Click(sender As Object, e As EventArgs) Handles BtnSidebarMs.Click
-        Settings.Set("LoginType", 5)
+        Settings.Set("LoginType", McLoginType.Ms)
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType5.Checked = True
                 End Sub)
         SidebarLoginShow()
         UpdateSidebarLogin()
+    End Sub
+
+    Private Sub TextSidebarName_Save()
+        Dim Name As String = TextSidebarName.Text.Trim()
+        If Name = "" Then Return
+        Dim Old As String = Settings.Get(Of String)("LoginLegacyName")
+        If Old.Split("¨"c)(0) = Name Then Return
+        Dim Rest As String = String.Join("¨", Old.Split("¨"c).Where(Function(x) x <> Name).ToArray())
+        Settings.Set("LoginLegacyName", If(Rest = "", Name, Name & "¨" & Rest))
+        Settings.Set("LoginType", McLoginType.Legacy)
+        LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
+        Hint("玩家名已保存：" & Name)
+    End Sub
+    Private Sub TextSidebarName_KeyDown(sender As Object, e As Input.KeyEventArgs) Handles TextSidebarName.KeyDown
+        If e.Key = Input.Key.Enter Then
+            TextSidebarName_Save()
+            TextSidebarName.MoveFocus(New TraversalRequest(FocusNavigationDirection.Next))
+        End If
+    End Sub
+    Private Sub TextSidebarName_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextSidebarName.LostFocus
+        TextSidebarName_Save()
     End Sub
 End Class
