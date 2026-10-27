@@ -747,12 +747,28 @@ ExitRefresh:
             ' 启动滑条：只控制启动按钮
             FrmLaunchLeft.BtnLaunch.Opacity = L / 100.0
             FrmLaunchLeft.BtnLaunch.IsHitTestVisible = L > 0
-            ' 登录滑条：整块
-            FrmLaunchLeft.PanLogin.Opacity = R / 100.0
-            FrmLaunchLeft.PanLogin.IsHitTestVisible = R > 0
+            ' 登录滑条：只管头像（0 时头像全隐，tab/用户名保留）
+            Dim SkinCtrl As MySkin = FindLoginSkin(FrmLaunchLeft.PanLogin)
+            If SkinCtrl IsNot Nothing Then
+                SkinCtrl.Opacity = R / 100.0
+                SkinCtrl.IsHitTestVisible = R > 0
+            End If
         Catch ex As Exception
             Logger.Warn(ex, "卡片透明度刷新失败")
         End Try
     End Sub
+
+
+    Private Shared Function FindLoginSkin(P As DependencyObject) As MySkin
+        Try
+            For Each C In LogicalTreeHelper.GetChildren(P)
+                If TypeOf C Is MySkin Then Return CType(C, MySkin)
+                Dim R = FindLoginSkin(C)
+                If R IsNot Nothing Then Return R
+            Next
+        Catch ex As Exception
+        End Try
+        Return Nothing
+    End Function
 
 End Class
