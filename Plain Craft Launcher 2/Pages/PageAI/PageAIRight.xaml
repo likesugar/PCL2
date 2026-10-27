@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
-        <Grid Margin="16,16,16,8">
+        <Grid Margin="12,12,12,6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1.2*" />
@@ -55,7 +55,7 @@
                 <StackPanel>
                     <Grid>
                         <TextBlock Text="对话" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" />
-                        <local:MyButton x:Name="BtnClearChat" Text="清空" Width="70" Height="28" HorizontalAlignment="Right" />
+                        <local:MyButton x:Name="BtnClearChat" Text="清空" Width="70" Height="28" HorizontalAlignment="Left" />
                     </Grid>
                     <Border x:Name="PanChat" Background="{DynamicResource ColorBrush7}" CornerRadius="6" Margin="0,12,0,0" Padding="12">
                         <StackPanel x:Name="PanChatList" MinHeight="120" />
@@ -64,8 +64,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="TextInput" Height="38" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
-                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" Width="70" Height="38" Margin="8,0,0,0" ColorType="Highlight" />
+                        <TextBox x:Name="TextInput" Height="34" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
+                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" MinWidth="56" Height="34" Margin="8,0,0,0" ColorType="Highlight" />
                     </Grid>
                 </StackPanel>
                 </local:MyCard>
