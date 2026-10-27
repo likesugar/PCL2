@@ -744,15 +744,12 @@ ExitRefresh:
             Try : L = Settings.Get(Of Integer)("UiCardLeftOpacity") : Catch ex As Exception : End Try
             Try : R = Settings.Get(Of Integer)("UiCardRightOpacity") : Catch ex As Exception : End Try
             L = Math.Max(0, Math.Min(100, L)) : R = Math.Max(0, Math.Min(100, R))
-            ' 启动滑条：只控制启动按钮
-            FrmLaunchLeft.BtnLaunch.Opacity = L / 100.0
-            FrmLaunchLeft.BtnLaunch.IsHitTestVisible = L > 0
-            ' 登录滑条：只管头像（0 时头像全隐，tab/用户名保留）
-            Dim SkinCtrl As MySkin = FindLoginSkin(FrmLaunchLeft.PanLogin)
-            If SkinCtrl IsNot Nothing Then
-                SkinCtrl.Opacity = R / 100.0
-                SkinCtrl.IsHitTestVisible = R > 0
-            End If
+            ' 启动滑条：整张启动卡（版本号+按钮+小字+双卡）全隐
+            FrmLaunchLeft.PanLaunchCard.Opacity = L / 100.0
+            FrmLaunchLeft.PanLaunchCard.IsHitTestVisible = L > 0
+            ' 登录滑条：整张登录卡（tab+头像+用户名）全隐
+            FrmLaunchLeft.PanLogin.Opacity = R / 100.0
+            FrmLaunchLeft.PanLogin.IsHitTestVisible = R > 0
         Catch ex As Exception
             Logger.Warn(ex, "卡片透明度刷新失败")
         End Try
