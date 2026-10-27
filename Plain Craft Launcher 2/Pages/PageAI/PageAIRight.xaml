@@ -51,24 +51,31 @@
                     <local:MyButton x:Name="BtnSaveConfig" Text="保存设置" Width="110" Height="28" Margin="0,12,0,0" HorizontalAlignment="Left" ColorType="Highlight" />
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard Grid.Column="1" Margin="0,0,0,10">
-                <StackPanel>
-                    <Grid>
-                        <TextBlock Text="对话" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" />
-                        <local:MyButton x:Name="BtnClearChat" Text="清空" Width="70" Height="28" HorizontalAlignment="Left" />
+            <local:MyCard Grid.Column="1" Margin="0,0,0,8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="对话" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" VerticalAlignment="Center" />
+                        <local:MyButton x:Name="BtnClearChat" Text="清空" Width="70" Height="28" HorizontalAlignment="Left" Margin="60,0,0,0" />
                     </Grid>
-                    <Border x:Name="PanChat" Background="{DynamicResource ColorBrush7}" CornerRadius="6" Margin="0,12,0,0" Padding="12">
-                        <StackPanel x:Name="PanChatList" MinHeight="120" />
-                    </Border>
-                    <Grid Margin="0,6,0,0">
+                    <local:MyScrollViewer x:Name="PanChatScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0" HorizontalScrollBarVisibility="Disabled">
+                        <Border x:Name="PanChat" Background="{DynamicResource ColorBrush7}" CornerRadius="6" Padding="10">
+                            <StackPanel x:Name="PanChatList" MinHeight="80" />
+                        </Border>
+                    </local:MyScrollViewer>
+                    <Grid Grid.Row="2" Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="TextInput" Height="34" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Top" />
-                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" MinWidth="56" Height="34" Margin="8,0,0,0" ColorType="Highlight" />
+                        <TextBox x:Name="TextInput" Height="34" TextWrapping="Wrap" AcceptsReturn="False" VerticalContentAlignment="Center" />
+                        <local:MyButton x:Name="BtnSend" Grid.Column="1" Text="发送" MinWidth="56" Height="34" Margin="6,0,0,0" ColorType="Highlight" />
                     </Grid>
-                </StackPanel>
-                </local:MyCard>
+                </Grid>
+            </local:MyCard>
             </Grid>
     </local:MyScrollViewer>
 </local:MyPageRight>

@@ -1710,7 +1710,7 @@ Public Class FormMain
         SidebarCollapsed = collapsed
         Dim target As Double = If(collapsed, 50.0, 96.0)
         If animate Then
-            Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(30))) With {
+            Dim ani As New Animation.DoubleAnimation(target, New Duration(TimeSpan.FromMilliseconds(20))) With {
                 .EasingFunction = New Animation.CircleEase() With {.EasingMode = Animation.EasingMode.EaseOut}
             }
             PanSidebar.BeginAnimation(FrameworkElement.WidthProperty, ani)

@@ -132,8 +132,10 @@
         Dim Tb As New TextBlock With {
             .TextWrapping = TextWrapping.Wrap,
             .Margin = New Thickness(0, 4, 0, 4),
-            .FontSize = 13
+            .FontSize = 13,
+            .HorizontalAlignment = HorizontalAlignment.Left
         }
+        Tb.SetBinding(WidthProperty, New System.Windows.Data.Binding("ActualWidth") With {.ElementName = "PanChatList", .Converter = New WidthMinusConverter()})
         If Role = "user" Then
             Dim Run As New Run("你：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(&H2A, &H2D, &H32))}
             Tb.Inlines.Add(Run)
@@ -142,7 +144,7 @@
             Tb.Inlines.Add(Run)
         End If
         PanChatList.Children.Add(Tb)
-        PanBack.ScrollToEnd()
+        PanChatScroll.ScrollToEnd()
     End Sub
 
     Private Shared Function JsonEscape(S As String) As String
@@ -239,5 +241,20 @@
             Logger.Warn(ex, "AI 配置保存失败")
         End Try
     End Sub
+
+
+Public Class WidthMinusConverter
+    Implements System.Windows.Data.IValueConverter
+
+    Public Function Convert(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
+        Dim W As Double = TryCast(value, Double?)
+        If W Is Nothing OrElse W < 10 Then Return Double.NaN
+        Return W - 8
+    End Function
+
+    Public Function ConvertBack(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.ConvertBack
+        Return Nothing
+    End Function
+End Class
 
 End Class
