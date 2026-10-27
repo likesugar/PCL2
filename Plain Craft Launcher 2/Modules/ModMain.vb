@@ -366,6 +366,7 @@ EndHint:
     Public FrmStart As SplashScreen
 
     '页面声明（出于单元测试考虑，初始化页面已转入 FormMain 中）
+    Public FrmDiyPage As PageDiy
     Public FrmLaunchLeft As PageLaunchLeft
     Public FrmLaunchRight As PageLaunchRight
     Public FrmSelectLeft As PageSelectLeft

@@ -42,7 +42,7 @@
     Private Sub RefreshStyleButtons()
         Dim Current = Settings.Get(Of String)("DiySakuraStyle")
         For Each B As MyButton In {BtnDiyStyleSakura, BtnDiyStyleLeaf, BtnDiyStyleSnow, BtnDiyStyleStar}
-            B.ColorType = If(B.Name.EndsWith(Current), MyButton.ButtonColorType.Highlight, MyButton.ButtonColorType.Normal)
+            B.ColorType = If(B.Name.EndsWith(Current), MyButton.ColorState.Highlight, MyButton.ColorState.Normal)
         Next
     End Sub
     Private Sub BtnDiyStyleSakura_Click(sender As Object, e As EventArgs) Handles BtnDiyStyleSakura.Click
@@ -84,7 +84,7 @@
         If IsLoading Then Return
         LabDiyBlur.Text = SliderDiyBlur.Value
         Settings.Set("UiBackgroundBlur", CInt(SliderDiyBlur.Value))
-        FrmMain.BackgroundRefresh(True, False)
+        PageSetupUI.BackgroundRefresh(False, True)
     End Sub
     Private Sub SliderDiyRadius_ValueChanged(sender As Object, e As RoutedPropertyChangedEventArgs(Of Double)) Handles SliderDiyRadius.ValueChanged
         If IsLoading Then Return
