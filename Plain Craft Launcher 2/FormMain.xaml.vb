@@ -1344,7 +1344,8 @@ Public Class FormMain
                     CType(FrmDownloadLeft.PanItem.Children(SubType), MyListItem).SetChecked(True, True, Stack = PageCurrent)
                 Case PageType.Setup
                     If FrmSetupLeft Is Nothing Then FrmSetupLeft = New PageSetupLeft
-                    CType(FrmSetupLeft.PanItem.Children(SubType), MyListItem).SetChecked(True, True, Stack = PageCurrent)
+                    Dim SetupItem As MyListItem = FrmSetupLeft.PanItem.Children.OfType(Of MyListItem)().FirstOrDefault(Function(I) Val(I.Tag?.ToString()) = SubType)
+                    If SetupItem IsNot Nothing Then SetupItem.SetChecked(True, True, Stack = PageCurrent)
             End Select
             PageChangeActual(Stack, SubType)
         Else
