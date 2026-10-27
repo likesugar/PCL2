@@ -1696,6 +1696,12 @@ Public Class FormMain
     Private SidebarHovering As Boolean = False
     Private ReadOnly SidebarTexts As New List(Of String) From {"启动", "下载", "", "设置", "", "AI"}
 
+    ' 启动时默认收起（悬停展开模式）
+    Public Sub SidebarInitCollapsed()
+        SidebarPinned = False
+        SidebarHovering = False
+        SidebarApply(True, False)
+    End Sub
     Private Sub SidebarApply(collapsed As Boolean, animate As Boolean)
         SidebarCollapsed = collapsed
         Dim target As Double = If(collapsed, 50.0, 96.0)
