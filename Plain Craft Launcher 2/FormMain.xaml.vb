@@ -1759,7 +1759,7 @@ End Sub
     End Sub
     Private Sub SidebarLoginShow()
         PageChange(PageType.Launch)
-        Dispatcher.BeginInvoke(DispatcherPriority.Loaded, New Action(Sub()
+        Dispatcher.BeginInvoke(Threading.DispatcherPriority.Loaded, New Action(Sub()
                     Try
                         If FrmLaunchLeft IsNot Nothing AndAlso FrmLaunchLeft.PanLoginArea IsNot Nothing Then
                             FrmLaunchLeft.PanLoginArea.Visibility = Visibility.Visible
