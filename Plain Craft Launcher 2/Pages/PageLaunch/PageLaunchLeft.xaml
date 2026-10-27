@@ -51,9 +51,7 @@
             <local:MyButton x:Name="BtnVersion" Height="35" Margin="0,10,5,0" Text="版本选择" IsEnabled="False" />
         <local:MyButton Grid.Column="1" x:Name="BtnMore" Height="35" Margin="5,10,0,0" TextPadding="36" Text="版本设置" />
         </Grid>
-            </StackPanel>
-        </Grid>
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,150,0" x:Name="PanLoginArea">
+<StackPanel x:Name="PanLoginArea" HorizontalAlignment="Center" Margin="0,16,0,4">
             <StackPanel.LayoutTransform>
                 <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
             </StackPanel.LayoutTransform>
@@ -79,6 +77,9 @@
             <Border x:Name="BorderCardRight" Background="#00FFFFFF" CornerRadius="18" Margin="-8,-8,-8,-8" IsHitTestVisible="False" />
         </Grid>
         </StackPanel>
+            </StackPanel>
+        </Grid>
+        
         <Grid Grid.ColumnSpan="5" Margin="20,24,20,-4" Name="PanTypeOne">
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource ColorBrushSemiTransparent}" CornerRadius="13" MinHeight="27" MaxHeight="27">
                 <StackPanel Orientation="Horizontal">
