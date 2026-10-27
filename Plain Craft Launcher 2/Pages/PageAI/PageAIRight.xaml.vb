@@ -135,7 +135,7 @@
             .FontSize = 13,
             .HorizontalAlignment = HorizontalAlignment.Left
         }
-        Tb.MaxWidth = 420
+        Tb.MaxWidth = 360
         If Role = "user" Then
             Dim Run As New Run("你：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(&H2A, &H2D, &H32))}
             Tb.Inlines.Add(Run)
