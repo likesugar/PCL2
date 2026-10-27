@@ -1,12 +1,12 @@
-<local:MyPageRight x:Class="PageAIRight"
+﻿<local:MyPageRight x:Class="PageAIRight"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
-        <Grid Margin="12,12,12,6" MinWidth="640">
+        <Grid Margin="12,12,12,6">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" MinWidth="300" />
-                <ColumnDefinition Width="1.2*" MinWidth="340" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1.2*" />
             </Grid.ColumnDefinitions>
 
             <!-- 左：设置卡 -->
