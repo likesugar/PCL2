@@ -137,7 +137,7 @@
                         </StackPanel>
                     <StackPanel x:Name="PanSidebarLogin" VerticalAlignment="Bottom" Margin="4,0,4,10" HorizontalAlignment="Center">
                         <Border x:Name="BtnSidebarLogin" Background="#40FFFFFF" CornerRadius="10" Width="38" Height="38" Cursor="Hand" ToolTip="打开登录">
-                            <TextBlock x:Name="LabSidebarAvatar" Text="?" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Image x:Name="ImgSidebarAvatar" Width="28" Height="28" Stretch="Uniform" />
                         </Border>
                         <local:MyTextBox x:Name="TextSidebarName" Height="24" MaxWidth="44" MinWidth="42" FontSize="10" Margin="0,3,0,6" HorizontalAlignment="Center" ToolTip="修改玩家名（离线登录，回车保存）" />
                         <Border x:Name="BorderSidebarLegacy" BorderThickness="1.5" BorderBrush="Transparent" CornerRadius="4" Margin="0,0,0,3">

@@ -1739,6 +1739,23 @@ End Sub
 
     '侧边栏底部登录卡
     Private SidebarNameEditing As Boolean = False
+
+    Private SidebarAvatarLoaded As Boolean = False
+    Private Sub SidebarAvatarRefresh()
+        If SidebarAvatarLoaded Then Return
+        SidebarAvatarLoaded = True
+        RunInNewThread(
+        Sub()
+            Try
+                Dim Skin As New MyBitmap(PathImage & "Skins/Steve.png")
+                Dim Scale As Integer = Skin.Pic.Width / 64
+                Dim Face = Skin.Clip(Scale * 8, Scale * 8, Scale * 8, Scale * 8)
+                RunInUi(Sub() ImgSidebarAvatar.Source = Face)
+            Catch ex As Exception
+                Logger.Warn(ex, "侧栏头像加载失败")
+            End Try
+        End Sub)
+    End Sub
     Private Function SidebarNameShort(Name As String) As String
         If Name.Length <= 3 Then Return Name
         Return Name.Substring(0, 1) & "…" & Name.Substring(Name.Length - 1)
@@ -1748,10 +1765,9 @@ End Sub
             Dim Name As String = McLoginName()
             If String.IsNullOrWhiteSpace(Name) Then Name = "未登录"
             If Not SidebarNameEditing AndAlso TextSidebarName.Text.Trim() = "" Then TextSidebarName.Text = If(Name = "未登录", "", SidebarNameShort(Name))
-            LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
         Catch ex As Exception
-            LabSidebarAvatar.Text = "?"
         End Try
+        SidebarAvatarRefresh()
         '登录方式选中态边框
         Try
             Dim IsMs As Boolean = Settings.Get(Of McLoginType)("LoginType") = McLoginType.Ms
@@ -1806,7 +1822,6 @@ End Sub
         Dim Rest As String = String.Join("¨", Old.Split("¨"c).Where(Function(x) x <> Name).ToArray())
         Settings.Set("LoginLegacyName", If(Rest = "", Name, Name & "¨" & Rest))
         Settings.Set("LoginType", McLoginType.Legacy)
-        LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
         TextSidebarName.Text = SidebarNameShort(Name)
         Hint("玩家名已保存：" & Name)
     End Sub
