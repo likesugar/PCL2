@@ -26,7 +26,7 @@
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Width="232">
-            <Border x:Name="BorderCardLeft" Background="#FFFFFFFF" CornerRadius="10" IsHitTestVisible="False" />
+            <Border x:Name="BorderCardLeft" Background="#00FFFFFF" CornerRadius="10" IsHitTestVisible="False" />
             <StackPanel VerticalAlignment="Center" Margin="0,14,0,14">
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="35,0,35,10" IsHitTestVisible="False">
                 <TextBlock Text="当前实例" HorizontalAlignment="Center" FontSize="12" Foreground="#FF8A8F98" />
