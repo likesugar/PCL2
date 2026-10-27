@@ -247,8 +247,8 @@ Public Class WidthMinusConverter
     Implements System.Windows.Data.IValueConverter
 
     Public Function Convert(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
-        Dim W As Double = TryCast(value, Double?)
-        If W Is Nothing OrElse W < 10 Then Return Double.NaN
+        Dim W As Double
+        If Not Double.TryParse(value?.ToString(), W) OrElse W < 10 Then Return Double.NaN
         Return W - 8
     End Function
 
