@@ -606,10 +606,16 @@ Public Class FormMain
     '移动
     Private Sub FormDragMove(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonDown
         Try
-            '交互控件不拖窗
-            Dim Src = e.OriginalSource
-            Dim N As String = Src.GetType().Name
-            If TypeOf Src Is System.Windows.Controls.TextBox OrElse TypeOf Src Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf Src Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf Src Is System.Windows.Controls.ComboBox OrElse TypeOf Src Is System.Windows.Controls.ListBoxItem OrElse TypeOf Src Is System.Windows.Controls.Slider OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyRadio") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("CheckBox") OrElse N.StartsWith("MyCheckBox") OrElse N.StartsWith("Resizer") Then Return
+            '遍历可视树：命中任何交互控件（含其内部视觉元素）则不拖窗
+            Dim V As Media.Visual = TryCast(e.OriginalSource, Media.Visual)
+            While V IsNot Nothing
+                Dim N As String = V.GetType().Name
+                If N.StartsWith("MyRadio") OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("MyCheckBox") OrElse N.StartsWith("MyCard") OrElse N.StartsWith("MyExtraButton") OrElse N.StartsWith("MyText") OrElse
+                   TypeOf V Is System.Windows.Controls.TextBox OrElse TypeOf V Is System.Windows.Controls.ComboBox OrElse TypeOf V Is System.Windows.Controls.Slider OrElse TypeOf V Is System.Windows.Controls.ListBoxItem OrElse TypeOf V Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf V Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf V Is System.Windows.Controls.CheckBox Then
+                    Return
+                End If
+                V = TryCast(Media.VisualTreeHelper.GetParent(V), Media.Visual)
+            End While
             DragMove()
         Catch ex As Exception
         End Try
