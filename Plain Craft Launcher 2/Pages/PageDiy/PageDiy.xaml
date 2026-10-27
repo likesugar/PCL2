@@ -39,16 +39,38 @@
                 </StackPanel>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="主题色">
-                <StackPanel Margin="25,38,23,15">
-                    <WrapPanel>
-                        <local:MyButton x:Name="BtnDiyThemePink" Text="樱花粉" MinWidth="90" Height="28" Margin="0,0,10,5" />
-                        <local:MyButton x:Name="BtnDiyThemeBlue" Text="天空蓝" MinWidth="90" Height="28" Margin="0,0,10,5" />
-                        <local:MyButton x:Name="BtnDiyThemePurple" Text="梦幻紫" MinWidth="90" Height="28" Margin="0,0,10,5" />
-                        <local:MyButton x:Name="BtnDiyThemeGreen" Text="清新绿" MinWidth="90" Height="28" Margin="0,0,10,5" />
-                        <local:MyButton x:Name="BtnDiyThemeOrange" Text="暖阳橙" MinWidth="90" Height="28" Margin="0,0,0,5" />
-                    </WrapPanel>
-                    <TextBlock Text="主题色将切换到 PCL 内置主题中最接近的颜色" FontSize="11" Opacity="0.6" TextWrapping="Wrap" />
-                </StackPanel>
+                <Grid Margin="18,12,18,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" /><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /><ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="0"
+                                              Grid.Column="1" Grid.Row="0" Text="龙猫蓝" x:Name="RadioDiyTheme0" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="1"
+                                              Grid.Column="2" Grid.Row="0" Text="甜柠青" x:Name="RadioDiyTheme1" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="2"
+                                              Grid.Column="3" Grid.Row="0" Text="小草绿" x:Name="RadioDiyTheme2" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="3"
+                                              Grid.Column="4" Grid.Row="0" Text="菠萝黄" x:Name="RadioDiyTheme3" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="4"
+                                              Grid.Column="1" Grid.Row="1" Text="橡木棕" x:Name="RadioDiyTheme4" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="5"
+                                              Grid.Column="2" Grid.Row="1" Text="玄素黑" x:Name="RadioDiyTheme5" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="6"
+                                              Grid.Column="3" Grid.Row="1" Text="铁杆粉" x:Name="RadioDiyTheme6" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="7"
+                                              Grid.Column="4" Grid.Row="1" Text="神秘紫" x:Name="RadioDiyTheme7" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="8"
+                                              Grid.Column="1" Grid.Row="2" Text="秋仪金" x:Name="RadioDiyTheme8" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="9"
+                                              Grid.Column="2" Grid.Row="2" Text="活跃橙" x:Name="RadioDiyTheme9" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="10"
+                                              Grid.Column="3" Grid.Row="2" Text="跳票红" x:Name="RadioDiyTheme10" Margin="0,0,22,8" />
+                        <local:MyRadioBox local:SettingService.Key="UiLauncherTheme" local:SettingService.Value="11"
+                                              Grid.Column="4" Grid.Row="2" Text="极客蓝" x:Name="RadioDiyTheme11" Margin="0,0,22,8" />
+                </Grid>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="界面调整">
                 <StackPanel Margin="25,38,23,15">

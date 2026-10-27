@@ -58,27 +58,6 @@
         SakuraStyleSet("Star")
     End Sub
 
-    '主题色：映射 PCL 内置主题
-    Private Sub ThemeSet(Theme As Integer)
-        Settings.Set("UiLauncherTheme", Theme)
-        ThemeRefresh(Theme)
-    End Sub
-    Private Sub BtnDiyThemePink_Click(sender As Object, e As EventArgs) Handles BtnDiyThemePink.Click
-        ThemeSet(1) '淡雅粉
-    End Sub
-    Private Sub BtnDiyThemeBlue_Click(sender As Object, e As EventArgs) Handles BtnDiyThemeBlue.Click
-        ThemeSet(2) '稳重黑蓝
-    End Sub
-    Private Sub BtnDiyThemePurple_Click(sender As Object, e As EventArgs) Handles BtnDiyThemePurple.Click
-        ThemeSet(7) '基佬紫
-    End Sub
-    Private Sub BtnDiyThemeGreen_Click(sender As Object, e As EventArgs) Handles BtnDiyThemeGreen.Click
-        ThemeSet(3) '清新绿
-    End Sub
-    Private Sub BtnDiyThemeOrange_Click(sender As Object, e As EventArgs) Handles BtnDiyThemeOrange.Click
-        ThemeSet(4) '活力橙
-    End Sub
-
     '界面调整
     Private Sub SliderDiyBlur_ValueChanged(sender As Object, e As RoutedPropertyChangedEventArgs(Of Double)) Handles SliderDiyBlur.ValueChanged
         If IsLoading Then Return
