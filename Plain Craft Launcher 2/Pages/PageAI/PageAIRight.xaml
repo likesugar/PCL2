@@ -5,8 +5,8 @@
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
         <Grid Margin="12,12,12,6">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.6*" />
                 <ColumnDefinition Width="0.85*" />
+                <ColumnDefinition Width="0.6*" />
             </Grid.ColumnDefinitions>
 
             <!-- 左：设置卡 -->
