@@ -610,6 +610,9 @@ Public Class FormMain
             Dim V As Media.Visual = TryCast(e.OriginalSource, Media.Visual)
             While V IsNot Nothing
                 Dim N As String = V.GetType().Name
+                '窗口缩放手柄不拖窗
+                Dim FE = TryCast(V, FrameworkElement)
+                If FE IsNot Nothing AndAlso FE.Name IsNot Nothing AndAlso FE.Name.StartsWith("Resizer") Then Return
                 If N.StartsWith("MyRadio") OrElse N.StartsWith("MyButton") OrElse N.StartsWith("MyIconButton") OrElse N.StartsWith("MyListItem") OrElse N.StartsWith("MySlider") OrElse N.StartsWith("MyCheckBox") OrElse N.StartsWith("MyCard") OrElse N.StartsWith("MyExtraButton") OrElse N.StartsWith("MyText") OrElse
                    TypeOf V Is System.Windows.Controls.TextBox OrElse TypeOf V Is System.Windows.Controls.ComboBox OrElse TypeOf V Is System.Windows.Controls.Slider OrElse TypeOf V Is System.Windows.Controls.ListBoxItem OrElse TypeOf V Is System.Windows.Controls.Primitives.ButtonBase OrElse TypeOf V Is System.Windows.Controls.Primitives.ToggleButton OrElse TypeOf V Is System.Windows.Controls.CheckBox Then
                     Return
