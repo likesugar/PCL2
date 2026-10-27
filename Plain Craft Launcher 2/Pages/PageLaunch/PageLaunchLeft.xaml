@@ -51,7 +51,7 @@
             <local:MyButton x:Name="BtnVersion" Height="35" Margin="0,10,5,0" Text="版本选择" IsEnabled="False" />
         <local:MyButton Grid.Column="1" x:Name="BtnMore" Height="35" Margin="5,10,0,0" TextPadding="36" Text="版本设置" />
         </Grid>
-<StackPanel x:Name="PanLoginArea" HorizontalAlignment="Center" Margin="0,16,0,4">
+<StackPanel x:Name="PanLoginArea" HorizontalAlignment="Center" Margin="0,16,0,4" Visibility="Collapsed">
             <StackPanel.LayoutTransform>
                 <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
             </StackPanel.LayoutTransform>

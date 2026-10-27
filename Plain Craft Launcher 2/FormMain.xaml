@@ -136,9 +136,12 @@
 
                         </StackPanel>
                     <StackPanel x:Name="PanSidebarLogin" VerticalAlignment="Bottom" Margin="4,0,4,10" HorizontalAlignment="Center">
-                        <local:MyButton x:Name="BtnSidebarLogin" Text="登录" Height="34" MinWidth="42" Padding="10,0" Margin="0,0,0,4" ColorType="Highlight" ToolTip="打开启动页的登录卡片" />
-                        <local:MyButton x:Name="BtnSidebarLegacy" Text="离线" Height="26" MinWidth="42" Padding="8,0" Margin="0,0,0,3" ToolTip="切换为离线登录" />
-                        <local:MyButton x:Name="BtnSidebarMs" Text="正版" Height="26" MinWidth="42" Padding="8,0" ToolTip="切换为正版登录" />
+                        <Border x:Name="BtnSidebarLogin" Background="#40FFFFFF" CornerRadius="10" Width="38" Height="38" Cursor="Hand" ToolTip="打开登录">
+                            <TextBlock x:Name="LabSidebarAvatar" Text="?" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock x:Name="LabSidebarName" Text="未登录" FontSize="10" Foreground="White" HorizontalAlignment="Center" Margin="0,3,0,6" TextTrimming="CharacterEllipsis" MaxWidth="44" ToolTip="当前玩家" />
+                        <local:MyButton x:Name="BtnSidebarLegacy" Text="离线" Height="24" MinWidth="40" Padding="6,0" Margin="0,0,0,3" ToolTip="切换为离线登录" />
+                        <local:MyButton x:Name="BtnSidebarMs" Text="正版" Height="24" MinWidth="40" Padding="6,0" ToolTip="切换为正版登录" />
                     </StackPanel>
                     </Grid>
                 </Border>

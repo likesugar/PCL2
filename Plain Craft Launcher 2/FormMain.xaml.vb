@@ -1350,7 +1350,8 @@ Public Class FormMain
             End Select
             PageChangeActual(Stack, SubType)
         End If
-    End Sub
+            UpdateSidebarLogin()
+End Sub
     ''' <summary>
     ''' 通过点击导航栏改变页面。
     ''' </summary>
@@ -1736,21 +1737,40 @@ Public Class FormMain
     ' 看板娘显示刷新
 
     '侧边栏底部登录卡
-    Private Sub BtnSidebarLogin_Click(sender As Object, e As EventArgs) Handles BtnSidebarLogin.Click
+    Public Sub UpdateSidebarLogin()
+        Try
+            Dim Name As String = McLoginName()
+            If String.IsNullOrWhiteSpace(Name) Then Name = "未登录"
+            LabSidebarName.Text = Name
+            LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
+        Catch ex As Exception
+            LabSidebarName.Text = "未登录"
+            LabSidebarAvatar.Text = "?"
+        End Try
+    End Sub
+    Private Sub SidebarLoginShow()
         PageChange(PageType.Launch)
+        RunInUi(Sub()
+                    If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.PanLoginArea.Visibility = Visibility.Visible
+                End Sub)
+    End Sub
+    Private Sub BtnSidebarLogin_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarLogin.MouseLeftButtonDown
+        SidebarLoginShow()
     End Sub
     Private Sub BtnSidebarLegacy_Click(sender As Object, e As EventArgs) Handles BtnSidebarLegacy.Click
         Settings.Set("LoginType", 0)
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType0.Checked = True
                 End Sub)
-        PageChange(PageType.Launch)
+        SidebarLoginShow()
+        UpdateSidebarLogin()
     End Sub
     Private Sub BtnSidebarMs_Click(sender As Object, e As EventArgs) Handles BtnSidebarMs.Click
         Settings.Set("LoginType", 5)
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType5.Checked = True
                 End Sub)
-        PageChange(PageType.Launch)
+        SidebarLoginShow()
+        UpdateSidebarLogin()
     End Sub
 End Class
