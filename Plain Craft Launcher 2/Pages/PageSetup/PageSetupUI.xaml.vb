@@ -430,8 +430,9 @@ Refresh:
                 If Not Settings.Get(Of Boolean)("UiHiddenSetupSystem") Then AvaliableCount += 1
                 FrmSetupLeft.PanItem.Visibility = If(AvaliableCount < 2 AndAlso Not HiddenForceShow, Visibility.Collapsed, Visibility.Visible)
             End If
-            '更多子页面
-
+        Catch ex As Exception
+            Logger.Error(ex, "刷新功能隐藏项目失败")
+        End Try
     End Sub
 
     'UI 协同改变
