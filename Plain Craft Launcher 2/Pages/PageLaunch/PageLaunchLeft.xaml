@@ -29,8 +29,7 @@
             <Border x:Name="BorderCardLeft" Background="#00FFFFFF" CornerRadius="18" IsHitTestVisible="False" />
             <StackPanel VerticalAlignment="Center" Margin="0,14,0,14">
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="35,0,35,10" IsHitTestVisible="False">
-                <TextBlock Text="当前实例" HorizontalAlignment="Center" FontSize="12" Foreground="#FF8A8F98" />
-                <TextBlock x:Name="LabVersionBig" Text="" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="#FF2A2D32" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" MaxWidth="220" />
+                                <TextBlock x:Name="LabVersionBig" Text="" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="#FF2A2D32" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" MaxWidth="220" />
             </StackPanel>
                     <Grid RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
