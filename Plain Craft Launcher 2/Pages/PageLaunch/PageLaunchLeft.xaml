@@ -25,9 +25,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="18,0,0,0" Width="252">
+        <Grid Grid.Row="1" Grid.RowSpan="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Width="232">
             <Border x:Name="BorderCardLeft" Background="#FFFFFFFF" CornerRadius="10" IsHitTestVisible="False" />
-            <StackPanel VerticalAlignment="Center" Margin="0,12,0,12">
+            <StackPanel VerticalAlignment="Center" Margin="0,14,0,14">
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="35,0,35,10" IsHitTestVisible="False">
+                <TextBlock Text="当前实例" HorizontalAlignment="Center" FontSize="12" Foreground="#FF8A8F98" />
+                <TextBlock x:Name="LabVersionBig" Text="" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="#FF2A2D32" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" MaxWidth="220" />
+            </StackPanel>
                     <Grid RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -35,11 +39,8 @@
                     <TranslateTransform x:Name="AprilPosTrans" />
                 </TransformGroup>
             </Grid.RenderTransform>
-            <local:MyButton x:Name="BtnLaunch" Height="54" Margin="20,0" Text="正在加载" ColorType="Highlight" Padding="30,0,30,15" IsEnabled="False" />
-            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="35,0,35,10" IsHitTestVisible="False">
-                <TextBlock Text="当前实例" HorizontalAlignment="Center" FontSize="12" Foreground="#FF8A8F98" />
-                <TextBlock x:Name="LabVersionBig" Text="" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="#FF2A2D32" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" MaxWidth="240" />
-            </StackPanel>
+            <local:MyButton x:Name="BtnLaunch" Height="54" Margin="0,10,0,0" Text="正在加载" ColorType="Highlight" Padding="30,0,30,15" IsEnabled="False" />
+
             <TextBlock x:Name="LabVersion" Text="正在加载版本列表，请稍候" Margin="35,0,35,10" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" FontSize="11" Foreground="{DynamicResource ColorBrushGray3}" RenderTransformOrigin="0.5,-0.2">
                 <TextBlock.RenderTransform>
                     <ScaleTransform ScaleX="{Binding RealRenderTransform.ScaleX, ElementName=BtnLaunch, Mode=OneWay}" ScaleY="{Binding RealRenderTransform.ScaleY, ElementName=BtnLaunch, Mode=OneWay}" />
@@ -53,7 +54,7 @@
         </Grid>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" Margin="24,10,28,14" VerticalAlignment="Center" x:Name="PanLogin">
+        <Grid Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" Margin="24,10,22,14" VerticalAlignment="Center" x:Name="PanLogin">
             <Grid.RenderTransform>
                 <ScaleTransform x:Name="TransformLogin" />
             </Grid.RenderTransform>
