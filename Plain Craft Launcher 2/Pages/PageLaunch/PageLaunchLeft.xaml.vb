@@ -578,6 +578,10 @@ ExitRefresh:
     '版本设置按钮
     Private Sub BtnMore_Click() Handles BtnMore.Click
         If McLaunchLoader.State = LoadState.Loading Then Return
+        If McInstanceSelected Is Nothing OrElse String.IsNullOrWhiteSpace(McInstanceSelected.PathIndie) AndAlso String.IsNullOrWhiteSpace(McInstanceSelected.PathVersion) Then
+            Hint("请先下载或选择一个游戏版本！", HintType.Red)
+            Return
+        End If
         If McInstanceLock.IsLocked(McInstanceSelected) Then
             Hint("该版本正在被修改，暂时无法进入版本设置！", HintType.Red)
             Return
