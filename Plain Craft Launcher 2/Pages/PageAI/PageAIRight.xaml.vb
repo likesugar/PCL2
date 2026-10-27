@@ -135,7 +135,7 @@
             .FontSize = 13,
             .HorizontalAlignment = HorizontalAlignment.Left
         }
-        Tb.SetBinding(WidthProperty, New System.Windows.Data.Binding("ActualWidth") With {.ElementName = "PanChatList", .Converter = New WidthMinusConverter()})
+        Tb.MaxWidth = 420
         If Role = "user" Then
             Dim Run As New Run("你：" & Content) With {.Foreground = New SolidColorBrush(Color.FromRgb(&H2A, &H2D, &H32))}
             Tb.Inlines.Add(Run)
@@ -243,18 +243,5 @@
     End Sub
 
 
-Public Class WidthMinusConverter
-    Implements System.Windows.Data.IValueConverter
-
-    Public Function Convert(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
-        Dim W As Double
-        If Not Double.TryParse(value?.ToString(), W) OrElse W < 10 Then Return Double.NaN
-        Return W - 8
-    End Function
-
-    Public Function ConvertBack(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.ConvertBack
-        Return Nothing
-    End Function
-End Class
 
 End Class
