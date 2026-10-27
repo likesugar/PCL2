@@ -358,6 +358,7 @@ Public Class FormMain
         PageSetupUI.BackgroundRefresh(False, True)
         MusicRefreshPlay(False, True)
         UpdateSidebarLogin()
+        SakuraRefresh()
         '扩展按钮
         BtnExtraDownload.ShowCheck = AddressOf BtnExtraDownload_ShowCheck
         BtnExtraBack.ShowCheck = AddressOf BtnExtraBack_ShowCheck
@@ -1179,6 +1180,9 @@ Public Class FormMain
         ''' 帮助详情。这是一个副页面。
         ''' </summary>
         HelpDetail = 9
+        '
+        ' DIY 个性化。这是一个副页面。
+        Diy = 11
     End Enum
     ''' <summary>
     ''' 次要页面种类。其数值必须与 StackPanel 中的下标一致。
@@ -1327,6 +1331,7 @@ Public Class FormMain
                 Dim BtnSel As MyRadioButton = Nothing
                 Select Case Stack.Page
                     Case PageType.Launch : BtnSel = BtnTitleSelect0
+                    Case PageType.Diy : BtnSel = BtnTitleSelect6
                     Case PageType.Download : BtnSel = BtnTitleSelect1
                     Case PageType.Setup : BtnSel = BtnTitleSelect3
                 End Select
@@ -1357,7 +1362,7 @@ End Sub
     ''' <summary>
     ''' 通过点击导航栏改变页面。
     ''' </summary>
-    Private Sub BtnTitleSelect_Click(sender As MyRadioButton, raiseByMouse As Boolean) Handles BtnTitleSelect0.Check, BtnTitleSelect1.Check, BtnTitleSelect3.Check
+    Private Sub BtnTitleSelect_Click(sender As MyRadioButton, raiseByMouse As Boolean) Handles BtnTitleSelect0.Check, BtnTitleSelect1.Check, BtnTitleSelect3.Check, BtnTitleSelect6.Check
         If IsChangingPage Then Return
         '「个性化」直接打开设置页的个性化子页
         If Val(sender.Tag) = 2 Then
@@ -1461,6 +1466,9 @@ End Sub
                     PageChangeAnim(New MyPageLeft, FrmDownloadResourceDetail)
                 Case PageType.HelpDetail '帮助详情
                     PageChangeAnim(New MyPageLeft, Stack.Additional(1))
+                Case PageType.Diy 'DIY 个性化
+                    If FrmDiyPage Is Nothing Then FrmDiyPage = New PageDiy
+                    PageChangeAnim(New MyPageLeft, FrmDiyPage)
             End Select
 #End Region
 
@@ -1761,6 +1769,79 @@ End Sub
         If Name.Length <= 3 Then Return Name
         Return Name.Substring(0, 1) & "…" & Name.Substring(Name.Length - 1)
     End Function
+
+    ' ---------- 樱花飘落动画引擎（DIY） ----------
+    Private SakuraTimer As Threading.DispatcherTimer = Nothing
+    Private SakuraParticles As New List(Of ParticleInfo)
+    Private SakuraRand As New Random
+    Private Class ParticleInfo
+        Public Shape As Ellipse
+        Public X As Double, Y As Double
+        Public Speed As Double, Drift As Double, Phase As Double
+        Public Size As Double
+    End Class
+    Public Sub SakuraRefresh()
+        If SakuraTimer Is Nothing Then
+            SakuraTimer = New Threading.DispatcherTimer With {.Interval = TimeSpan.FromMilliseconds(40)}
+            AddHandler SakuraTimer.Tick, AddressOf SakuraTick
+            AddHandler Me.Activated, Sub() If Settings.Get(Of Boolean)("DiySakuraPause") Then SakuraTimer.Start()
+            AddHandler Me.Deactivated, Sub() If Settings.Get(Of Boolean)("DiySakuraPause") Then SakuraTimer.Stop()
+        End If
+        If Not Settings.Get(Of Boolean)("DiySakura") Then
+            SakuraTimer.Stop()
+            PanSakura.Children.Clear()
+            SakuraParticles.Clear()
+            Return
+        End If
+        SakuraRebuild()
+        SakuraTimer.Start()
+    End Sub
+    Private Sub SakuraRebuild()
+        PanSakura.Children.Clear()
+        SakuraParticles.Clear()
+        Dim Count = Math.Max(5, Math.Min(35, Settings.Get(Of Integer)("DiySakuraCount")))
+        Dim Style = Settings.Get(Of String)("DiySakuraStyle")
+        For i = 1 To Count
+            Dim P As New ParticleInfo With {
+                .Size = 4 + SakuraRand.NextDouble() * 6,
+                .X = SakuraRand.NextDouble() * Math.Max(300, PanSakura.ActualWidth),
+                .Y = SakuraRand.NextDouble() * Math.Max(200, PanSakura.ActualHeight) - 100,
+                .Speed = 0.6 + SakuraRand.NextDouble() * 1.4,
+                .Drift = 0.4 + SakuraRand.NextDouble() * 1.2,
+                .Phase = SakuraRand.NextDouble() * Math.PI * 2}
+            Dim E As New Ellipse With {.Width = P.Size, .Height = P.Size * If(Style = "Sakura", 0.8, 1), .Opacity = 0.75}
+            E.Fill = New Media.SolidColorBrush(SakuraColor(Style, SakuraRand.Next(3)))
+            PanSakura.Children.Add(E)
+            P.Shape = E
+            SakuraParticles.Add(P)
+        Next
+    End Sub
+    Private Function SakuraColor(Style As String, Variant As Integer) As Media.Color
+        Select Case Style
+            Case "Leaf" : Return Media.Color.FromRgb(CByte(120 + Variant * 20), CByte(190), CByte(90))
+            Case "Snow" : Return Media.Color.FromRgb(&HF5, &HF8, &HFF)
+            Case "Star" : Return If(Variant = 0, Media.Color.FromRgb(&HFF, &HE8, &H9A), Media.Color.FromRgb(&HFF, &HF7, &HD1))
+            Case Else : Return Media.Color.FromRgb(CByte(250 - Variant * 8), CByte(180 + Variant * 15), CByte(200))
+        End Select
+    End Function
+    Private Sub SakuraTick(sender As Object, e As EventArgs)
+        If Not Settings.Get(Of Boolean)("DiySakura") Then Return
+        Dim W = Math.Max(300, PanSakura.ActualWidth)
+        Dim H = Math.Max(200, PanSakura.ActualHeight)
+        Dim T = Environment.TickCount / 1000.0
+        For Each P In SakuraParticles
+            P.Y += P.Speed
+            P.X += Math.Sin(T * 1.5 + P.Phase) * P.Drift
+            If P.Y > H + 20 Then
+                P.Y = -20
+                P.X = SakuraRand.NextDouble() * W
+            End If
+            If P.X > W + 20 Then P.X = -15
+            If P.X < -20 Then P.X = W + 15
+            Canvas.SetLeft(P.Shape, P.X)
+            Canvas.SetTop(P.Shape, P.Y)
+        Next
+    End Sub
     Public Sub UpdateSidebarLogin()
         Try
             Dim Name As String = McLoginName()

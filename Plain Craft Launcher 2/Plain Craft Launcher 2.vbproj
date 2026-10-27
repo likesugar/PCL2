@@ -569,7 +569,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PageLaunch\PageLaunchLeft.xaml">
+    <Page Include="Pages\PageDiy\PageDiy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Pages\PageDiy\PageDiy.xaml.vb">
+      <DependentUpon>PageDiy.xaml</DependentUpon>
+    </Compile>
+<Page Include="Pages\PageLaunch\PageLaunchLeft.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,4 @@
-Public Class CrashAnalyzer
+﻿Public Class CrashAnalyzer
 
     '构造函数
     Private TempFolder As String
@@ -862,50 +862,8 @@ NextStack:
         '弹窗提示
         FrmMain.ShowWindowToTop()
         Dim Detail As String = GetAnalyzeResult(IsManualAnalyze)
-        'AI 崩溃分析（移植自 oaoi）：配置了 API 且开启时自动分析，失败降级本地
-        If Not IsManualAnalyze AndAlso Settings.Get(Of Boolean)("SetupAiCrashEnabled") AndAlso
-           Settings.Get(Of String)("SetupAiUrl") <> "" AndAlso Settings.Get(Of String)("SetupAiKey") <> "" Then
-            Dim LocalDetail As String = Detail
-            Dim LogText As String = ""
-            Try
-                For Each F In OutputFiles
-                    If FileUtils.Exists(F) Then LogText &= vbCrLf & FileUtils.ReadAsLines(F).Join(vbCrLf)
-                Next
-            Catch ex As Exception
-                Logger.Error(ex, "读取崩溃日志供 AI 分析失败")
-            End Try
-            If String.IsNullOrWhiteSpace(LogText) Then LogText = Detail
-            If LogText.Length > 8000 Then LogText = LogText.Substring(LogText.Length - 8000)
-            Hint("正在使用 AI 分析崩溃日志……")
-            RunInNewThread(Sub()
-                Try
-                    Dim AiResult = AiAnalyzeCrash(LogText)
-                    RunInUi(Sub() MyMsgBox(AiResult, "AI 崩溃分析", "确定"))
-                Catch ex As Exception
-                    Logger.Error(ex, "AI 崩溃分析失败，降级本地分析")
-                    RunInUi(Sub() OutputCore(False, ExtraFiles, LocalDetail))
-                End Try
-            End Sub, "AI Crash Analysis", ThreadPriority.BelowNormal)
-            Return
-        End If
         OutputCore(IsManualAnalyze, ExtraFiles, Detail)
     End Sub
-
-    '调用 OpenAI 兼容接口分析崩溃日志（移植自 oaoi）。
-    Private Function AiAnalyzeCrash(LogText As String) As String
-        Dim Url As String = Settings.Get(Of String)("SetupAiUrl").TrimEnd("/").TrimEnd("\") & "/chat/completions"
-        Dim Prompt As String = "你是 Minecraft 崩溃日志分析专家。请分析以下崩溃日志，用简洁的中文输出：1. 崩溃原因；2. 可疑的 Mod 或文件；3. 具体解决办法。不要输出多余寒暄。" & vbCrLf & vbCrLf & "=== 崩溃日志（截取尾部）===" & vbCrLf & LogText
-        Dim Body As String = JObject.FromObject(New With {
-            .model = Settings.Get(Of String)("SetupAiModel"),
-            .temperature = 0.3,
-            .messages = New JArray() From {New JObject() From {New JProperty("role", "user"), New JProperty("content", Prompt)}}
-        }).ToString()
-        Dim Resp As String = NetRequestByClientRetry(Url, Method:=HttpMethod.Post, Content:=Body, ContentType:="application/json",
-            Headers:=New String(,) {{"Authorization", "Bearer " & Settings.Get(Of String)("SetupAiKey")}}, RequireJson:=True)
-        Dim Result As String = JObject.Parse(Resp)("choices")(0)("message")("content").ToString()
-        If String.IsNullOrWhiteSpace(Result) Then Throw New Exception("AI 返回内容为空")
-        Return Result
-    End Function
 
     Private Sub OutputCore(IsManualAnalyze As Boolean, ExtraFiles As List(Of String), Detail As String)
         Select Case MyMsgBox(Detail, If(IsManualAnalyze, "错误报告分析结果", "Minecraft 出现错误"),
