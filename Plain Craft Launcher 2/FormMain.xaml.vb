@@ -1737,11 +1737,16 @@ End Sub
     ' 看板娘显示刷新
 
     '侧边栏底部登录卡
+    Private SidebarNameEditing As Boolean = False
+    Private Function SidebarNameShort(Name As String) As String
+        If Name.Length <= 3 Then Return Name
+        Return Name.Substring(0, 1) & "…" & Name.Substring(Name.Length - 1)
+    End Function
     Public Sub UpdateSidebarLogin()
         Try
             Dim Name As String = McLoginName()
             If String.IsNullOrWhiteSpace(Name) Then Name = "未登录"
-            If TextSidebarName.Text.Trim() = "" Then TextSidebarName.Text = If(Name = "未登录", "", Name)
+            If Not SidebarNameEditing AndAlso TextSidebarName.Text.Trim() = "" Then TextSidebarName.Text = If(Name = "未登录", "", SidebarNameShort(Name))
             LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
         Catch ex As Exception
             LabSidebarAvatar.Text = "?"
@@ -1791,6 +1796,7 @@ End Sub
         Settings.Set("LoginLegacyName", If(Rest = "", Name, Name & "¨" & Rest))
         Settings.Set("LoginType", McLoginType.Legacy)
         LabSidebarAvatar.Text = Name.Substring(0, 1).ToUpper()
+        TextSidebarName.Text = SidebarNameShort(Name)
         Hint("玩家名已保存：" & Name)
     End Sub
     Private Sub TextSidebarName_KeyDown(sender As Object, e As Input.KeyEventArgs) Handles TextSidebarName.KeyDown
@@ -1799,7 +1805,16 @@ End Sub
             TextSidebarName.MoveFocus(New TraversalRequest(FocusNavigationDirection.Next))
         End If
     End Sub
+    Private Sub TextSidebarName_GotFocus(sender As Object, e As RoutedEventArgs) Handles TextSidebarName.GotFocus
+        SidebarNameEditing = True
+        Dim Name As String = McLoginName()
+        If Not String.IsNullOrWhiteSpace(Name) AndAlso TextSidebarName.Text = SidebarNameShort(Name) Then TextSidebarName.Text = Name
+        TextSidebarName.SelectAll()
+    End Sub
     Private Sub TextSidebarName_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextSidebarName.LostFocus
         TextSidebarName_Save()
+        SidebarNameEditing = False
+        Dim Name As String = TextSidebarName.Text.Trim()
+        If Name <> "" Then TextSidebarName.Text = SidebarNameShort(Name)
     End Sub
 End Class
