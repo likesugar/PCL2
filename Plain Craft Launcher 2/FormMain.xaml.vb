@@ -1753,9 +1753,13 @@ End Sub
             LabSidebarAvatar.Text = "?"
         End Try
         '登录方式选中态边框
-        Dim IsMs As Boolean = Settings.Get(Of McLoginType)("LoginType") = McLoginType.Ms
-        BorderSidebarMs.BorderBrush = If(IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
-        BorderSidebarLegacy.BorderBrush = If(Not IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
+        Try
+            Dim IsMs As Boolean = Settings.Get(Of McLoginType)("LoginType") = McLoginType.Ms
+            BorderSidebarMs.BorderBrush = If(IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
+            BorderSidebarLegacy.BorderBrush = If(Not IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
+        Catch ex As Exception
+            Logger.Warn(ex, "刷新侧栏登录方式边框失败")
+        End Try
     End Sub
     Private Sub SidebarLoginShow()
         PageChange(PageType.Launch)
