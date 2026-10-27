@@ -744,17 +744,12 @@ ExitRefresh:
             Try : L = Settings.Get(Of Integer)("UiCardLeftOpacity") : Catch ex As Exception : End Try
             Try : R = Settings.Get(Of Integer)("UiCardRightOpacity") : Catch ex As Exception : End Try
             L = Math.Max(0, Math.Min(100, L)) : R = Math.Max(0, Math.Min(100, R))
-            ' 启动卡：背景+内容整体随滑条
-            FrmLaunchLeft.BorderCardLeft.Opacity = L / 100.0
-            FrmLaunchLeft.BorderCardLeft.Background = New SolidColorBrush(Color.FromArgb(CByte(Math.Max(1, 255 * L / 100)), 255, 255, 255))
-            For Each E As UIElement In {FrmLaunchLeft.LabVersionBig, FrmLaunchLeft.LabVersion, FrmLaunchLeft.BtnLaunch, FrmLaunchLeft.BtnVersion, FrmLaunchLeft.BtnMore}
-                E.Opacity = L / 100.0
-                E.IsHitTestVisible = L > 0
-            Next
-            ' 登录卡：整块
+            ' 启动滑条：只控制启动按钮
+            FrmLaunchLeft.BtnLaunch.Opacity = L / 100.0
+            FrmLaunchLeft.BtnLaunch.IsHitTestVisible = L > 0
+            ' 登录滑条：整块
             FrmLaunchLeft.PanLogin.Opacity = R / 100.0
             FrmLaunchLeft.PanLogin.IsHitTestVisible = R > 0
-            Logger.Info($"卡片透明度：L={L} R={R} PanLogin.Opacity={FrmLaunchLeft.PanLogin.Opacity} Children={FrmLaunchLeft.PanLogin.Children.Count} 可见={FrmLaunchLeft.PanLogin.Visibility} HasAnimatedBase={FrmLaunchLeft.PanLogin.IsLoaded}")
         Catch ex As Exception
             Logger.Warn(ex, "卡片透明度刷新失败")
         End Try
