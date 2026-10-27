@@ -1746,6 +1746,10 @@ End Sub
         Catch ex As Exception
             LabSidebarAvatar.Text = "?"
         End Try
+        '登录方式选中态边框
+        Dim IsMs As Boolean = Settings.Get(Of McLoginType)("LoginType") = McLoginType.Ms
+        BorderSidebarMs.BorderBrush = If(IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
+        BorderSidebarLegacy.BorderBrush = If(Not IsMs, New Media.SolidColorBrush(Media.Color.FromRgb(&HFF, &HD3, &H6A)), Media.Brushes.Transparent)
     End Sub
     Private Sub SidebarLoginShow()
         PageChange(PageType.Launch)
@@ -1753,15 +1757,21 @@ End Sub
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.PanLoginArea.Visibility = Visibility.Visible
                 End Sub)
     End Sub
+    '点头像 = 正版登录
     Private Sub BtnSidebarLogin_MouseLeftButtonDown(sender As Object, e As Input.MouseButtonEventArgs) Handles BtnSidebarLogin.MouseLeftButtonDown
+        Settings.Set("LoginType", McLoginType.Ms)
+        RunInUi(Sub()
+                    If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType5.Checked = True
+                End Sub)
         SidebarLoginShow()
+        UpdateSidebarLogin()
     End Sub
+    '离线/正版仅切换登录方式（选中带边框）
     Private Sub BtnSidebarLegacy_Click(sender As Object, e As EventArgs) Handles BtnSidebarLegacy.Click
         Settings.Set("LoginType", McLoginType.Legacy)
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType0.Checked = True
                 End Sub)
-        SidebarLoginShow()
         UpdateSidebarLogin()
     End Sub
     Private Sub BtnSidebarMs_Click(sender As Object, e As EventArgs) Handles BtnSidebarMs.Click
@@ -1769,7 +1779,6 @@ End Sub
         RunInUi(Sub()
                     If FrmLaunchLeft IsNot Nothing Then FrmLaunchLeft.RadioLoginType5.Checked = True
                 End Sub)
-        SidebarLoginShow()
         UpdateSidebarLogin()
     End Sub
 
