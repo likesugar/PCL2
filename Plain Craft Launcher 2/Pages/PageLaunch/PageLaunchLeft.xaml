@@ -54,7 +54,10 @@
         </Grid>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,80,0" x:Name="PanLoginArea">
+        <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,150,0" x:Name="PanLoginArea">
+            <StackPanel.LayoutTransform>
+                <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
+            </StackPanel.LayoutTransform>
 <Grid Name="PanType" Visibility="Collapsed" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
